@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Denti — El software dental que trabaja contigo</title>
+<meta name="description" content="Denti es el software de gestión dental diseñado para clínicas colombianas. Agenda, historias clínicas, facturación DIAN, asistente IA y mucho más.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --accent: #60a5fa;
+    --dark: #0f172a;
+    --dark2: #1e293b;
+    --dark3: #1e3a8a;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --success: #22c55e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(96,165,250,0.1);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a {
+    color: #94a3b8; text-decoration: none; font-size: 0.92rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-ctas { display: flex; align-items: center; gap: 12px; }
+  .btn-nav-ghost {
+    color: #cbd5e1; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; padding: 8px 18px; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 500; cursor: pointer; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-nav-ghost:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .btn-nav-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff; padding: 8px 20px; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer; text-decoration: none;
+    border: none; transition: all 0.2s; box-shadow: 0 0 0 0 rgba(37,99,235,0.4);
+  }
+  .btn-nav-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(37,99,235,0.5); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #1e3a8a 75%, #1e40af 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 5% 80px;
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,99,235,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(37,99,235,0.2); border: 1px solid rgba(96,165,250,0.3);
+    color: #93c5fd; padding: 6px 16px; border-radius: 100px;
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.03em;
+    margin-bottom: 28px; text-transform: uppercase;
+  }
+  .hero-badge span { width: 6px; height: 6px; background: #60a5fa; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900; color: #fff; line-height: 1.08;
+    letter-spacing: -0.03em; margin-bottom: 24px;
+    max-width: 820px;
+  }
+  .hero-title .highlight {
+    background: linear-gradient(90deg, #60a5fa, #93c5fd);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem); color: #94a3b8;
+    max-width: 560px; margin: 0 auto 40px; line-height: 1.7;
+  }
+  .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+  .btn-hero-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff; padding: 16px 32px; border-radius: 12px;
+    font-size: 1rem; font-weight: 700; cursor: pointer; text-decoration: none;
+    border: none; transition: all 0.25s;
+    box-shadow: 0 4px 24px rgba(37,99,235,0.45);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-hero-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37,99,235,0.6); }
+  .btn-hero-ghost {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+    color: #e2e8f0; padding: 16px 32px; border-radius: 12px;
+    font-size: 1rem; font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: all 0.25s; display: flex; align-items: center; gap: 8px;
+  }
+  .btn-hero-ghost:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+  /* Dashboard mockup */
+  .hero-mockup {
+    width: 100%; max-width: 960px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(96,165,250,0.15);
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(96,165,250,0.08);
+    position: relative;
+  }
+  .mockup-topbar {
+    background: #1e293b; padding: 12px 16px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid rgba(96,165,250,0.08);
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-r { background: #ef4444; } .dot-y { background: #f59e0b; } .dot-g { background: #22c55e; }
+  .mockup-url {
+    flex: 1; background: rgba(255,255,255,0.06); border-radius: 6px;
+    padding: 5px 12px; margin: 0 12px; color: #64748b; font-size: 0.78rem;
+    text-align: center;
+  }
+  .mockup-body {
+    display: grid; grid-template-columns: 200px 1fr;
+    min-height: 380px;
+  }
+  .mockup-sidebar {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    padding: 20px 0;
+  }
+  .m-logo { padding: 0 16px 20px; display: flex; align-items: center; gap: 8px; }
+  .m-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg,#2563eb,#60a5fa); border-radius: 7px; display:flex;align-items:center;justify-content:center;font-size:0.8rem; }
+  .m-logo-text { color: #fff; font-weight: 700; font-size: 0.9rem; }
+  .m-nav-item {
+    padding: 9px 16px; display: flex; align-items: center; gap: 10px;
+    color: #64748b; font-size: 0.78rem; cursor: default;
+  }
+  .m-nav-item.active {
+    background: linear-gradient(90deg, rgba(37,99,235,0.35), rgba(37,99,235,0.1));
+    color: #93c5fd; border-left: 3px solid #60a5fa;
+  }
+  .m-icon { font-size: 0.85rem; }
+  .mockup-main { background: #f8fafc; padding: 20px; }
+  .m-greeting { font-size: 0.85rem; font-weight: 700; color: #0f172a; margin-bottom: 14px; }
+  .m-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+  .m-kpi {
+    background: #fff; border-radius: 10px; padding: 12px;
+    border: 1px solid #e2e8f0; border-top: 3px solid;
+  }
+  .m-kpi:nth-child(1){border-top-color:#2563eb}
+  .m-kpi:nth-child(2){border-top-color:#22c55e}
+  .m-kpi:nth-child(3){border-top-color:#f59e0b}
+  .m-kpi:nth-child(4){border-top-color:#8b5cf6}
+  .m-kpi-label { font-size: 0.6rem; color: #64748b; font-weight: 500; margin-bottom: 4px; }
+  .m-kpi-val { font-size: 1rem; font-weight: 800; color: #0f172a; }
+  .m-kpi-sub { font-size: 0.55rem; color: #94a3b8; }
+  .m-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .m-card { background: #fff; border-radius: 10px; padding: 12px; border: 1px solid #e2e8f0; }
+  .m-card-title { font-size: 0.7rem; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+  .m-appt { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid #f1f5f9; }
+  .m-appt:last-child { border: none; }
+  .m-appt-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .m-appt-name { font-size: 0.65rem; font-weight: 600; color: #0f172a; }
+  .m-appt-time { font-size: 0.58rem; color: #64748b; }
+  .m-appt-tag { margin-left: auto; font-size: 0.55rem; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+
+  /* ─── LOGOS / SOCIAL PROOF ─── */
+  .social-bar {
+    background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 24px 5%; text-align: center;
+  }
+  .social-bar p { font-size: 0.82rem; color: var(--text-muted); font-weight: 500; margin-bottom: 16px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .social-logos { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; }
+  .social-logo {
+    color: #cbd5e1; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.05em;
+    opacity: 0.6; transition: opacity 0.2s;
+  }
+  .social-logo:hover { opacity: 1; }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 96px 5%; }
+  .section-label {
+    display: inline-block; background: rgba(37,99,235,0.1); color: #2563eb;
+    padding: 5px 14px; border-radius: 100px; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900;
+    color: var(--text); line-height: 1.15; letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .section-sub { font-size: 1.1rem; color: var(--text-muted); max-width: 540px; line-height: 1.7; }
+  .text-center { text-align: center; }
+  .text-center .section-sub { margin: 0 auto; }
+
+  /* ─── FEATURES ─── */
+  #features { background: #fff; }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px; margin-top: 56px;
+  }
+  .feature-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 16px; padding: 28px;
+    transition: all 0.25s;
+  }
+  .feature-card:hover {
+    border-color: rgba(37,99,235,0.3);
+    box-shadow: 0 8px 32px rgba(37,99,235,0.08);
+    transform: translateY(-2px);
+  }
+  .feature-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 18px;
+    border: 1px solid rgba(37,99,235,0.15);
+  }
+  .feature-title { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .feature-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* ─── HOW IT WORKS ─── */
+  #how { background: var(--bg); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-top: 56px; position: relative; }
+  .step { text-align: center; }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff; font-size: 1.3rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+  }
+  .step-title { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+  .step-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* ─── DENTI IA ─── */
+  #ia {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e3a8a 100%);
+    position: relative; overflow: hidden;
+  }
+  #ia::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(37,99,235,0.2) 0%, transparent 70%);
+  }
+  #ia .section-title { color: #fff; }
+  #ia .section-sub { color: #94a3b8; }
+  #ia .section-label { background: rgba(96,165,250,0.15); color: #93c5fd; }
+  .ia-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 56px; }
+  .ia-features { display: flex; flex-direction: column; gap: 20px; }
+  .ia-feat {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px; border-radius: 14px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(96,165,250,0.1);
+    transition: all 0.2s;
+  }
+  .ia-feat:hover { background: rgba(255,255,255,0.07); border-color: rgba(96,165,250,0.25); }
+  .ia-feat-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .ia-feat-title { font-size: 0.95rem; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+  .ia-feat-desc { font-size: 0.85rem; color: #64748b; line-height: 1.6; }
+  .ia-chat {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(96,165,250,0.15);
+    border-radius: 20px; overflow: hidden;
+  }
+  .ia-chat-header {
+    background: rgba(37,99,235,0.2); padding: 14px 18px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid rgba(96,165,250,0.1);
+  }
+  .ia-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg,#2563eb,#60a5fa);
+    display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+  }
+  .ia-name { color: #e2e8f0; font-weight: 700; font-size: 0.85rem; }
+  .ia-status { color: #22c55e; font-size: 0.72rem; font-weight: 600; }
+  .ia-messages { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .ia-bubble-user {
+    align-self: flex-end; background: #2563eb;
+    color: #fff; padding: 10px 14px; border-radius: 14px 14px 2px 14px;
+    font-size: 0.82rem; max-width: 80%;
+  }
+  .ia-bubble-bot {
+    align-self: flex-start; background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(96,165,250,0.15);
+    color: #cbd5e1; padding: 10px 14px; border-radius: 2px 14px 14px 14px;
+    font-size: 0.82rem; max-width: 88%; line-height: 1.5;
+  }
+  .ia-bubble-bot strong { color: #93c5fd; }
+
+  /* ─── PRICING ─── */
+  #pricing { background: #fff; }
+  .pricing-toggle { display: flex; align-items: center; gap: 12px; justify-content: center; margin: 24px 0 48px; }
+  .toggle-label { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+  .toggle-label.active { color: var(--primary); font-weight: 700; }
+  .toggle-badge { background: #dcfce7; color: #16a34a; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+  .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .plan-card {
+    border: 1.5px solid var(--border); border-radius: 20px; padding: 32px;
+    position: relative; transition: all 0.25s;
+  }
+  .plan-card:hover { box-shadow: 0 12px 40px rgba(37,99,235,0.1); transform: translateY(-3px); }
+  .plan-card.featured {
+    border-color: #2563eb;
+    box-shadow: 0 8px 40px rgba(37,99,235,0.2);
+  }
+  .plan-badge {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg,#2563eb,#1d4ed8); color: #fff;
+    font-size: 0.72rem; font-weight: 700; padding: 4px 16px; border-radius: 100px;
+    letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap;
+  }
+  .plan-name { font-size: 1rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .plan-price { display: flex; align-items: flex-end; gap: 4px; margin-bottom: 6px; }
+  .plan-price-currency { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .plan-price-num { font-size: 2.6rem; font-weight: 900; color: var(--text); line-height: 1; }
+  .plan-price-period { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+  .plan-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5; }
+  .plan-divider { height: 1px; background: var(--border); margin-bottom: 24px; }
+  .plan-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .plan-feat { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text); }
+  .plan-feat-icon { color: #22c55e; font-size: 0.9rem; flex-shrink: 0; }
+  .plan-feat-icon.no { color: #cbd5e1; }
+  .plan-feat.disabled { color: #cbd5e1; }
+  .btn-plan {
+    width: 100%; padding: 14px; border-radius: 12px;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    border: 1.5px solid var(--primary); transition: all 0.2s;
+    text-align: center; text-decoration: none; display: block;
+  }
+  .btn-plan-outline { background: transparent; color: var(--primary); }
+  .btn-plan-outline:hover { background: var(--primary); color: #fff; }
+  .btn-plan-filled { background: linear-gradient(135deg,#2563eb,#1d4ed8); color: #fff; border-color: transparent; box-shadow: 0 4px 16px rgba(37,99,235,0.3); }
+  .btn-plan-filled:hover { box-shadow: 0 6px 24px rgba(37,99,235,0.5); transform: translateY(-1px); }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--bg); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px; }
+  .testimonial-card {
+    background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 28px;
+    transition: all 0.25s;
+  }
+  .testimonial-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.06); transform: translateY(-2px); }
+  .stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 16px; }
+  .testimonial-text { font-size: 0.95rem; color: var(--text); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg,#2563eb,#60a5fa);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800; font-size: 1rem; flex-shrink: 0;
+  }
+  .author-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+  .author-role { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* ─── STATS ─── */
+  #stats {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
+    padding: 80px 5%; text-align: center;
+  }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px; max-width: 900px; margin: 0 auto; }
+  .stat-item {}
+  .stat-num { font-size: 3rem; font-weight: 900; color: #fff; line-height: 1; margin-bottom: 8px; }
+  .stat-num span { color: #60a5fa; }
+  .stat-label { font-size: 0.9rem; color: #64748b; font-weight: 500; }
+
+  /* ─── FINAL CTA ─── */
+  #cta {
+    background: #fff; padding: 100px 5%; text-align: center;
+  }
+  .cta-box {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1e40af 100%);
+    border-radius: 24px; padding: 72px 40px; max-width: 800px; margin: 0 auto;
+    position: relative; overflow: hidden;
+  }
+  .cta-box::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 70% 80% at 50% -20%, rgba(96,165,250,0.25) 0%, transparent 70%);
+  }
+  .cta-box h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900; color: #fff; margin-bottom: 16px; line-height: 1.15; letter-spacing: -0.02em; position:relative; }
+  .cta-box p { color: #94a3b8; font-size: 1.05rem; margin-bottom: 36px; position:relative; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position:relative; }
+  .btn-cta-primary {
+    background: #fff; color: #1d4ed8; padding: 16px 32px;
+    border-radius: 12px; font-weight: 800; font-size: 1rem;
+    text-decoration: none; transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .btn-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .btn-cta-ghost {
+    border: 1.5px solid rgba(255,255,255,0.2); color: #e2e8f0; padding: 16px 32px;
+    border-radius: 12px; font-weight: 600; font-size: 1rem;
+    text-decoration: none; transition: all 0.25s;
+  }
+  .btn-cta-ghost:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .cta-note { color: #475569; font-size: 0.82rem; margin-top: 20px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0f172a; padding: 60px 5% 32px;
+    border-top: 1px solid rgba(96,165,250,0.08);
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  .footer-brand { }
+  .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; text-decoration: none; }
+  .footer-logo-icon { width: 34px; height: 34px; background: linear-gradient(135deg,#2563eb,#60a5fa); border-radius: 9px; display:flex;align-items:center;justify-content:center;font-size:1rem; }
+  .footer-logo-text { color: #fff; font-weight: 800; font-size: 1.2rem; }
+  .footer-tagline { color: #475569; font-size: 0.85rem; line-height: 1.6; max-width: 240px; }
+  .footer-col h4 { color: #94a3b8; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+  .footer-col a { display: block; color: #475569; font-size: 0.88rem; text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: #94a3b8; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { color: #334155; font-size: 0.82rem; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: #334155; font-size: 0.82rem; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: #64748b; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .mockup-body { grid-template-columns: 1fr; }
+    .mockup-sidebar { display: none; }
+    .m-kpis { grid-template-columns: repeat(2, 1fr); }
+    .ia-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.35s; }
+  .delay-4 { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">🦷</div>
+    Denti
+  </a>
+  <div class="nav-links">
+    <a href="#features">Funciones</a>
+    <a href="#ia">Denti IA</a>
+    <a href="#pricing">Precios</a>
+    <a href="#testimonials">Testimonios</a>
+  </div>
+  <div class="nav-ctas">
+    <a href="DentalOS.html" class="btn-nav-ghost">Iniciar sesión</a>
+    <a href="DentalOS.html" class="btn-nav-primary">Empezar gratis →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-badge fade-up">
+    <span></span> Nuevo: Asistente IA integrado — Denti ya entiende tu voz
+  </div>
+  <h1 class="hero-title fade-up delay-1">
+    El software dental que<br><span class="highlight">trabaja contigo</span>
+  </h1>
+  <p class="hero-sub fade-up delay-2">
+    Agenda citas, maneja historias clínicas, factura ante la DIAN y deja que tu asistente IA haga el trabajo pesado. Todo en un solo lugar, diseñado para Colombia.
+  </p>
+  <div class="hero-ctas fade-up delay-3">
+    <a href="DentalOS.html" class="btn-hero-primary">🚀 Empezar gratis — 30 días sin tarjeta</a>
+    <a href="#ia" class="btn-hero-ghost">▶ Ver demo en vivo</a>
+  </div>
+
+  <!-- Dashboard mockup -->
+  <div class="hero-mockup fade-up delay-4">
+    <div class="mockup-topbar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+      <div class="mockup-url">🔒 soydenti.com/app</div>
+    </div>
+    <div class="mockup-body">
+      <div class="mockup-sidebar">
+        <div class="m-logo">
+          <div class="m-logo-icon">🦷</div>
+          <div class="m-logo-text">Denti</div>
+        </div>
+        <div class="m-nav-item active"><span class="m-icon">📊</span> Dashboard</div>
+        <div class="m-nav-item"><span class="m-icon">📅</span> Agenda</div>
+        <div class="m-nav-item"><span class="m-icon">👥</span> Pacientes</div>
+        <div class="m-nav-item"><span class="m-icon">🦷</span> Odontograma</div>
+        <div class="m-nav-item"><span class="m-icon">💳</span> Facturación</div>
+        <div class="m-nav-item"><span class="m-icon">📦</span> Inventario</div>
+        <div class="m-nav-item"><span class="m-icon">📈</span> Reportes</div>
+      </div>
+      <div class="mockup-main">
+        <div class="m-greeting">☀️ Buenos días, Dra. Yenifer — Viernes 17 de julio</div>
+        <div class="m-kpis">
+          <div class="m-kpi">
+            <div class="m-kpi-label">💰 INGRESOS HOY</div>
+            <div class="m-kpi-val">$100M</div>
+            <div class="m-kpi-sub">4 facturas cobradas</div>
+          </div>
+          <div class="m-kpi">
+            <div class="m-kpi-label">📅 CITAS HOY</div>
+            <div class="m-kpi-val">8 / 12</div>
+            <div class="m-kpi-sub">4 pendientes</div>
+          </div>
+          <div class="m-kpi">
+            <div class="m-kpi-label">⏳ POR COBRAR</div>
+            <div class="m-kpi-val">$21.5M</div>
+            <div class="m-kpi-sub">2 facturas</div>
+          </div>
+          <div class="m-kpi">
+            <div class="m-kpi-label">👥 PACIENTES</div>
+            <div class="m-kpi-val">247</div>
+            <div class="m-kpi-sub">activos este mes</div>
+          </div>
+        </div>
+        <div class="m-row">
+          <div class="m-card">
+            <div class="m-card-title">🕐 Próximas citas</div>
+            <div class="m-appt">
+              <div class="m-appt-dot" style="background:#2563eb"></div>
+              <div><div class="m-appt-name">María García</div><div class="m-appt-time">10:00 · Implante</div></div>
+              <div class="m-appt-tag" style="background:#eff6ff;color:#2563eb">Pendiente</div>
+            </div>
+            <div class="m-appt">
+              <div class="m-appt-dot" style="background:#22c55e"></div>
+              <div><div class="m-appt-name">Carlos Mendoza</div><div class="m-appt-time">11:30 · Ortodoncia</div></div>
+              <div class="m-appt-tag" style="background:#f0fdf4;color:#16a34a">Confirmada</div>
+            </div>
+            <div class="m-appt">
+              <div class="m-appt-dot" style="background:#f59e0b"></div>
+              <div><div class="m-appt-name">Ana Martínez</div><div class="m-appt-time">14:00 · Limpieza</div></div>
+              <div class="m-appt-tag" style="background:#fffbeb;color:#d97706">En sala</div>
+            </div>
+          </div>
+          <div class="m-card">
+            <div class="m-card-title">🤖 Denti IA dice</div>
+            <div style="background:#eff6ff;border-radius:8px;padding:10px;font-size:0.65rem;color:#1e40af;line-height:1.5">
+              Hoy tienes <strong>$100M</strong> en ingresos. Tu mejor día del mes. La paciente <strong>Ana Martínez</strong> tiene su control de ortodoncia vencido desde hace 3 semanas.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<div class="social-bar">
+  <p>Clínicas dentales en Colombia ya usan Denti</p>
+  <div class="social-logos">
+    <span class="social-logo">SONRISAS BOGOTÁ</span>
+    <span class="social-logo">CLÍNICA DENTAL MEDELLÍN</span>
+    <span class="social-logo">ODONTO CALI</span>
+    <span class="social-logo">DENTAL CENTER BCG</span>
+    <span class="social-logo">ORTO SALUD</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="text-center">
+    <div class="section-label">Funcionalidades</div>
+    <h2 class="section-title">Todo lo que necesita tu clínica, sin complicaciones</h2>
+    <p class="section-sub">Desde la primera cita hasta la factura DIAN, Denti lo cubre todo sin que tengas que aprender 6 programas distintos.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <div class="feature-title">Agenda Inteligente</div>
+      <div class="feature-desc">Agenda citas en segundos, gestiona múltiples consultorios y doctores, y envía recordatorios por WhatsApp automáticamente. Sin choques de horario.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🦷</div>
+      <div class="feature-title">Odontograma Digital</div>
+      <div class="feature-desc">Odontograma completo con simbología clínica estándar, periodontograma interactivo y registro de evoluciones por sesión. Todo queda en la historia clínica.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💳</div>
+      <div class="feature-title">Facturación DIAN</div>
+      <div class="feature-desc">Genera facturas electrónicas cumpliendo la normativa DIAN, exporta RIPS para SISPRO y maneja distintos métodos de pago. Cero papel.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <div class="feature-title">Historias Clínicas</div>
+      <div class="feature-desc">Historial completo por paciente: anamnesis, alergias, tratamientos, radiografías, evoluciones y consentimientos informados. Siempre a la mano.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <div class="feature-title">Inventario y Compras</div>
+      <div class="feature-desc">Controla el stock de materiales dentales, recibe alertas cuando algo está por agotarse y registra tus proveedores en un solo lugar.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📈</div>
+      <div class="feature-title">Reportes Financieros</div>
+      <div class="feature-desc">Ve tus ingresos diarios, mensuales y anuales con gráficas claras. Sabe cuánto debes cobrar, qué tratamientos generan más y cómo está creciendo tu clínica.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="text-center">
+    <div class="section-label">Cómo funciona</div>
+    <h2 class="section-title">Listo en minutos, no en semanas</h2>
+    <p class="section-sub">Sin instalaciones, sin configuraciones complicadas. Abres el navegador y empiezas a trabajar hoy mismo.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-title">Crea tu cuenta</div>
+      <div class="step-desc">Regístrate con tu email y configura tu clínica en menos de 5 minutos. Ingresa el nombre, NIT y los doctores de tu equipo.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-title">Importa tus pacientes</div>
+      <div class="step-desc">Sube tu base de pacientes desde Excel o CSV en un clic. Si no tienes, empieza a agregarlos directamente y Denti los organiza solo.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-title">Trabaja con Denti IA</div>
+      <div class="step-desc">Denti aprende cómo trabajas y te ayuda con recordatorios, resúmenes del día, alertas de stock y mucho más — con voz o texto.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DENTI IA -->
+<section id="ia">
+  <div>
+    <div class="section-label">Inteligencia Artificial</div>
+    <h2 class="section-title">Conoce a Denti, tu asistente dental IA</h2>
+    <p class="section-sub">El primer asistente virtual diseñado específicamente para dentistas colombianos. Habla con él, hazle preguntas, pídele que haga cosas.</p>
+  </div>
+  <div class="ia-grid">
+    <div class="ia-features">
+      <div class="ia-feat">
+        <div class="ia-feat-icon">🎙️</div>
+        <div>
+          <div class="ia-feat-title">Control por voz</div>
+          <div class="ia-feat-desc">Di "nueva cita para mañana a las 10" o "muéstrame los ingresos de julio" y Denti lo hace por ti, sin tocar el teclado.</div>
+        </div>
+      </div>
+      <div class="ia-feat">
+        <div class="ia-feat-icon">📊</div>
+        <div>
+          <div class="ia-feat-title">Resúmenes inteligentes</div>
+          <div class="ia-feat-desc">Al llegar a tu clínica, Denti te da el resumen del día: citas, ingresos, alertas de pacientes y stock en menos de 10 segundos.</div>
+        </div>
+      </div>
+      <div class="ia-feat">
+        <div class="ia-feat-icon">🔔</div>
+        <div>
+          <div class="ia-feat-title">Alertas proactivas</div>
+          <div class="ia-feat-desc">Te avisa si un paciente no ha vuelto en mucho tiempo, si el stock de materiales está bajo, o si tienes facturas pendientes de cobro.</div>
+        </div>
+      </div>
+      <div class="ia-feat">
+        <div class="ia-feat-icon">💬</div>
+        <div>
+          <div class="ia-feat-title">Chat natural</div>
+          <div class="ia-feat-desc">Hazle cualquier pregunta sobre tu negocio. "¿Cuántos pacientes nuevos tuve este mes?" — te responde en segundos con datos reales.</div>
+        </div>
+      </div>
+    </div>
+    <div class="ia-chat">
+      <div class="ia-chat-header">
+        <div class="ia-avatar">🦷</div>
+        <div>
+          <div class="ia-name">Denti IA</div>
+          <div class="ia-status">● En línea</div>
+        </div>
+      </div>
+      <div class="ia-messages">
+        <div class="ia-bubble-user">Dame el resumen del día</div>
+        <div class="ia-bubble-bot">¡Buenos días! Aquí va tu resumen del <strong>viernes 17 de julio</strong>:<br><br>💰 <strong>Ingresos hoy:</strong> $100.000.000<br>📅 <strong>Citas:</strong> 12 programadas, 8 atendidas<br>⚠️ <strong>Alerta:</strong> El stock de anestesia está bajo (3 unidades)<br>📋 <strong>Pendiente:</strong> Ana Martínez tiene control vencido</div>
+        <div class="ia-bubble-user">Agenda una cita para Pedro Gómez mañana a las 9am</div>
+        <div class="ia-bubble-bot">✅ Listo. Cita creada para <strong>Pedro Gómez</strong> el sábado 18 de julio a las 9:00 AM. ¿Le envío recordatorio por WhatsApp?</div>
+        <div class="ia-bubble-user">¿Cuánto llevo de ingresos este mes?</div>
+        <div class="ia-bubble-bot">En julio llevas <strong>$2.340.000.000</strong> en ingresos. Estás <strong>18% por encima</strong> del mes pasado. Tu mejor semana fue la del 7 al 11 de julio. 📈</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">2<span>min</span></div>
+      <div class="stat-label">Para agendar una cita completa</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span>$</span>0</div>
+      <div class="stat-label">Para empezar — 30 días gratis</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Normativa DIAN y RIPS Colombia</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">24<span>/7</span></div>
+      <div class="stat-label">Acceso desde cualquier dispositivo</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="text-center">
+    <div class="section-label">Planes y precios</div>
+    <h2 class="section-title">Sin sorpresas, sin letra pequeña</h2>
+    <p class="section-sub">Elige el plan que mejor se adapta a tu clínica. Todos incluyen 30 días gratis y soporte en español.</p>
+    <div class="pricing-toggle">
+      <span class="toggle-label active">Mensual</span>
+      <span style="color:#cbd5e1">·</span>
+      <span class="toggle-label">Anual <span class="toggle-badge">Ahorra 20%</span></span>
+    </div>
+  </div>
+  <div class="plans-grid">
+    <!-- Básico -->
+    <div class="plan-card">
+      <div class="plan-name">Básico</div>
+      <div class="plan-price">
+        <span class="plan-price-currency">$</span>
+        <span class="plan-price-num">89.000</span>
+      </div>
+      <div class="plan-price-period">COP / mes · 1 doctor</div>
+      <div class="plan-desc">Ideal para odontólogos que trabajan solos y quieren organizar su clínica desde el primer día.</div>
+      <div class="plan-divider"></div>
+      <div class="plan-features">
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> 1 consultorio / 1 doctor</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Hasta 200 pacientes</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Agenda y citas</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Historia clínica completa</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Odontograma digital</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Facturación básica</div>
+        <div class="plan-feat disabled"><span class="plan-feat-icon no">✗</span> Denti IA</div>
+        <div class="plan-feat disabled"><span class="plan-feat-icon no">✗</span> Facturación DIAN</div>
+        <div class="plan-feat disabled"><span class="plan-feat-icon no">✗</span> WhatsApp recordatorios</div>
+      </div>
+      <a href="#" class="btn-plan btn-plan-outline">Empezar gratis</a>
+    </div>
+
+    <!-- Pro -->
+    <div class="plan-card featured">
+      <div class="plan-badge">⭐ Más popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">
+        <span class="plan-price-currency">$</span>
+        <span class="plan-price-num">189.000</span>
+      </div>
+      <div class="plan-price-period">COP / mes · hasta 3 doctores</div>
+      <div class="plan-desc">El favorito de clínicas en crecimiento que quieren automatizar y crecer con datos reales.</div>
+      <div class="plan-divider"></div>
+      <div class="plan-features">
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Hasta 3 consultorios / doctores</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Pacientes ilimitados</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Agenda avanzada + multi-doctor</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Historia clínica + evoluciones</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> 🤖 Denti IA con voz</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Facturación DIAN electrónica</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> WhatsApp recordatorios</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Inventario y alertas stock</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Reportes financieros</div>
+      </div>
+      <a href="#" class="btn-plan btn-plan-filled">Empezar gratis 30 días</a>
+    </div>
+
+    <!-- Clínica -->
+    <div class="plan-card">
+      <div class="plan-name">Clínica</div>
+      <div class="plan-price">
+        <span class="plan-price-currency">$</span>
+        <span class="plan-price-num">349.000</span>
+      </div>
+      <div class="plan-price-period">COP / mes · doctores ilimitados</div>
+      <div class="plan-desc">Para clínicas grandes, grupos odontológicos o franquicias con múltiples sedes.</div>
+      <div class="plan-divider"></div>
+      <div class="plan-features">
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Doctores y consultorios ilimitados</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Multi-sede</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Todo lo del plan Pro</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> RIPS y SISPRO automático</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Roles y permisos por usuario</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Consentimientos informados</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Importador CSV masivo</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> API para integraciones</div>
+        <div class="plan-feat"><span class="plan-feat-icon">✓</span> Soporte prioritario 24/7</div>
+      </div>
+      <a href="#" class="btn-plan btn-plan-outline">Hablar con ventas</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="text-center">
+    <div class="section-label">Testimonios</div>
+    <h2 class="section-title">Lo que dicen los dentistas colombianos</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"Antes usaba Excel para todo y perdía horas cada semana. Con Denti organicé mi clínica en un día. El asistente de voz es increíble, ya no tengo que escribir nada durante la consulta."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">YT</div>
+        <div>
+          <div class="author-name">Dra. Yenifer Torres</div>
+          <div class="author-role">Odontóloga general · Bogotá</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"La facturación DIAN me quitó una pesadilla de encima. Antes pagaba contador para eso, ahora Denti lo hace solo. Y los recordatorios de WhatsApp redujeron mis citas perdidas a la mitad."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">CM</div>
+        <div>
+          <div class="author-name">Dr. Carlos Montoya</div>
+          <div class="author-role">Ortodoncista · Medellín</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"Tenemos 4 doctores y 3 consultorios. Antes la coordinación era un caos. Denti nos centralizó todo y ahora sé exactamente cuánto produce cada doctor cada semana. Imprescindible."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">LP</div>
+        <div>
+          <div class="author-name">Dra. Laura Pedraza</div>
+          <div class="author-role">Directora Clínica Dental Cali</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="cta-box">
+    <h2>Empieza hoy.<br>Tu clínica te lo agradecerá.</h2>
+    <p>30 días gratis, sin tarjeta de crédito, sin compromisos. Cancela cuando quieras.</p>
+    <div class="cta-buttons">
+      <a href="#pricing" class="btn-cta-primary">🚀 Crear mi cuenta gratis</a>
+      <a href="mailto:hola@soydenti.com" class="btn-cta-ghost">✉️ Hablar con el equipo</a>
+    </div>
+    <div class="cta-note">¿Tienes dudas? Escríbenos a hola@soydenti.com · Respondemos en menos de 2 horas.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="footer-logo">
+        <div class="footer-logo-icon">🦷</div>
+        <span class="footer-logo-text">Denti</span>
+      </a>
+      <p class="footer-tagline">El software dental diseñado para Colombia. Simple, inteligente y sin complicaciones.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="#features">Funcionalidades</a>
+      <a href="#ia">Denti IA</a>
+      <a href="#pricing">Precios</a>
+      <a href="#">Novedades</a>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="#">Nosotros</a>
+      <a href="#">Blog</a>
+      <a href="#">Contacto</a>
+      <a href="mailto:hola@soydenti.com">hola@soydenti.com</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Términos de uso</a>
+      <a href="#">Privacidad</a>
+      <a href="#">Tratamiento de datos</a>
+      <a href="#">Habeas Data</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Denti · soydenti.com · Hecho con 🦷 en Colombia</div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Nav scroll effect
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
+  });
+
+  // Animate stats on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const nums = entry.target.querySelectorAll('.stat-num');
+        nums.forEach(el => {
+          el.style.transform = 'translateY(0)';
+          el.style.opacity = '1';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  const statsSection = document.getElementById('stats');
+  if (statsSection) observer.observe(statsSection);
+
+  // Fade up on scroll
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.feature-card, .step, .plan-card, .testimonial-card, .ia-feat').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    fadeObserver.observe(el);
+  });
+</script>
+</body>
+</html>
