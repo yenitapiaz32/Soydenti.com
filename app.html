@@ -5,42 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Denti — Gestión Dental Inteligente</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --primary-light: #eff6ff;
-  --accent: #60a5fa;
-  --accent-dark: #3b82f6;
+  --primary: #3D5C82;
+  --primary-dark: #16304f;
+  --primary-light: #e8eef5;
+  --accent: #7093c0;
+  --accent-dark: #2a4a70;
   --success: #22c55e;
   --warning: #f59e0b;
   --danger: #ef4444;
-  --info: #2563eb;
-  --bg: #f8fafc;
-  --sidebar-bg: #0f172a;
-  --sidebar-hover: #1e293b;
-  --sidebar-active: #1e3a8a;
-  --card: #ffffff;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --border: #e2e8f0;
-  --radius: 12px;
-  --shadow: 0 1px 6px rgba(15,23,42,0.06), 0 2px 14px rgba(15,23,42,0.05);
-  --shadow-md: 0 4px 24px rgba(15,23,42,0.10);
+  --info: #3D5C82;
+  --bg: #f7f2e3;
+  --sidebar-bg: #16304f;
+  --sidebar-hover: #1e3a5c;
+  --sidebar-active: #2a4a70;
+  --card: #FBF8F2;
+  --text: #1c2b3a;
+  --text-muted: #6f7680;
+  --border: #d7d5d0;
+  --radius: 14px;
+  --shadow: 0 1px 6px rgba(22,48,79,0.06), 0 2px 14px rgba(22,48,79,0.05);
+  --shadow-md: 0 4px 24px rgba(22,48,79,0.10);
   --sidebar-width: 240px;
   --topbar-height: 60px;
   -webkit-font-smoothing: antialiased;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; font-size: 14px; letter-spacing: -0.01em; }
+body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; font-size: 14px; letter-spacing: -0.01em; }
+h1,h2,h3,.logo-text strong,.topbar-title { font-family: 'Lora', serif; }
 
 /* SIDEBAR */
 #sidebar {
   width: var(--sidebar-width);
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
+  background: linear-gradient(180deg, #16304f 0%, #1e3a5c 60%, #16304f 100%);
   display: flex; flex-direction: column;
   height: 100vh; overflow-y: auto;
   flex-shrink: 0; z-index: 100;
@@ -54,7 +55,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
   border-bottom: 1px solid rgba(96,165,250,0.10);
 }
 .logo-icon {
-  width: 38px; height: 38px; background: linear-gradient(135deg, #3b82f6, #2563eb);
+  width: 38px; height: 38px; background: linear-gradient(135deg, #7093c0, #3D5C82);
   border-radius: 10px; display: flex; align-items: center; justify-content: center;
   font-size: 18px; flex-shrink: 0; box-shadow: 0 4px 16px rgba(37,99,235,0.45);
 }
@@ -72,7 +73,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
   text-decoration: none; font-size: 13.5px;
 }
 .nav-item:hover { background: rgba(96,165,250,0.10); color: white; }
-.nav-item.active { background: linear-gradient(90deg, rgba(37,99,235,0.35) 0%, rgba(37,99,235,0.12) 100%); color: #93c5fd; border-left: 3px solid #60a5fa; padding-left: 7px; }
+.nav-item.active { background: linear-gradient(90deg, rgba(37,99,235,0.35) 0%, rgba(37,99,235,0.12) 100%); color: #a9c2dc; border-left: 3px solid #8fa9c9; padding-left: 7px; }
 .nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
 .nav-badge { margin-left: auto; background: var(--danger); color: white; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; }
 .nav-badge.green { background: var(--success); }
@@ -91,12 +92,12 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
   border-bottom: 2px solid var(--border);
   display: flex; align-items: center; padding: 0 24px; gap: 16px;
   flex-shrink: 0;
-  box-shadow: 0 1px 0 rgba(15,23,42,0.06);
+  box-shadow: 0 1px 0 rgba(22,48,79,0.06);
 }
 .topbar-title { font-size: 17px; font-weight: 700; flex: 1; letter-spacing: -0.02em; color: var(--text); }
 .topbar-search {
   display: flex; align-items: center; gap: 8px;
-  background: #f8fafc; border: 1.5px solid #e2e8f0;
+  background: #f7f2e3; border: 1.5px solid #d7d5d0;
   border-radius: 8px; padding: 7px 12px; width: 240px;
   transition: border-color 0.15s;
 }
@@ -104,11 +105,11 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans
 .topbar-search input { border: none; background: none; outline: none; font-size: 13px; width: 100%; color: var(--text); }
 .topbar-search span { color: var(--text-muted); font-size: 14px; }
 .topbar-btn {
-  width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid #e2e8f0;
-  background: #f8fafc; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid #d7d5d0;
+  background: #f7f2e3; cursor: pointer; display: flex; align-items: center; justify-content: center;
   font-size: 16px; color: var(--text-muted); position: relative; transition: all 0.15s;
 }
-.topbar-btn:hover { background: #eff6ff; border-color: var(--primary); color: var(--primary); }
+.topbar-btn:hover { background: #e8eef5; border-color: var(--primary); color: var(--primary); }
 .notif-dot { position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; background: var(--danger); border-radius: 50%; border: 1.5px solid white; }
 
 #content { flex: 1; overflow-y: auto; padding: 24px; }
@@ -167,7 +168,7 @@ tr:hover td { background: #f8f9fa; }
 .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
 .badge-green { background: #e3fcef; color: #006644; }
 .badge-red { background: #ffebe6; color: #bf2600; }
-.badge-blue { background: #eff6ff; color: #1d4ed8; }
+.badge-blue { background: #e8eef5; color: #16304f; }
 .badge-orange { background: #fff3e0; color: #974900; }
 .badge-gray { background: #f4f5f7; color: #42526e; }
 .badge-purple { background: #f3e8ff; color: #5f01d1; }
@@ -370,7 +371,7 @@ textarea { resize: vertical; min-height: 80px; }
 .tooth-svg { transition:filter 0.12s, transform 0.12s; transform-origin:bottom center; }
 .tooth-svg:hover { transform:scale(1.08); filter:drop-shadow(0 2px 6px rgba(0,80,200,0.25)); }
 .tooth-surface { transition:opacity 0.1s, stroke 0.1s; cursor:pointer; }
-.tooth-surface:hover { stroke:#1d4ed8 !important; stroke-width:2px !important; opacity:0.82; }
+.tooth-surface:hover { stroke:#16304f !important; stroke-width:2px !important; opacity:0.82; }
 .jaw-divider { width:100%; border-top:2px dashed #c5cae9; margin:4px 0; }
 .odonto-legend { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:12px; padding:12px; background:var(--bg); border-radius:8px; }
 .legend-item { display:flex; align-items:center; gap:5px; font-size:10.5px; color:var(--text-muted); }
@@ -521,7 +522,7 @@ textarea { resize: vertical; min-height: 80px; }
   background:rgba(96,165,250,0.15);transition:width 0.2s;
 }
 .nav-item:hover::before { width:100%; }
-.nav-item.active { box-shadow:inset 3px 0 0 #60a5fa; }
+.nav-item.active { box-shadow:inset 3px 0 0 #8fa9c9; }
 
 /* Stat card number shimmer on load */
 @keyframes countUp { from{opacity:0;transform:scale(0.85);} to{opacity:1;transform:scale(1);} }
@@ -530,14 +531,14 @@ textarea { resize: vertical; min-height: 80px; }
 /* Smooth scrollbar */
 #content::-webkit-scrollbar { width:5px; }
 #content::-webkit-scrollbar-track { background:transparent; }
-#content::-webkit-scrollbar-thumb { background:#e2e8f0;border-radius:3px; }
-#content::-webkit-scrollbar-thumb:hover { background:#94a3b8; }
+#content::-webkit-scrollbar-thumb { background:#d7d5d0;border-radius:3px; }
+#content::-webkit-scrollbar-thumb:hover { background:#8b8f96; }
 
 /* Toast pro redesign */
 #toast-container { bottom:100px !important; }
 .toast {
   backdrop-filter: blur(12px) !important;
-  box-shadow: 0 8px 32px rgba(15,23,42,0.18) !important;
+  box-shadow: 0 8px 32px rgba(22,48,79,0.18) !important;
   border: 1px solid rgba(255,255,255,0.12) !important;
 }
 
@@ -571,17 +572,17 @@ input:focus, select:focus, textarea:focus {
 
 /* ── DARK MODE ─────────────────────────────────────────────── */
 body.dark-mode {
-  --bg: #0f172a;
-  --card: #1e293b;
-  --text: #e2e8f0;
-  --text-muted: #94a3b8;
+  --bg: #16304f;
+  --card: #1e3a5c;
+  --text: #d7d5d0;
+  --text-muted: #8b8f96;
   --border: #334155;
   --primary-light: #1e3a5f;
   --shadow: 0 1px 6px rgba(0,0,0,0.3), 0 2px 14px rgba(0,0,0,0.25);
 }
-body.dark-mode .topbar { background: #0f172a !important; border-color: #334155 !important; }
-body.dark-mode .card { background: #1e293b; }
-body.dark-mode input, body.dark-mode select, body.dark-mode textarea { background: #0f172a; color: #e2e8f0; border-color: #334155; }
+body.dark-mode .topbar { background: #16304f !important; border-color: #334155 !important; }
+body.dark-mode .card { background: #1e3a5c; }
+body.dark-mode input, body.dark-mode select, body.dark-mode textarea { background: #16304f; color: #d7d5d0; border-color: #334155; }
 
 /* ── SKELETON LOADER ───────────────────────────── */
 @keyframes skeletonShimmer {
@@ -589,7 +590,7 @@ body.dark-mode input, body.dark-mode select, body.dark-mode textarea { backgroun
   100% { background-position: 400px 0; }
 }
 .skeleton {
-  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background: linear-gradient(90deg, #d7d5d0 25%, #eceef1 50%, #d7d5d0 75%);
   background-size: 800px 100%;
   animation: skeletonShimmer 1.4s ease-in-out infinite;
   border-radius: 6px;
@@ -682,7 +683,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; flex-shrink: 0; margin-top: 2px;
 }
-.timeline-dot.blue { background: #eff6ff; }
+.timeline-dot.blue { background: #e8eef5; }
 .timeline-dot.green { background: #f0fdf4; }
 .timeline-dot.amber { background: #fffbeb; }
 .timeline-dot.red { background: #fff1f2; }
@@ -694,23 +695,23 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
 </head>
 <body>
 <!-- ===== LANDING / LOGIN ===== -->
-<div id="auth-screen" style="position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);overflow-y:auto;">
+<div id="auth-screen" style="position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:linear-gradient(135deg,#16304f 0%,#1e3a5c 50%,#16304f 100%);overflow-y:auto;">
 
   <!-- HERO SECTION -->
   <div style="display:flex;flex:1;min-height:100vh;">
 
     <!-- LEFT: Branding + Features -->
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 64px;background:linear-gradient(135deg,#0f172a 0%,#1e293b 60%,#0f2254 100%);position:relative;overflow:hidden;">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 64px;background:linear-gradient(135deg,#16304f 0%,#1e3a5c 60%,#0f2254 100%);position:relative;overflow:hidden;">
       <!-- Decorative circles -->
       <div style="position:absolute;top:-80px;left:-80px;width:300px;height:300px;border-radius:50%;background:rgba(96,165,250,0.06);"></div>
       <div style="position:absolute;bottom:-60px;right:-60px;width:400px;height:400px;border-radius:50%;background:rgba(37,99,235,0.08);"></div>
 
       <!-- Logo -->
       <div style="display:flex;align-items:center;gap:14px;margin-bottom:48px;position:relative;">
-        <div style="width:52px;height:52px;background:linear-gradient(135deg,#60a5fa,#2563eb);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 24px rgba(37,99,235,0.40);">🦷</div>
+        <div style="width:52px;height:52px;background:linear-gradient(135deg,#8fa9c9,#3D5C82);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 24px rgba(37,99,235,0.40);">🦷</div>
         <div>
           <div style="font-size:28px;font-weight:900;color:white;letter-spacing:-0.5px;">Denti</div>
-          <div style="font-size:12px;color:#60a5fa;font-weight:600;letter-spacing:2px;text-transform:uppercase;">Software Dental Inteligente</div>
+          <div style="font-size:12px;color:#8fa9c9;font-weight:600;letter-spacing:2px;text-transform:uppercase;">Software Dental Inteligente</div>
         </div>
       </div>
 
@@ -718,7 +719,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
       <div style="position:relative;">
         <h1 style="font-size:44px;font-weight:900;color:white;line-height:1.1;margin-bottom:16px;">
           El software dental<br>
-          <span style="background:linear-gradient(135deg,#60a5fa,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">diseñado para ganar</span>
+          <span style="background:linear-gradient(135deg,#8fa9c9,#a9c2dc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">diseñado para ganar</span>
         </h1>
         <p style="font-size:17px;color:rgba(255,255,255,0.65);line-height:1.6;max-width:460px;margin-bottom:40px;">
           Todo lo que necesitas para gestionar tu clínica dental: pacientes, citas, facturación, RIPS para SISPRO y un asistente de IA clínico — en una sola plataforma.
@@ -727,7 +728,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         <!-- Stats -->
         <div style="display:flex;gap:32px;margin-bottom:48px;">
           <div>
-            <div style="font-size:28px;font-weight:900;color:#00c7b1;">+2,400</div>
+            <div style="font-size:28px;font-weight:900;color:#7093c0;">+2,400</div>
             <div style="font-size:12px;color:rgba(255,255,255,0.5);">clínicas activas</div>
           </div>
           <div style="width:1px;background:rgba(255,255,255,0.1);"></div>
@@ -744,7 +745,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
 
         <!-- Feature pills -->
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;">
-          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:8px 16px;font-size:12px;color:white;font-weight:600;display:flex;align-items:center;gap:6px;"><span style="color:#00c7b1;">🤖</span> Asistente IA clínico</div>
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:8px 16px;font-size:12px;color:white;font-weight:600;display:flex;align-items:center;gap:6px;"><span style="color:#7093c0;">🤖</span> Asistente IA clínico</div>
           <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:8px 16px;font-size:12px;color:white;font-weight:600;display:flex;align-items:center;gap:6px;"><span style="color:#4db8ff;">🦷</span> Odontograma interactivo</div>
           <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:8px 16px;font-size:12px;color:white;font-weight:600;display:flex;align-items:center;gap:6px;"><span style="color:#a78bfa;">📤</span> RIPS / SISPRO</div>
           <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:8px 16px;font-size:12px;color:white;font-weight:600;display:flex;align-items:center;gap:6px;"><span style="color:#f6ad55;">📱</span> Portal del paciente</div>
@@ -756,7 +757,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 20px;max-width:460px;">
           <div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;font-style:italic;">"Con Denti redujimos el tiempo administrativo un 60% y nuestros ingresos crecieron un 40% en el primer trimestre. El módulo de RIPS me ahorró horas cada mes."</div>
           <div style="margin-top:10px;display:flex;align-items:center;gap:10px;">
-            <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#60a5fa,#2563eb);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:white;">DR</div>
+            <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#8fa9c9,#3D5C82);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:white;">DR</div>
             <div><div style="font-size:12px;font-weight:700;color:white;">Dr. Andrés Rueda</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Clínica OralVida, Medellín</div></div>
           </div>
         </div>
@@ -767,8 +768,8 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
     <div style="width:460px;flex-shrink:0;background:white;display:flex;flex-direction:column;justify-content:center;padding:56px 48px;">
       <div id="auth-tab-login" style="display:block;">
         <div style="margin-bottom:32px;">
-          <h2 style="font-size:26px;font-weight:800;color:#0a1628;margin-bottom:6px;">Bienvenido de nuevo</h2>
-          <p style="font-size:14px;color:#6b778c;">Ingresa a tu cuenta de Denti</p>
+          <h2 style="font-size:26px;font-weight:800;color:#16304f;margin-bottom:6px;">Bienvenido de nuevo</h2>
+          <p style="font-size:14px;color:#6f7680;">Ingresa a tu cuenta de Denti</p>
         </div>
 
         <div class="form-group">
@@ -790,19 +791,19 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         <div id="login-error" style="display:none;" class="alert alert-warning">⚠️ Correo o contraseña incorrectos</div>
 
         <div style="text-align:center;margin-bottom:16px;">
-          <a href="#" onclick="fillDemoLogin();return false;" style="font-size:12px;color:#6b778c;text-decoration:underline;">Usar cuenta demo</a>
+          <a href="#" onclick="fillDemoLogin();return false;" style="font-size:12px;color:#6f7680;text-decoration:underline;">Usar cuenta demo</a>
         </div>
 
-        <button onclick="doLogin()" style="width:100%;padding:14px;background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:16px;letter-spacing:0.3px;transition:opacity 0.15s;box-shadow:0 4px 16px rgba(37,99,235,0.35);" onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1">
+        <button onclick="doLogin()" style="width:100%;padding:14px;background:linear-gradient(135deg,#7093c0,#16304f);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:16px;letter-spacing:0.3px;transition:opacity 0.15s;box-shadow:0 4px 16px rgba(37,99,235,0.35);" onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1">
           Iniciar sesión →
         </button>
 
-        <div style="text-align:center;font-size:13px;color:#6b778c;margin-bottom:24px;">
+        <div style="text-align:center;font-size:13px;color:#6f7680;margin-bottom:24px;">
           ¿No tienes cuenta? <a href="#" onclick="showRegister()" style="color:var(--primary);font-weight:700;">Regístrate gratis 14 días</a>
         </div>
 
         <div style="border-top:1px solid var(--border);padding-top:20px;">
-          <div style="font-size:11px;text-align:center;color:#6b778c;margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">O continúa con</div>
+          <div style="font-size:11px;text-align:center;color:#6f7680;margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">O continúa con</div>
           <div style="display:flex;gap:10px;">
             <button onclick="doLogin()" style="flex:1;padding:10px;border:1.5px solid var(--border);background:white;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">🏥 Microsoft</button>
             <button onclick="doLogin()" style="flex:1;padding:10px;border:1.5px solid var(--border);background:white;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">🔵 Google</button>
@@ -814,8 +815,8 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
       <div id="auth-tab-register" style="display:none;">
         <div style="margin-bottom:24px;">
           <button onclick="showLogin()" style="background:none;border:none;cursor:pointer;color:var(--primary);font-size:13px;font-weight:600;margin-bottom:12px;">← Volver</button>
-          <h2 style="font-size:24px;font-weight:800;color:#0a1628;margin-bottom:4px;">Crear cuenta</h2>
-          <p style="font-size:13px;color:#6b778c;">14 días gratis · Sin tarjeta de crédito</p>
+          <h2 style="font-size:24px;font-weight:800;color:#16304f;margin-bottom:4px;">Crear cuenta</h2>
+          <p style="font-size:13px;color:#6f7680;">14 días gratis · Sin tarjeta de crédito</p>
         </div>
         <div class="form-row">
           <div class="form-group"><label>Nombre</label><input type="text" id="reg-nombre" placeholder="Juan"></div>
@@ -836,20 +837,20 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
           <div class="form-group"><label>Contraseña</label><input type="password" id="reg-pass" placeholder="Mínimo 8 caracteres"></div>
           <div class="form-group"><label>Confirmar</label><input type="password" id="reg-pass2" placeholder="Repetir contraseña"></div>
         </div>
-        <div style="background:#eff6ff;border-radius:8px;padding:12px;font-size:12px;color:#1d4ed8;margin-bottom:16px;">
+        <div style="background:#e8eef5;border-radius:8px;padding:12px;font-size:12px;color:#16304f;margin-bottom:16px;">
           ✓ 14 días gratis &nbsp;·&nbsp; ✓ Sin tarjeta &nbsp;·&nbsp; ✓ Cancela cuando quieras
         </div>
-        <button onclick="doRegister()" style="width:100%;padding:13px;background:linear-gradient(135deg,#60a5fa,#2563eb);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 14px rgba(37,99,235,0.30);">
+        <button onclick="doRegister()" style="width:100%;padding:13px;background:linear-gradient(135deg,#8fa9c9,#3D5C82);color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 14px rgba(37,99,235,0.30);">
           Crear cuenta gratis →
         </button>
-        <div style="background:#f7fafc;border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:12px;">
-          <label style="text-transform:none;font-size:12px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;margin:0;color:#4a5568;font-weight:400;">
+        <div style="background:#eef2f6;border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:12px;">
+          <label style="text-transform:none;font-size:12px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;margin:0;color:#33455c;font-weight:400;">
             <input type="checkbox" id="reg-terms" style="width:16px;height:16px;margin-top:1px;flex-shrink:0;">
             <span>Acepto los <a href="#" onclick="showLegal('terminos')" style="color:var(--primary);font-weight:600;">Términos y Condiciones</a> y la <a href="#" onclick="showLegal('privacidad')" style="color:var(--primary);font-weight:600;">Política de Privacidad y Protección de Datos Personales</a> conforme a la Ley 1581 de 2012 (Habeas Data).</span>
           </label>
         </div>
-        <div style="background:#f7fafc;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;">
-          <label style="text-transform:none;font-size:12px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;margin:0;color:#4a5568;font-weight:400;">
+        <div style="background:#eef2f6;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;">
+          <label style="text-transform:none;font-size:12px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;margin:0;color:#33455c;font-weight:400;">
             <input type="checkbox" id="reg-marketing" style="width:16px;height:16px;margin-top:1px;flex-shrink:0;">
             <span>Autorizo el envío de comunicaciones comerciales, novedades y actualizaciones del producto (opcional).</span>
           </label>
@@ -862,20 +863,20 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
   <div id="section-precios" style="background:#f0f4ff;padding:80px 40px;">
     <div style="max-width:1100px;margin:0 auto;">
       <div style="text-align:center;margin-bottom:48px;">
-        <div style="display:inline-block;background:rgba(37,99,235,0.10);color:#2563eb;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Planes y Precios</div>
-        <h2 style="font-size:36px;font-weight:900;color:#0a1628;margin-bottom:10px;">Empieza gratis, crece sin límites</h2>
-        <p style="font-size:16px;color:#6b778c;max-width:540px;margin:0 auto;">Sin costos ocultos. Sin letra pequeña. Cancela cuando quieras.</p>
+        <div style="display:inline-block;background:rgba(37,99,235,0.10);color:#3D5C82;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Planes y Precios</div>
+        <h2 style="font-size:36px;font-weight:900;color:#16304f;margin-bottom:10px;">Empieza gratis, crece sin límites</h2>
+        <p style="font-size:16px;color:#6f7680;max-width:540px;margin:0 auto;">Sin costos ocultos. Sin letra pequeña. Cancela cuando quieras.</p>
         <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;">
-          <span style="font-size:13px;color:#6b778c;">Mensual</span>
-          <div style="background:#0052cc;padding:3px 8px;border-radius:12px;font-size:11px;color:white;font-weight:700;">AHORRA 2 MESES → Anual</div>
+          <span style="font-size:13px;color:#6f7680;">Mensual</span>
+          <div style="background:#3D5C82;padding:3px 8px;border-radius:12px;font-size:11px;color:white;font-weight:700;">AHORRA 2 MESES → Anual</div>
         </div>
       </div>
       <div class="pricing-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start;">
         <!-- Starter -->
-        <div style="background:white;border-radius:16px;padding:32px;box-shadow:0 4px 20px rgba(0,0,0,0.07);border:2px solid #e2e8f0;">
-          <div style="font-size:13px;font-weight:700;color:#6b778c;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Básico</div>
-          <div style="font-size:36px;font-weight:900;color:#0a1628;line-height:1;">$89.000<span style="font-size:14px;color:#6b778c;font-weight:400;">/mes</span></div>
-          <div style="font-size:11px;color:#6b778c;margin-bottom:24px;">COP · ~$22 USD</div>
+        <div style="background:white;border-radius:16px;padding:32px;box-shadow:0 4px 20px rgba(0,0,0,0.07);border:2px solid #d7d5d0;">
+          <div style="font-size:13px;font-weight:700;color:#6f7680;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Básico</div>
+          <div style="font-size:36px;font-weight:900;color:#16304f;line-height:1;">$89.000<span style="font-size:14px;color:#6f7680;font-weight:400;">/mes</span></div>
+          <div style="font-size:11px;color:#6f7680;margin-bottom:24px;">COP · ~$22 USD</div>
           <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;font-size:13px;">
             <div style="display:flex;gap:8px;"><span style="color:#36b37e;font-weight:700;">✓</span> 1 odontólogo</div>
             <div style="display:flex;gap:8px;"><span style="color:#36b37e;font-weight:700;">✓</span> Hasta 200 pacientes</div>
@@ -886,31 +887,31 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
             <div style="display:flex;gap:8px;"><span style="color:#bbb;">✗</span> <span style="color:#bbb;">Asistente IA</span></div>
             <div style="display:flex;gap:8px;"><span style="color:#bbb;">✗</span> <span style="color:#bbb;">Portal del paciente</span></div>
           </div>
-          <button onclick="showRegister()" style="width:100%;padding:12px;border:2px solid #0052cc;background:white;color:#0052cc;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">Empezar gratis →</button>
+          <button onclick="showRegister()" style="width:100%;padding:12px;border:2px solid #3D5C82;background:white;color:#3D5C82;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">Empezar gratis →</button>
         </div>
         <!-- Pro -->
-        <div style="background:linear-gradient(135deg,#0052cc,#0a2a5e);border-radius:16px;padding:32px;box-shadow:0 12px 40px rgba(0,82,204,0.3);position:relative;transform:scale(1.04);">
-          <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#00c7b1;color:white;padding:5px 16px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap;">⭐ MÁS POPULAR</div>
+        <div style="background:linear-gradient(135deg,#3D5C82,#1e3a5c);border-radius:16px;padding:32px;box-shadow:0 12px 40px rgba(0,82,204,0.3);position:relative;transform:scale(1.04);">
+          <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#7093c0;color:white;padding:5px 16px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap;">⭐ MÁS POPULAR</div>
           <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Pro</div>
           <div style="font-size:36px;font-weight:900;color:white;line-height:1;">$189.000<span style="font-size:14px;color:rgba(255,255,255,0.6);font-weight:400;">/mes</span></div>
           <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:24px;">COP · ~$47 USD</div>
           <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;font-size:13px;color:rgba(255,255,255,0.85);">
-            <div style="display:flex;gap:8px;"><span style="color:#00c7b1;font-weight:700;">✓</span> Hasta 3 odontólogos</div>
-            <div style="display:flex;gap:8px;"><span style="color:#00c7b1;font-weight:700;">✓</span> Pacientes ilimitados</div>
-            <div style="display:flex;gap:8px;"><span style="color:#00c7b1;font-weight:700;">✓</span> RIPS / SISPRO completo</div>
-            <div style="display:flex;gap:8px;"><span style="color:#00c7b1;font-weight:700;">✓</span> Asistente IA clínico</div>
-            <div style="display:flex;gap:8px;"><span style="color:#00c7b1;font-weight:700;">✓</span> Portal del paciente</div>
-            <div style="display:flex;gap:8px;"><span style="color:#00c7b1;font-weight:700;">✓</span> WhatsApp automático</div>
-            <div style="display:flex;gap:8px;"><span style="color:#00c7b1;font-weight:700;">✓</span> Facturación DIAN</div>
-            <div style="display:flex;gap:8px;"><span style="color:#00c7b1;font-weight:700;">✓</span> Soporte prioritario</div>
+            <div style="display:flex;gap:8px;"><span style="color:#7093c0;font-weight:700;">✓</span> Hasta 3 odontólogos</div>
+            <div style="display:flex;gap:8px;"><span style="color:#7093c0;font-weight:700;">✓</span> Pacientes ilimitados</div>
+            <div style="display:flex;gap:8px;"><span style="color:#7093c0;font-weight:700;">✓</span> RIPS / SISPRO completo</div>
+            <div style="display:flex;gap:8px;"><span style="color:#7093c0;font-weight:700;">✓</span> Asistente IA clínico</div>
+            <div style="display:flex;gap:8px;"><span style="color:#7093c0;font-weight:700;">✓</span> Portal del paciente</div>
+            <div style="display:flex;gap:8px;"><span style="color:#7093c0;font-weight:700;">✓</span> WhatsApp automático</div>
+            <div style="display:flex;gap:8px;"><span style="color:#7093c0;font-weight:700;">✓</span> Facturación DIAN</div>
+            <div style="display:flex;gap:8px;"><span style="color:#7093c0;font-weight:700;">✓</span> Soporte prioritario</div>
           </div>
-          <button onclick="showRegister()" style="width:100%;padding:12px;border:none;background:white;color:#0052cc;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">Empezar gratis 14 días →</button>
+          <button onclick="showRegister()" style="width:100%;padding:12px;border:none;background:white;color:#3D5C82;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">Empezar gratis 14 días →</button>
         </div>
         <!-- Clínica -->
-        <div style="background:white;border-radius:16px;padding:32px;box-shadow:0 4px 20px rgba(0,0,0,0.07);border:2px solid #e2e8f0;">
-          <div style="font-size:13px;font-weight:700;color:#6b778c;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Clínica</div>
-          <div style="font-size:36px;font-weight:900;color:#0a1628;line-height:1;">$349.000<span style="font-size:14px;color:#6b778c;font-weight:400;">/mes</span></div>
-          <div style="font-size:11px;color:#6b778c;margin-bottom:24px;">COP · ~$87 USD</div>
+        <div style="background:white;border-radius:16px;padding:32px;box-shadow:0 4px 20px rgba(0,0,0,0.07);border:2px solid #d7d5d0;">
+          <div style="font-size:13px;font-weight:700;color:#6f7680;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Clínica</div>
+          <div style="font-size:36px;font-weight:900;color:#16304f;line-height:1;">$349.000<span style="font-size:14px;color:#6f7680;font-weight:400;">/mes</span></div>
+          <div style="font-size:11px;color:#6f7680;margin-bottom:24px;">COP · ~$87 USD</div>
           <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;font-size:13px;">
             <div style="display:flex;gap:8px;"><span style="color:#36b37e;font-weight:700;">✓</span> Odontólogos ilimitados</div>
             <div style="display:flex;gap:8px;"><span style="color:#36b37e;font-weight:700;">✓</span> Multi-sede / sucursales</div>
@@ -921,21 +922,21 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
             <div style="display:flex;gap:8px;"><span style="color:#36b37e;font-weight:700;">✓</span> Onboarding personalizado</div>
             <div style="display:flex;gap:8px;"><span style="color:#36b37e;font-weight:700;">✓</span> Factura electrónica DIAN</div>
           </div>
-          <button onclick="openDemoModal()" style="width:100%;padding:12px;border:2px solid #0052cc;background:white;color:#0052cc;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">Agendar demo →</button>
+          <button onclick="openDemoModal()" style="width:100%;padding:12px;border:2px solid #3D5C82;background:white;color:#3D5C82;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">Agendar demo →</button>
         </div>
       </div>
-      <p style="text-align:center;margin-top:24px;font-size:13px;color:#6b778c;">Todos los planes incluyen SSL, backups automáticos, actualizaciones y cumplimiento HABEAS DATA (Ley 1581/2012).</p>
+      <p style="text-align:center;margin-top:24px;font-size:13px;color:#6f7680;">Todos los planes incluyen SSL, backups automáticos, actualizaciones y cumplimiento HABEAS DATA (Ley 1581/2012).</p>
     </div>
   </div>
 
   <!-- ===== DEMO SECTION ===== -->
-  <div style="background:#0a1628;padding:60px 40px;text-align:center;">
+  <div style="background:#16304f;padding:60px 40px;text-align:center;">
     <div style="max-width:680px;margin:0 auto;">
       <div style="font-size:40px;margin-bottom:16px;">🎯</div>
       <h2 style="font-size:32px;font-weight:900;color:white;margin-bottom:12px;">¿Quieres ver Denti en acción?</h2>
       <p style="font-size:16px;color:rgba(255,255,255,0.6);margin-bottom:32px;">Agenda una demo personalizada de 30 minutos con uno de nuestros especialistas. Te mostramos exactamente cómo funcionaría en tu clínica.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <button onclick="openDemoModal()" style="padding:16px 36px;background:linear-gradient(135deg,#00c7b1,#0052cc);border:none;color:white;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(0,199,177,0.3);">📅 Agendar demo gratis</button>
+        <button onclick="openDemoModal()" style="padding:16px 36px;background:linear-gradient(135deg,#7093c0,#3D5C82);border:none;color:white;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(0,199,177,0.3);">📅 Agendar demo gratis</button>
         <a href="https://wa.me/576012345678?text=Hola,%20quiero%20ver%20una%20demo%20de%20Denti" target="_blank" style="padding:16px 28px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.2);color:white;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">💬 WhatsApp</a>
       </div>
     </div>
@@ -945,34 +946,34 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
   <div id="section-contacto" style="background:white;padding:72px 40px;">
     <div style="max-width:1000px;margin:0 auto;">
       <div style="text-align:center;margin-bottom:48px;">
-        <div style="display:inline-block;background:rgba(0,199,177,0.1);color:#009e8d;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Contáctanos</div>
-        <h2 style="font-size:32px;font-weight:900;color:#0a1628;">Estamos para ayudarte</h2>
-        <p style="color:#6b778c;margin-top:8px;">Nuestro equipo responde en menos de 2 horas en horario hábil.</p>
+        <div style="display:inline-block;background:rgba(0,199,177,0.1);color:#2f4d70;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Contáctanos</div>
+        <h2 style="font-size:32px;font-weight:900;color:#16304f;">Estamos para ayudarte</h2>
+        <p style="color:#6f7680;margin-top:8px;">Nuestro equipo responde en menos de 2 horas en horario hábil.</p>
       </div>
       <div class="contact-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
-        <div style="text-align:center;padding:28px 20px;border-radius:14px;background:#f7fafc;border:1.5px solid #e2e8f0;">
+        <div style="text-align:center;padding:28px 20px;border-radius:14px;background:#eef2f6;border:1.5px solid #d7d5d0;">
           <div style="font-size:36px;margin-bottom:12px;">💬</div>
           <div style="font-weight:800;font-size:14px;margin-bottom:6px;">WhatsApp</div>
-          <div style="font-size:13px;color:#6b778c;margin-bottom:14px;">Respuesta en minutos</div>
+          <div style="font-size:13px;color:#6f7680;margin-bottom:14px;">Respuesta en minutos</div>
           <a href="https://wa.me/576012345678" target="_blank" style="display:inline-block;background:#25d366;color:white;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;">+57 601 234 5678</a>
         </div>
-        <div style="text-align:center;padding:28px 20px;border-radius:14px;background:#f7fafc;border:1.5px solid #e2e8f0;">
+        <div style="text-align:center;padding:28px 20px;border-radius:14px;background:#eef2f6;border:1.5px solid #d7d5d0;">
           <div style="font-size:36px;margin-bottom:12px;">✉️</div>
           <div style="font-weight:800;font-size:14px;margin-bottom:6px;">Email</div>
-          <div style="font-size:13px;color:#6b778c;margin-bottom:14px;">Respuesta en &lt; 2 horas</div>
-          <a href="mailto:hola@soydenti.com" style="display:inline-block;background:#0052cc;color:white;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;">hola@soydenti.com</a>
+          <div style="font-size:13px;color:#6f7680;margin-bottom:14px;">Respuesta en &lt; 2 horas</div>
+          <a href="mailto:hola@soydenti.com" style="display:inline-block;background:#3D5C82;color:white;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;">hola@soydenti.com</a>
         </div>
-        <div style="text-align:center;padding:28px 20px;border-radius:14px;background:#f7fafc;border:1.5px solid #e2e8f0;">
+        <div style="text-align:center;padding:28px 20px;border-radius:14px;background:#eef2f6;border:1.5px solid #d7d5d0;">
           <div style="font-size:36px;margin-bottom:12px;">📞</div>
           <div style="font-weight:800;font-size:14px;margin-bottom:6px;">Teléfono</div>
-          <div style="font-size:13px;color:#6b778c;margin-bottom:14px;">Lun–Vie 8am–6pm<br>Sáb 9am–1pm</div>
-          <div style="font-size:14px;font-weight:700;color:#0a1628;">+57 (601) 234-5678</div>
+          <div style="font-size:13px;color:#6f7680;margin-bottom:14px;">Lun–Vie 8am–6pm<br>Sáb 9am–1pm</div>
+          <div style="font-size:14px;font-weight:700;color:#16304f;">+57 (601) 234-5678</div>
         </div>
-        <div style="text-align:center;padding:28px 20px;border-radius:14px;background:#f7fafc;border:1.5px solid #e2e8f0;">
+        <div style="text-align:center;padding:28px 20px;border-radius:14px;background:#eef2f6;border:1.5px solid #d7d5d0;">
           <div style="font-size:36px;margin-bottom:12px;">📅</div>
           <div style="font-weight:800;font-size:14px;margin-bottom:6px;">Demo</div>
-          <div style="font-size:13px;color:#6b778c;margin-bottom:14px;">30 min · Sin compromiso</div>
-          <button onclick="openDemoModal()" style="background:#0052cc;color:white;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">Agendar ahora</button>
+          <div style="font-size:13px;color:#6f7680;margin-bottom:14px;">30 min · Sin compromiso</div>
+          <button onclick="openDemoModal()" style="background:#3D5C82;color:white;border:none;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">Agendar ahora</button>
         </div>
       </div>
     </div>
@@ -982,49 +983,49 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
   <div id="section-faq" style="background:white;padding:72px 40px;">
     <div style="max-width:1000px;margin:0 auto;">
       <div style="text-align:center;margin-bottom:48px;">
-        <div style="font-size:14px;font-weight:700;color:#6b778c;margin-bottom:8px;">¿Tienes dudas?</div>
-        <h2 style="font-size:36px;font-weight:900;color:#0a1628;">Estamos aquí para ayudarte</h2>
+        <div style="font-size:14px;font-weight:700;color:#6f7680;margin-bottom:8px;">¿Tienes dudas?</div>
+        <h2 style="font-size:36px;font-weight:900;color:#16304f;">Estamos aquí para ayudarte</h2>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 32px;" id="faq-grid"></div>
       <div style="text-align:center;margin-top:36px;">
-        <p style="color:#6b778c;font-size:14px;margin-bottom:16px;">¿No encontraste lo que buscabas?</p>
-        <button onclick="openChatBot()" style="padding:12px 28px;background:#0052cc;color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-right:10px;">💬 Chatea con nosotros</button>
-        <button onclick="openDemoModal()" style="padding:12px 28px;background:white;color:#0052cc;border:2px solid #0052cc;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">📅 Agenda una demo</button>
+        <p style="color:#6f7680;font-size:14px;margin-bottom:16px;">¿No encontraste lo que buscabas?</p>
+        <button onclick="openChatBot()" style="padding:12px 28px;background:#3D5C82;color:white;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-right:10px;">💬 Chatea con nosotros</button>
+        <button onclick="openDemoModal()" style="padding:12px 28px;background:white;color:#3D5C82;border:2px solid #3D5C82;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;">📅 Agenda una demo</button>
       </div>
     </div>
   </div>
 
   <!-- ===== LEGAL ===== -->
-  <div id="section-legal" style="background:#f7fafc;padding:64px 40px;border-top:1px solid #e2e8f0;">
+  <div id="section-legal" style="background:#eef2f6;padding:64px 40px;border-top:1px solid #d7d5d0;">
     <div style="max-width:1000px;margin:0 auto;">
       <div style="text-align:center;margin-bottom:40px;">
-        <div style="display:inline-block;background:rgba(0,0,0,0.05);color:#4a5568;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Marco Legal</div>
-        <h2 style="font-size:28px;font-weight:900;color:#0a1628;">Tu información está protegida</h2>
-        <p style="color:#6b778c;margin-top:8px;max-width:580px;margin-inline:auto;">Cumplimos con toda la normativa colombiana e internacional de protección de datos personales y seguridad de la información.</p>
+        <div style="display:inline-block;background:rgba(0,0,0,0.05);color:#33455c;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Marco Legal</div>
+        <h2 style="font-size:28px;font-weight:900;color:#16304f;">Tu información está protegida</h2>
+        <p style="color:#6f7680;margin-top:8px;max-width:580px;margin-inline:auto;">Cumplimos con toda la normativa colombiana e internacional de protección de datos personales y seguridad de la información.</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px;">
-        <div style="background:white;border-radius:12px;padding:24px;border:1.5px solid #e2e8f0;cursor:pointer;" onclick="showLegal('habeasdata')">
+        <div style="background:white;border-radius:12px;padding:24px;border:1.5px solid #d7d5d0;cursor:pointer;" onclick="showLegal('habeasdata')">
           <div style="font-size:28px;margin-bottom:10px;">🔒</div>
-          <div style="font-weight:800;font-size:14px;color:#0a1628;margin-bottom:6px;">Habeas Data</div>
-          <div style="font-size:12px;color:#6b778c;line-height:1.5;">Ley 1581 de 2012 y Decreto 1377 de 2013. Política de Protección de Datos Personales.</div>
-          <div style="color:#0052cc;font-size:12px;font-weight:700;margin-top:10px;">Ver política →</div>
+          <div style="font-weight:800;font-size:14px;color:#16304f;margin-bottom:6px;">Habeas Data</div>
+          <div style="font-size:12px;color:#6f7680;line-height:1.5;">Ley 1581 de 2012 y Decreto 1377 de 2013. Política de Protección de Datos Personales.</div>
+          <div style="color:#3D5C82;font-size:12px;font-weight:700;margin-top:10px;">Ver política →</div>
         </div>
-        <div style="background:white;border-radius:12px;padding:24px;border:1.5px solid #e2e8f0;cursor:pointer;" onclick="showLegal('terminos')">
+        <div style="background:white;border-radius:12px;padding:24px;border:1.5px solid #d7d5d0;cursor:pointer;" onclick="showLegal('terminos')">
           <div style="font-size:28px;margin-bottom:10px;">📋</div>
-          <div style="font-weight:800;font-size:14px;color:#0a1628;margin-bottom:6px;">Términos y Condiciones</div>
-          <div style="font-size:12px;color:#6b778c;line-height:1.5;">Condiciones de uso del software, responsabilidades, SLA y acuerdos de servicio.</div>
-          <div style="color:#0052cc;font-size:12px;font-weight:700;margin-top:10px;">Ver términos →</div>
+          <div style="font-weight:800;font-size:14px;color:#16304f;margin-bottom:6px;">Términos y Condiciones</div>
+          <div style="font-size:12px;color:#6f7680;line-height:1.5;">Condiciones de uso del software, responsabilidades, SLA y acuerdos de servicio.</div>
+          <div style="color:#3D5C82;font-size:12px;font-weight:700;margin-top:10px;">Ver términos →</div>
         </div>
-        <div style="background:white;border-radius:12px;padding:24px;border:1.5px solid #e2e8f0;cursor:pointer;" onclick="showLegal('privacidad')">
+        <div style="background:white;border-radius:12px;padding:24px;border:1.5px solid #d7d5d0;cursor:pointer;" onclick="showLegal('privacidad')">
           <div style="font-size:28px;margin-bottom:10px;">🛡️</div>
-          <div style="font-weight:800;font-size:14px;color:#0a1628;margin-bottom:6px;">Política de Privacidad</div>
-          <div style="font-size:12px;color:#6b778c;line-height:1.5;">Qué datos recopilamos, cómo los usamos y tus derechos como titular de los datos.</div>
-          <div style="color:#0052cc;font-size:12px;font-weight:700;margin-top:10px;">Ver política →</div>
+          <div style="font-weight:800;font-size:14px;color:#16304f;margin-bottom:6px;">Política de Privacidad</div>
+          <div style="font-size:12px;color:#6f7680;line-height:1.5;">Qué datos recopilamos, cómo los usamos y tus derechos como titular de los datos.</div>
+          <div style="color:#3D5C82;font-size:12px;font-weight:700;margin-top:10px;">Ver política →</div>
         </div>
       </div>
       <div style="background:#e6f0ff;border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;">
         <div style="font-size:32px;flex-shrink:0;">🇨🇴</div>
-        <div style="font-size:13px;color:#0a1628;line-height:1.6;">
+        <div style="font-size:13px;color:#16304f;line-height:1.6;">
           <strong>Cumplimiento normativo en Colombia:</strong> Denti cumple con la Ley 1581/2012 (Habeas Data), Ley 1712/2014 (Transparencia), Ley 23/1981 (Ética médica), Resolución 8430/1993 (Investigación en salud), CIRCULAR EXTERNA 005/2017 de la Superintendencia de Salud, y estándares ISO 27001 de seguridad de la información.
           Sus datos clínicos se almacenan en servidores en Colombia con cifrado AES-256.
         </div>
@@ -1033,10 +1034,10 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
   </div>
 
   <!-- ===== FOOTER ===== -->
-  <div style="background:#0a1628;padding:32px 40px;">
+  <div style="background:#16304f;padding:32px 40px;">
     <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;">
       <div style="display:flex;align-items:center;gap:10px;">
-        <div style="width:32px;height:32px;background:linear-gradient(135deg,#00c7b1,#0052cc);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;">🦷</div>
+        <div style="width:32px;height:32px;background:linear-gradient(135deg,#7093c0,#3D5C82);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;">🦷</div>
         <div style="color:white;font-weight:800;font-size:15px;">Denti</div>
       </div>
       <div style="display:flex;gap:20px;flex-wrap:wrap;">
@@ -1058,7 +1059,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
       <button class="modal-close" onclick="closeModal('modal-demo')">✕</button>
     </div>
     <div class="modal-body">
-      <div style="background:linear-gradient(135deg,#0052cc,#0a2a5e);border-radius:10px;padding:16px;margin-bottom:20px;color:white;font-size:13px;line-height:1.5;">
+      <div style="background:linear-gradient(135deg,#3D5C82,#1e3a5c);border-radius:10px;padding:16px;margin-bottom:20px;color:white;font-size:13px;line-height:1.5;">
         🎯 En 30 minutos te mostramos el odontograma clínico, generación de RIPS, asistente IA, portal del paciente y todo lo que diferencia a Denti de la competencia.
       </div>
       <div class="form-row">
@@ -1104,7 +1105,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
       <h3 id="legal-title">Política Legal</h3>
       <button class="modal-close" onclick="closeModal('modal-legal')">✕</button>
     </div>
-    <div class="modal-body" id="legal-content" style="max-height:60vh;overflow-y:auto;font-size:13px;line-height:1.7;color:#4a5568;"></div>
+    <div class="modal-body" id="legal-content" style="max-height:60vh;overflow-y:auto;font-size:13px;line-height:1.7;color:#33455c;"></div>
     <div class="modal-footer">
       <button class="btn btn-primary" onclick="closeModal('modal-legal')">Entendido</button>
     </div>
@@ -1226,7 +1227,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
     <!-- ===== DASHBOARD ===== -->
     <div id="page-dashboard" class="page active">
       <!-- HERO BANNER -->
-      <div style="background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 60%,#1e40af 100%);border-radius:16px;padding:24px 28px;margin-bottom:20px;position:relative;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,#16304f 0%,#2a4a70 60%,#1e40af 100%);border-radius:16px;padding:24px 28px;margin-bottom:20px;position:relative;overflow:hidden;">
         <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:rgba(96,165,250,0.08);"></div>
         <div style="position:absolute;bottom:-30px;right:120px;width:140px;height:140px;border-radius:50%;background:rgba(37,99,235,0.12);"></div>
         <div style="display:flex;justify-content:space-between;align-items:center;position:relative;">
@@ -1236,7 +1237,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
           </div>
           <div style="display:flex;gap:8px;">
             <button class="btn btn-sm" onclick="openModal('modal-nuevo-paciente')" style="background:rgba(255,255,255,0.10);color:white;border:1.5px solid rgba(255,255,255,0.20);">+ Paciente</button>
-            <button class="btn btn-sm" onclick="openModal('modal-nueva-cita')" style="background:#2563eb;color:white;border:none;box-shadow:0 2px 10px rgba(37,99,235,0.5);">+ Cita</button>
+            <button class="btn btn-sm" onclick="openModal('modal-nueva-cita')" style="background:#3D5C82;color:white;border:none;box-shadow:0 2px 10px rgba(37,99,235,0.5);">+ Cita</button>
           </div>
         </div>
       </div>
@@ -1294,54 +1295,54 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
       <div class="grid-4" style="margin-bottom:20px;">
 
         <!-- Ingresos Hoy -->
-        <div onclick="showPage('facturacion')" style="cursor:pointer;background:white;border-radius:14px;padding:20px;border:1px solid #e2e8f0;box-shadow:0 1px 6px rgba(15,23,42,0.06);border-top:3px solid #22c55e;transition:box-shadow 0.15s;" onmouseenter="this.style.boxShadow='0 4px 20px rgba(34,197,94,0.15)'" onmouseleave="this.style.boxShadow='0 1px 6px rgba(15,23,42,0.06)'">
+        <div onclick="showPage('facturacion')" style="cursor:pointer;background:white;border-radius:14px;padding:20px;border:1px solid #d7d5d0;box-shadow:0 1px 6px rgba(22,48,79,0.06);border-top:3px solid #22c55e;transition:box-shadow 0.15s;" onmouseenter="this.style.boxShadow='0 4px 20px rgba(34,197,94,0.15)'" onmouseleave="this.style.boxShadow='0 1px 6px rgba(22,48,79,0.06)'">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-            <span style="font-size:10.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;">Ingresos Hoy</span>
+            <span style="font-size:10.5px;font-weight:700;color:#6f7680;text-transform:uppercase;letter-spacing:0.8px;">Ingresos Hoy</span>
             <div style="display:flex;align-items:center;gap:4px;background:#f0fdf4;border-radius:20px;padding:3px 8px;">
               <div style="width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse-dot 2s infinite;"></div>
               <span style="font-size:10px;font-weight:700;color:#16a34a;">LIVE</span>
             </div>
           </div>
-          <div id="dash-stat-ingresos" style="font-size:26px;font-weight:800;color:#0f172a;letter-spacing:-0.03em;margin-bottom:4px;">$0</div>
-          <div id="dash-stat-ingresos-sub" style="font-size:11.5px;color:#64748b;">Calculando...</div>
+          <div id="dash-stat-ingresos" style="font-size:26px;font-weight:800;color:#16304f;letter-spacing:-0.03em;margin-bottom:4px;">$0</div>
+          <div id="dash-stat-ingresos-sub" style="font-size:11.5px;color:#6f7680;">Calculando...</div>
           <div style="margin-top:10px;height:4px;background:#f0fdf4;border-radius:2px;overflow:hidden;"><div id="dash-progress-ingresos" style="height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:2px;transition:width 0.8s ease;"></div></div>
         </div>
 
         <!-- Citas Hoy -->
-        <div onclick="showPage('citas')" style="cursor:pointer;background:white;border-radius:14px;padding:20px;border:1px solid #e2e8f0;box-shadow:0 1px 6px rgba(15,23,42,0.06);border-top:3px solid #2563eb;transition:box-shadow 0.15s;" onmouseenter="this.style.boxShadow='0 4px 20px rgba(37,99,235,0.15)'" onmouseleave="this.style.boxShadow='0 1px 6px rgba(15,23,42,0.06)'">
+        <div onclick="showPage('citas')" style="cursor:pointer;background:white;border-radius:14px;padding:20px;border:1px solid #d7d5d0;box-shadow:0 1px 6px rgba(22,48,79,0.06);border-top:3px solid #3D5C82;transition:box-shadow 0.15s;" onmouseenter="this.style.boxShadow='0 4px 20px rgba(37,99,235,0.15)'" onmouseleave="this.style.boxShadow='0 1px 6px rgba(22,48,79,0.06)'">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-            <span style="font-size:10.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;">Citas Hoy</span>
-            <span style="background:#eff6ff;color:#1d4ed8;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;">Agenda</span>
+            <span style="font-size:10.5px;font-weight:700;color:#6f7680;text-transform:uppercase;letter-spacing:0.8px;">Citas Hoy</span>
+            <span style="background:#e8eef5;color:#16304f;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;">Agenda</span>
           </div>
           <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:4px;">
-            <span id="dash-stat-citas" style="font-size:26px;font-weight:800;color:#0f172a;letter-spacing:-0.03em;">0</span>
-            <span id="dash-stat-citas-total" style="font-size:14px;font-weight:600;color:#94a3b8;">/ 0</span>
-            <span style="font-size:11px;color:#64748b;margin-left:2px;">atendidas</span>
+            <span id="dash-stat-citas" style="font-size:26px;font-weight:800;color:#16304f;letter-spacing:-0.03em;">0</span>
+            <span id="dash-stat-citas-total" style="font-size:14px;font-weight:600;color:#8b8f96;">/ 0</span>
+            <span style="font-size:11px;color:#6f7680;margin-left:2px;">atendidas</span>
           </div>
-          <div id="dash-stat-citas-sub" style="font-size:11.5px;color:#64748b;">Sin citas hoy</div>
-          <div style="margin-top:10px;height:4px;background:#eff6ff;border-radius:2px;overflow:hidden;"><div id="dash-progress-citas" style="height:100%;width:0%;background:linear-gradient(90deg,#60a5fa,#2563eb);border-radius:2px;transition:width 0.8s ease;"></div></div>
+          <div id="dash-stat-citas-sub" style="font-size:11.5px;color:#6f7680;">Sin citas hoy</div>
+          <div style="margin-top:10px;height:4px;background:#e8eef5;border-radius:2px;overflow:hidden;"><div id="dash-progress-citas" style="height:100%;width:0%;background:linear-gradient(90deg,#8fa9c9,#3D5C82);border-radius:2px;transition:width 0.8s ease;"></div></div>
         </div>
 
         <!-- Por Cobrar -->
-        <div onclick="showPage('facturacion')" style="cursor:pointer;background:white;border-radius:14px;padding:20px;border:1px solid #e2e8f0;box-shadow:0 1px 6px rgba(15,23,42,0.06);border-top:3px solid #f59e0b;transition:box-shadow 0.15s;" onmouseenter="this.style.boxShadow='0 4px 20px rgba(245,158,11,0.15)'" onmouseleave="this.style.boxShadow='0 1px 6px rgba(15,23,42,0.06)'">
+        <div onclick="showPage('facturacion')" style="cursor:pointer;background:white;border-radius:14px;padding:20px;border:1px solid #d7d5d0;box-shadow:0 1px 6px rgba(22,48,79,0.06);border-top:3px solid #f59e0b;transition:box-shadow 0.15s;" onmouseenter="this.style.boxShadow='0 4px 20px rgba(245,158,11,0.15)'" onmouseleave="this.style.boxShadow='0 1px 6px rgba(22,48,79,0.06)'">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-            <span style="font-size:10.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;">Por Cobrar</span>
+            <span style="font-size:10.5px;font-weight:700;color:#6f7680;text-transform:uppercase;letter-spacing:0.8px;">Por Cobrar</span>
             <span style="background:#fffbeb;color:#b45309;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;">Pendiente</span>
           </div>
-          <div id="dash-stat-cobrar" style="font-size:26px;font-weight:800;color:#0f172a;letter-spacing:-0.03em;margin-bottom:4px;">$0</div>
-          <div id="dash-stat-cobrar-sub" style="font-size:11.5px;color:#64748b;">Sin facturas pendientes</div>
+          <div id="dash-stat-cobrar" style="font-size:26px;font-weight:800;color:#16304f;letter-spacing:-0.03em;margin-bottom:4px;">$0</div>
+          <div id="dash-stat-cobrar-sub" style="font-size:11.5px;color:#6f7680;">Sin facturas pendientes</div>
           <div style="margin-top:10px;height:4px;background:#fffbeb;border-radius:2px;overflow:hidden;"><div id="dash-progress-cobrar" style="height:100%;width:0%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:2px;transition:width 0.8s ease;"></div></div>
         </div>
 
         <!-- Pacientes Activos -->
-        <div onclick="showPage('pacientes')" style="cursor:pointer;background:white;border-radius:14px;padding:20px;border:1px solid #e2e8f0;box-shadow:0 1px 6px rgba(15,23,42,0.06);border-top:3px solid #60a5fa;transition:box-shadow 0.15s;" onmouseenter="this.style.boxShadow='0 4px 20px rgba(96,165,250,0.15)'" onmouseleave="this.style.boxShadow='0 1px 6px rgba(15,23,42,0.06)'">
+        <div onclick="showPage('pacientes')" style="cursor:pointer;background:white;border-radius:14px;padding:20px;border:1px solid #d7d5d0;box-shadow:0 1px 6px rgba(22,48,79,0.06);border-top:3px solid #8fa9c9;transition:box-shadow 0.15s;" onmouseenter="this.style.boxShadow='0 4px 20px rgba(96,165,250,0.15)'" onmouseleave="this.style.boxShadow='0 1px 6px rgba(22,48,79,0.06)'">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-            <span style="font-size:10.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;">Pacientes Activos</span>
+            <span style="font-size:10.5px;font-weight:700;color:#6f7680;text-transform:uppercase;letter-spacing:0.8px;">Pacientes Activos</span>
             <span style="background:#f0f9ff;color:#0369a1;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;">Base</span>
           </div>
-          <div id="dash-stat-pacientes" style="font-size:26px;font-weight:800;color:#0f172a;letter-spacing:-0.03em;margin-bottom:4px;">0</div>
-          <div id="dash-stat-pacientes-sub" style="font-size:11.5px;color:#64748b;">Total registrados</div>
-          <div style="margin-top:10px;height:4px;background:#f0f9ff;border-radius:2px;overflow:hidden;"><div id="dash-progress-pacientes" style="height:100%;width:0%;background:linear-gradient(90deg,#93c5fd,#60a5fa);border-radius:2px;transition:width 0.8s ease;"></div></div>
+          <div id="dash-stat-pacientes" style="font-size:26px;font-weight:800;color:#16304f;letter-spacing:-0.03em;margin-bottom:4px;">0</div>
+          <div id="dash-stat-pacientes-sub" style="font-size:11.5px;color:#6f7680;">Total registrados</div>
+          <div style="margin-top:10px;height:4px;background:#f0f9ff;border-radius:2px;overflow:hidden;"><div id="dash-progress-pacientes" style="height:100%;width:0%;background:linear-gradient(90deg,#a9c2dc,#8fa9c9);border-radius:2px;transition:width 0.8s ease;"></div></div>
         </div>
 
       </div>
@@ -1763,7 +1764,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         <div style="display:flex;gap:8px;align-items:center;">
           <select style="width:200px;" id="odonto-patient-select"><option>Seleccionar paciente...</option></select>
           <button class="btn btn-ghost btn-sm" onclick="saveOdontogram()">💾 Guardar</button>
-          <button class="btn btn-primary btn-sm" onclick="printCartaDental()" style="background:linear-gradient(135deg,#1d4ed8,#0ea5e9);">🖨️ Carta Dental PDF</button>
+          <button class="btn btn-primary btn-sm" onclick="printCartaDental()" style="background:linear-gradient(135deg,#16304f,#0ea5e9);">🖨️ Carta Dental PDF</button>
         </div>
       </div>
 
@@ -1792,12 +1793,12 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         <div id="odontogram-container" style="overflow-x:auto;"></div>
         <!-- Leyenda Ley 38 -->
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
-          <div class="legend-item"><div class="legend-dot" style="background:#f1f5f9;border:2px solid #374151;border-radius:0;"></div><span style="font-size:10.5px;">Ausente (X negra)</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#eceef1;border:2px solid #374151;border-radius:0;"></div><span style="font-size:10.5px;">Ausente (X negra)</span></div>
           <div class="legend-item"><div class="legend-dot" style="background:#dc2626;"></div><span style="font-size:10.5px;">Caries</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background:#2563eb;"></div><span style="font-size:10.5px;">Restauración</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background:white;border:3px solid #2563eb;border-radius:0;"></div><span style="font-size:10.5px;">Corona</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#3D5C82;"></div><span style="font-size:10.5px;">Restauración</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:white;border:3px solid #3D5C82;border-radius:0;"></div><span style="font-size:10.5px;">Corona</span></div>
           <div class="legend-item"><div class="legend-dot" style="background:#fee2e2;border:1.5px solid #dc2626;border-radius:0;"></div><span style="font-size:10.5px;">Endodoncia</span></div>
-          <div class="legend-item"><div class="legend-dot" style="background:#f1f5f9;border:1.5px solid #1e293b;border-radius:0;"></div><span style="font-size:10.5px;">Implante</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#eceef1;border:1.5px solid #1e3a5c;border-radius:0;"></div><span style="font-size:10.5px;">Implante</span></div>
           <div class="legend-item"><div class="legend-dot" style="background:#ede9fe;border:1.5px solid #7c3aed;border-radius:0;"></div><span style="font-size:10.5px;">Puente</span></div>
           <div class="legend-item"><div class="legend-dot" style="background:#fee2e2;border:2px solid #dc2626;border-radius:0;"></div><span style="font-size:10.5px;">Exodoncia ind. (X roja)</span></div>
           <div class="legend-item"><div class="legend-dot" style="background:white;border:2px dashed #9ca3af;border-radius:0;"></div><span style="font-size:10.5px;">Agenesia / NE</span></div>
@@ -2114,7 +2115,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
       </div>
       <div class="grid-2-1">
         <div class="card" style="padding:0;overflow:hidden;">
-          <div style="padding:16px 20px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#0052cc,#0a1628);">
+          <div style="padding:16px 20px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#3D5C82,#16304f);">
             <div style="color:white;font-weight:700;font-size:15px;">🤖 Denti AI</div>
             <div style="color:rgba(255,255,255,0.6);font-size:12px;">Asistente clínico inteligente · En línea</div>
           </div>
@@ -2294,7 +2295,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
           </select>
           <button class="btn btn-ghost btn-sm" onclick="agregarRegistroRIPS()">+ Agregar</button>
           <button class="btn btn-outline btn-sm" onclick="generarRIPS()">📥 Generar JSON</button>
-          <button class="btn btn-primary" onclick="openModal('modal-sispro-upload')" style="background:linear-gradient(135deg,#0052cc,#00c7b1);">🚀 Subir a SISPRO</button>
+          <button class="btn btn-primary" onclick="openModal('modal-sispro-upload')" style="background:linear-gradient(135deg,#3D5C82,#7093c0);">🚀 Subir a SISPRO</button>
         </div>
       </div>
 
@@ -2438,7 +2439,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
           </div>
           <!-- Ventana de chat activa -->
           <div class="card" style="padding:0;overflow:hidden;display:flex;flex-direction:column;" id="lab-chat-window">
-            <div style="padding:14px 16px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#0052cc,#0a1628);">
+            <div style="padding:14px 16px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#3D5C82,#16304f);">
               <div id="lab-chat-title" style="color:white;font-weight:700;font-size:14px;">Selecciona una conversación</div>
               <div id="lab-chat-subtitle" style="color:rgba(255,255,255,0.6);font-size:11px;margin-top:2px;"></div>
             </div>
@@ -2475,7 +2476,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
             <div class="card-title">¿Cómo funciona?</div>
             <div style="display:flex;flex-direction:column;gap:0;margin-top:8px;">
               <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);">
-                <div style="width:36px;height:36px;border-radius:50%;background:#0052cc;color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">1</div>
+                <div style="width:36px;height:36px;border-radius:50%;background:#3D5C82;color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">1</div>
                 <div>
                   <div style="font-weight:700;font-size:13px;margin-bottom:2px;">Odontólogo escribe en el portal</div>
                   <div style="font-size:12px;color:var(--text-muted);">El mensaje queda registrado en la orden de trabajo y se envía simultáneamente al WhatsApp del laboratorio.</div>
@@ -2707,7 +2708,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         <div class="stat-card"><div class="card-title">Profundidad media</div><div class="card-value" id="ps-avg">0.0</div><div class="card-sub">mm</div></div>
         <div class="stat-card" style="align-items:center;text-align:center;"><div class="card-title" style="margin-bottom:6px;">Estadio AAP/EFP</div><div id="ps-stage">—</div></div>
       </div>
-      <div id="ps-summary" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:8px 14px;font-size:11.5px;color:#374151;margin-bottom:16px;">—</div>
+      <div id="ps-summary" style="background:#f7f2e3;border:1px solid #d7d5d0;border-radius:8px;padding:8px 14px;font-size:11.5px;color:#374151;margin-bottom:16px;">—</div>
       <div class="card" style="overflow-x:auto;padding:16px;">
         <div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
           <span style="width:8px;height:8px;border-radius:2px;background:#dcfce7;border:1px solid #86efac;display:inline-block;"></span>≤3mm normal
@@ -2902,7 +2903,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
           <div class="card-title">Distribución NPS</div>
           <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
             <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>9-10 Promotores</span><span style="color:var(--success);font-weight:700;">68%</span></div><div class="progress-bar"><div class="progress-fill" style="width:68%;background:var(--success);"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>7-8 Pasivos</span><span style="font-weight:700;">24%</span></div><div class="progress-bar"><div class="progress-fill" style="width:24%;background:#94a3b8;"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>7-8 Pasivos</span><span style="font-weight:700;">24%</span></div><div class="progress-bar"><div class="progress-fill" style="width:24%;background:#8b8f96;"></div></div></div>
             <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>0-6 Detractores</span><span style="color:var(--danger);font-weight:700;">8%</span></div><div class="progress-bar"><div class="progress-fill" style="width:8%;background:var(--danger);"></div></div></div>
           </div>
         </div>
@@ -3029,7 +3030,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         <!-- Mensajes -->
         <div style="display:flex;flex-direction:column;">
           <div id="chat-header-name" style="padding:12px 16px;font-weight:700;border-bottom:1px solid var(--border);background:var(--bg);font-size:14px;">Selecciona un contacto</div>
-          <div id="chat-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;min-height:300px;max-height:500px;background:#f9fafb;"></div>
+          <div id="chat-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;min-height:300px;max-height:500px;background:#f4f6f8;"></div>
           <div style="padding:12px;border-top:1px solid var(--border);display:flex;gap:8px;">
             <input id="chat-msg-input" type="text" placeholder="Escribe un mensaje..." style="flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:20px;font-size:13px;outline:none;" onkeypress="if(event.key==='Enter')sendChatInterno()">
             <button class="btn btn-primary btn-sm" onclick="sendChatInterno()" style="border-radius:20px;padding:8px 16px;">Enviar</button>
@@ -3426,7 +3427,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
       <!-- Plantilla rápida -->
       <div style="background:linear-gradient(135deg,#f0f7ff,#e6f0ff);border-radius:10px;padding:12px 14px;margin-bottom:16px;border:1.5px solid #bee3f8;">
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <span style="font-size:12px;font-weight:700;color:#0052cc;">⚡ Usar plantilla:</span>
+          <span style="font-size:12px;font-weight:700;color:#3D5C82;">⚡ Usar plantilla:</span>
           <div id="evol-template-pills" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
           <button class="btn btn-ghost btn-sm" style="font-size:11px;margin-left:auto;" onclick="showHistoriaTab('plantillas')">Ver todas →</button>
         </div>
@@ -3472,7 +3473,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
       <!-- FORMATO SOAP -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
         <div class="form-group" style="margin:0;">
-          <label style="color:#0052cc;display:flex;justify-content:space-between;align-items:center;">S — Subjetivo (motivo de consulta / anamnesis)<button type="button" onclick="voiceToField('evol-s',this)" class="btn btn-ghost btn-sm" style="font-size:11px;padding:2px 8px;" title="Dictado por voz">🎙 Voz</button></label>
+          <label style="color:#3D5C82;display:flex;justify-content:space-between;align-items:center;">S — Subjetivo (motivo de consulta / anamnesis)<button type="button" onclick="voiceToField('evol-s',this)" class="btn btn-ghost btn-sm" style="font-size:11px;padding:2px 8px;" title="Dictado por voz">🎙 Voz</button></label>
           <textarea id="evol-s" placeholder="Paciente refiere... · Motivo de consulta: · Evolución del dolor:..." style="min-height:80px;font-size:12px;" oninput="triggerAutosave('evol-s','Evolución SOAP')"></textarea>
         </div>
         <div class="form-group" style="margin:0;">
@@ -3587,7 +3588,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
 <!-- Modal: Nueva Orden de Laboratorio — PROTOTIPO CLÍNICO -->
 <div class="modal-overlay" id="modal-nueva-orden">
   <div class="modal modal-xl" style="max-width:980px;">
-    <div class="modal-header" style="background:linear-gradient(135deg,#0052cc,#0a1628);border-radius:14px 14px 0 0;padding:16px 24px;">
+    <div class="modal-header" style="background:linear-gradient(135deg,#3D5C82,#16304f);border-radius:14px 14px 0 0;padding:16px 24px;">
       <div>
         <h3 style="color:white;font-size:16px;">🔬 Orden de Trabajo — Laboratorio Dental</h3>
         <div style="color:rgba(255,255,255,0.6);font-size:11px;margin-top:2px;">Sistema FDI · Guía VITA · Colorimetría por tercios</div>
@@ -3688,7 +3689,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
             <div style="display:grid;grid-template-columns:80px 1fr;gap:12px;align-items:center;">
               <!-- Visual tooth -->
               <div style="display:flex;flex-direction:column;align-items:center;">
-                <div id="vita-tooth-visual" style="width:52px;border-radius:6px;overflow:hidden;border:1.5px solid #94a3b8;">
+                <div id="vita-tooth-visual" style="width:52px;border-radius:6px;overflow:hidden;border:1.5px solid #8b8f96;">
                   <div id="vita-cervical-preview" style="height:30px;background:#e8c888;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#5a3e1b;">Cer.</div>
                   <div id="vita-medio-preview" style="height:32px;background:#f0d9a8;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#5a3e1b;">Med.</div>
                   <div id="vita-incisal-preview" style="height:26px;background:#f5e6c8;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#5a3e1b;">Inc.</div>
@@ -3826,7 +3827,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
 <!-- Modal: Subida SISPRO -->
 <div class="modal-overlay" id="modal-sispro-upload">
   <div class="modal modal-lg">
-    <div class="modal-header" style="background:linear-gradient(135deg,#0052cc,#00547a);border-radius:14px 14px 0 0;padding:16px 24px;">
+    <div class="modal-header" style="background:linear-gradient(135deg,#3D5C82,#00547a);border-radius:14px 14px 0 0;padding:16px 24px;">
       <div>
         <h3 style="color:white;font-size:16px;">🚀 Subir RIPS a SISPRO</h3>
         <div style="color:rgba(255,255,255,0.6);font-size:11px;margin-top:2px;">sispro.gov.co · Módulo de Habilitación · Cargue RIPS JSON</div>
@@ -3866,7 +3867,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         <!-- Opción envío automático -->
         <div style="background:#e6f0ff;border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:4px;">
           <div style="flex:1;">
-            <div style="font-size:13px;font-weight:700;color:#0052cc;">⏰ Activar envío automático mensual</div>
+            <div style="font-size:13px;font-weight:700;color:#3D5C82;">⏰ Activar envío automático mensual</div>
             <div style="font-size:11px;color:#4a6fa5;margin-top:2px;">Se enviará automáticamente el día 5 de cada mes con los registros del período anterior.</div>
           </div>
           <input type="checkbox" id="sispro-auto-check" checked style="accent-color:var(--primary);width:18px;height:18px;">
@@ -3910,7 +3911,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
             <span id="sispro-prog-pct">0%</span>
           </div>
           <div class="progress-bar" style="height:8px;">
-            <div class="progress-fill" id="sispro-prog-bar" style="width:0%;background:linear-gradient(90deg,#0052cc,#00c7b1);"></div>
+            <div class="progress-fill" id="sispro-prog-bar" style="width:0%;background:linear-gradient(90deg,#3D5C82,#7093c0);"></div>
           </div>
         </div>
       </div>
@@ -3930,7 +3931,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
     </div>
     <div class="modal-footer" id="sispro-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-sispro-upload')">Cancelar</button>
-      <button class="btn btn-primary" id="sispro-btn-enviar" onclick="iniciarEnvioSISPRO()" style="background:linear-gradient(135deg,#0052cc,#00c7b1);">🚀 Enviar a SISPRO</button>
+      <button class="btn btn-primary" id="sispro-btn-enviar" onclick="iniciarEnvioSISPRO()" style="background:linear-gradient(135deg,#3D5C82,#7093c0);">🚀 Enviar a SISPRO</button>
     </div>
   </div>
 </div>
@@ -3999,7 +4000,7 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
         </div>
         <!-- Chat integrado -->
         <div style="display:flex;flex-direction:column;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;">
-          <div style="padding:12px 14px;background:linear-gradient(135deg,#0052cc,#0a1628);color:white;">
+          <div style="padding:12px 14px;background:linear-gradient(135deg,#3D5C82,#16304f);color:white;">
             <div style="font-weight:700;font-size:13px;">💬 Chat con el laboratorio</div>
             <div style="font-size:11px;opacity:0.7;margin-top:1px;" id="modal-chat-lab-name"></div>
           </div>
@@ -4025,12 +4026,12 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
 </div>
 
 <!-- ===== CHAT BOT WIDGET (landing) ===== -->
-<div id="chatbot-bubble" onclick="openChatBot()" style="position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:linear-gradient(135deg,#0052cc,#0a1628);border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:8000;box-shadow:0 8px 24px rgba(0,82,204,0.4);font-size:24px;transition:transform 0.15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">💬
+<div id="chatbot-bubble" onclick="openChatBot()" style="position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:linear-gradient(135deg,#3D5C82,#16304f);border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:8000;box-shadow:0 8px 24px rgba(0,82,204,0.4);font-size:24px;transition:transform 0.15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">💬
   <div style="position:absolute;top:2px;right:2px;width:14px;height:14px;background:#36b37e;border-radius:50%;border:2px solid white;font-size:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;">•</div>
 </div>
 
-<div id="chatbot-widget" style="position:fixed;bottom:90px;right:24px;width:340px;background:white;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,0.2);z-index:8001;display:none;flex-direction:column;overflow:hidden;border:1px solid #e2e8f0;">
-  <div style="background:linear-gradient(135deg,#0052cc,#0a1628);padding:14px 16px;display:flex;align-items:center;gap:10px;">
+<div id="chatbot-widget" style="position:fixed;bottom:90px;right:24px;width:340px;background:white;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,0.2);z-index:8001;display:none;flex-direction:column;overflow:hidden;border:1px solid #d7d5d0;">
+  <div style="background:linear-gradient(135deg,#3D5C82,#16304f);padding:14px 16px;display:flex;align-items:center;gap:10px;">
     <div style="width:36px;height:36px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;">🤖</div>
     <div style="flex:1;">
       <div style="color:white;font-weight:700;font-size:14px;">Denti Asistente</div>
@@ -4039,21 +4040,21 @@ body.privacy-mode .btn-privacy { background: #fef9c3 !important; color: #92400e 
     <button onclick="closeChatBot()" style="background:none;border:none;color:white;font-size:18px;cursor:pointer;opacity:0.7;">✕</button>
   </div>
   <div id="bot-messages" style="height:280px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:#f8f9fa;">
-    <div style="background:white;border:1px solid #e2e8f0;border-radius:10px;border-bottom-left-radius:3px;padding:10px 12px;font-size:12.5px;box-shadow:0 1px 4px rgba(0,0,0,0.06);max-width:85%;">
-      <span style="font-size:9px;font-weight:800;color:#0052cc;display:block;margin-bottom:3px;">🤖 Denti</span>
+    <div style="background:white;border:1px solid #d7d5d0;border-radius:10px;border-bottom-left-radius:3px;padding:10px 12px;font-size:12.5px;box-shadow:0 1px 4px rgba(0,0,0,0.06);max-width:85%;">
+      <span style="font-size:9px;font-weight:800;color:#3D5C82;display:block;margin-bottom:3px;">🤖 Denti</span>
       ¡Hola! Soy el asistente de Denti 🦷<br><br>Puedo ayudarte con preguntas sobre precios, funcionalidades, demos y más. ¿En qué te puedo ayudar?
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
-      <button onclick="botReply('planes')" style="padding:5px 10px;background:#e6f0ff;color:#0052cc;border:1px solid #bee3f8;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">💰 Planes y precios</button>
-      <button onclick="botReply('demo')" style="padding:5px 10px;background:#e6f0ff;color:#0052cc;border:1px solid #bee3f8;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">📅 Agendar demo</button>
-      <button onclick="botReply('rips')" style="padding:5px 10px;background:#e6f0ff;color:#0052cc;border:1px solid #bee3f8;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">📤 RIPS/SISPRO</button>
-      <button onclick="botReply('seguridad')" style="padding:5px 10px;background:#e6f0ff;color:#0052cc;border:1px solid #bee3f8;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">🔒 Seguridad</button>
+      <button onclick="botReply('planes')" style="padding:5px 10px;background:#e6f0ff;color:#3D5C82;border:1px solid #bee3f8;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">💰 Planes y precios</button>
+      <button onclick="botReply('demo')" style="padding:5px 10px;background:#e6f0ff;color:#3D5C82;border:1px solid #bee3f8;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">📅 Agendar demo</button>
+      <button onclick="botReply('rips')" style="padding:5px 10px;background:#e6f0ff;color:#3D5C82;border:1px solid #bee3f8;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">📤 RIPS/SISPRO</button>
+      <button onclick="botReply('seguridad')" style="padding:5px 10px;background:#e6f0ff;color:#3D5C82;border:1px solid #bee3f8;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">🔒 Seguridad</button>
       <button onclick="botReply('asesor')" style="padding:5px 10px;background:#f0fff4;color:#276749;border:1px solid #9ae6b4;border-radius:20px;font-size:11px;cursor:pointer;font-weight:600;">👤 Hablar con asesor</button>
     </div>
   </div>
-  <div style="padding:10px 12px;border-top:1px solid #e2e8f0;display:flex;gap:8px;background:white;">
-    <input id="bot-input" type="text" placeholder="Escribe tu pregunta..." style="flex:1;padding:8px 12px;border:1.5px solid #e2e8f0;border-radius:20px;font-size:12px;outline:none;" onkeypress="if(event.key==='Enter')sendBotMsg()">
-    <button onclick="sendBotMsg()" style="width:34px;height:34px;background:#0052cc;border:none;border-radius:50%;cursor:pointer;color:white;font-size:14px;">➤</button>
+  <div style="padding:10px 12px;border-top:1px solid #d7d5d0;display:flex;gap:8px;background:white;">
+    <input id="bot-input" type="text" placeholder="Escribe tu pregunta..." style="flex:1;padding:8px 12px;border:1.5px solid #d7d5d0;border-radius:20px;font-size:12px;outline:none;" onkeypress="if(event.key==='Enter')sendBotMsg()">
+    <button onclick="sendBotMsg()" style="width:34px;height:34px;background:#3D5C82;border:none;border-radius:50%;cursor:pointer;color:white;font-size:14px;">➤</button>
   </div>
 </div>
 
@@ -4261,7 +4262,7 @@ const _ayerS= `${_ayer.getFullYear()}-${String(_ayer.getMonth()+1).padStart(2,'0
 const APPOINTMENTS = [
   // ── HOY ──────────────────────────────────────────────────────
   {id:'C001',patientId:'P001',patientName:'María García López',   phone:'+57 300 111 2233',date:_hoyS,time:'08:30',duration:60, type:'Limpieza Dental',    doctor:'Dra. Yenifer',room:'Consultorio 1',status:'asistio',  color:'#36b37e'},
-  {id:'C002',patientId:'P002',patientName:'Carlos Mendoza Ruiz', phone:'+57 315 322 4455',date:_hoyS,time:'09:30',duration:90, type:'Endodoncia pieza 36',doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente', color:'#0052cc'},
+  {id:'C002',patientId:'P002',patientName:'Carlos Mendoza Ruiz', phone:'+57 315 322 4455',date:_hoyS,time:'09:30',duration:90, type:'Endodoncia pieza 36',doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente', color:'#3D5C82'},
   {id:'C003',patientId:'P003',patientName:'Ana Martínez Torres', phone:'+57 311 544 6677',date:_hoyS,time:'11:00',duration:60, type:'Empaste composite',  doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente', color:'#ff8b00'},
   {id:'C004',patientId:'P008',patientName:'Fernando Reyes Pinto',phone:'+57 304 908 1212',date:_hoyS,time:'12:30',duration:30, type:'Revisión General',   doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente', color:'#9f7aea'},
   {id:'C005',patientId:'P005',patientName:'Laura Jiménez Vega',  phone:'+57 301 988 0011',date:_hoyS,time:'14:00',duration:60, type:'Blanqueamiento LED', doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente', color:'#36b37e'},
@@ -4269,7 +4270,7 @@ const APPOINTMENTS = [
   // ── MAÑANA ────────────────────────────────────────────────────
   {id:'C101',patientId:'P009',patientName:'Valentina Ospina',    phone:'+57 310 234 5678',date:_manS,time:'08:00',duration:60, type:'Limpieza + Fluorización', doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente',color:'#36b37e'},
   {id:'C102',patientId:'P011',patientName:'Camila Vargas León',  phone:'+57 302 345 6789',date:_manS,time:'09:00',duration:90, type:'Endodoncia pieza 46',    doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente',color:'#dc2626'},
-  {id:'C103',patientId:'P014',patientName:'Jorge Ramírez Castro',phone:'+57 318 678 9012',date:_manS,time:'10:30',duration:60, type:'Corona cerámica (cita 2)',doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente',color:'#0052cc'},
+  {id:'C103',patientId:'P014',patientName:'Jorge Ramírez Castro',phone:'+57 318 678 9012',date:_manS,time:'10:30',duration:60, type:'Corona cerámica (cita 2)',doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente',color:'#3D5C82'},
   {id:'C104',patientId:'P015',patientName:'Daniela Flores Rico', phone:'+57 305 789 0123',date:_manS,time:'11:30',duration:45, type:'Revisión Ortodoncia',     doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente',color:'#7c3aed'},
   {id:'C105',patientId:'P012',patientName:'Sebastián Ríos Mora', phone:'+57 319 456 7890',date:_manS,time:'14:00',duration:60, type:'Extracción pieza 18',     doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente',color:'#f59e0b'},
   {id:'C106',patientId:'P004',patientName:'Roberto Sánchez Ríos',phone:'+57 320 766 8899',date:_manS,time:'15:00',duration:30, type:'Revisión General',        doctor:'Dra. Yenifer',room:'Consultorio 1',status:'pendiente',color:'#9ca3af'},
@@ -4331,37 +4332,37 @@ const CONDITIONS = [
   // ── SUPERFICIES (se aplican por cara: M, D, V/B, L/P, O/I, Cv, Cp) ──
   // Ley 38: ROJO = patología activa; AZUL = tratamiento completado; VERDE = materiales específicos
   {id:'caries',       label:'Caries',              color:'#dc2626', border:'#991b1b', type:'surface', sym:'',  symCol:'#fff',    ley38:'Relleno rojo sólido — lesión cavitada activa'},
-  {id:'amalgama',     label:'Amalgama',            color:'#1e40af', border:'#1e3a8a', type:'surface', sym:'',  symCol:'#fff',    ley38:'Relleno azul oscuro sólido — amalgama terminada'},
+  {id:'amalgama',     label:'Amalgama',            color:'#1e40af', border:'#2a4a70', type:'surface', sym:'',  symCol:'#fff',    ley38:'Relleno azul oscuro sólido — amalgama terminada'},
   {id:'resina',       label:'Resina/Composite',    color:'#15803d', border:'#14532d', type:'surface', sym:'',  symCol:'#fff',    ley38:'Relleno verde sólido — resina/composite terminada'},
-  {id:'rest-apta',    label:'Rest. Apta',          color:'#1d4ed8', border:'#1e40af', type:'surface', sym:'✓', symCol:'#bfdbfe', ley38:'Azul con visto — restauración adaptada'},
+  {id:'rest-apta',    label:'Rest. Apta',          color:'#16304f', border:'#1e40af', type:'surface', sym:'✓', symCol:'#bfdbfe', ley38:'Azul con visto — restauración adaptada'},
   {id:'rest-desad',   label:'Rest. Desadaptada',   color:'#fff',    border:'#dc2626', type:'surface', sym:'',  symCol:'#dc2626', isDesad:true, ley38:'Contorno rojo, interior blanco — restauración deficiente'},
   {id:'sellante',     label:'Sellante',            color:'#d9f99d', border:'#65a30d', type:'surface', sym:'S', symCol:'#3f6212', ley38:'Verde amarillo + S — sellante de fosas y fisuras'},
   {id:'caries-ini',   label:'Caries inicial',      color:'#fca5a5', border:'#dc2626', type:'surface', sym:'·', symCol:'#7f1d1d', ley38:'Rojo claro — mancha blanca / desmineralización'},
   {id:'caries-sec',   label:'Caries secundaria',   color:'#7f1d1d', border:'#450a0a', type:'surface', sym:'Cs',symCol:'#fff',    ley38:'Rojo oscuro — caries bajo restauración'},
   {id:'lcnc',         label:'L.C. No Cariosa',     color:'#fde68a', border:'#d97706', type:'surface', sym:'≈', symCol:'#78350f', ley38:'Ámbar — abrasión/erosión/abfracción'},
   {id:'ionomer',      label:'Ionómero vidrio',     color:'#99f6e4', border:'#0d9488', type:'surface', sym:'I', symCol:'#134e4a', ley38:'Verde azulado — ionómero de vidrio'},
-  {id:'limpiar-sup',  label:'Limpiar superficie',  color:'#f8fafc', border:'#cbd5e0', type:'surface', sym:'',  symCol:'#999',    ley38:'Quitar hallazgo de superficie'},
+  {id:'limpiar-sup',  label:'Limpiar superficie',  color:'#f7f2e3', border:'#cbd5e0', type:'surface', sym:'',  symCol:'#999',    ley38:'Quitar hallazgo de superficie'},
   // ── DIENTE COMPLETO — Ley 38 de 1993 ──
-  {id:'presente',     label:'Presente / Sano',     color:'#f9fafb', border:'#9ca3af', type:'whole',   ley38:'Sin marcas — diente sano presente'},
+  {id:'presente',     label:'Presente / Sano',     color:'#f4f6f8', border:'#9ca3af', type:'whole',   ley38:'Sin marcas — diente sano presente'},
   {id:'ausente',      label:'Ausente',             color:'#f3f4f6', border:'#374151', type:'whole',   ley38:'X negra — diente ausente/extraído'},
   {id:'exodoncia',    label:'Exodoncia indicada',  color:'#fee2e2', border:'#dc2626', type:'whole',   ley38:'X roja — extracción indicada (rojo = tratamiento por realizar)'},
   {id:'no-erupcion',  label:'No erupcionado',      color:'#f5f3ff', border:'#7c3aed', type:'whole',   ley38:'Contorno punteado morado — diente no erupcionado'},
   {id:'impactado',    label:'Impactado/Retenido',  color:'#fef3c7', border:'#d97706', type:'whole',   ley38:'Flecha y contorno naranja — diente retenido'},
-  {id:'corona',       label:'Corona total',        color:'#dbeafe', border:'#2563eb', type:'whole',   ley38:'Contorno azul completo — corona protésica'},
+  {id:'corona',       label:'Corona total',        color:'#dbeafe', border:'#3D5C82', type:'whole',   ley38:'Contorno azul completo — corona protésica'},
   {id:'corona-prov',  label:'Corona provisional',  color:'#e0f2fe', border:'#0284c7', type:'whole',   ley38:'Contorno azul punteado — corona provisional'},
   {id:'puente',       label:'Puente',              color:'#ede9fe', border:'#7c3aed', type:'whole',   ley38:'Línea continua entre pilares — prótesis fija'},
-  {id:'implante',     label:'Implante',            color:'#f1f5f9', border:'#334155', type:'whole',   ley38:'Tornillo negro — implante oseointegrado'},
+  {id:'implante',     label:'Implante',            color:'#eceef1', border:'#334155', type:'whole',   ley38:'Tornillo negro — implante oseointegrado'},
   {id:'endodoncia',   label:'Endodoncia',          color:'#fee2e2', border:'#dc2626', type:'whole',   ley38:'Línea azul/roja en conducto — tratamiento endodóntico'},
   {id:'fractura',     label:'Fractura',            color:'#fee2e2', border:'#dc2626', type:'whole',   ley38:'Línea diagonal roja — fractura dental'},
   {id:'diastema',     label:'Diastema',            color:'#f0fdf4', border:'#16a34a', type:'whole',   ley38:'Flechas divergentes — espacio entre dientes'},
   {id:'giroversion',  label:'Giroversión',         color:'#fefce8', border:'#ca8a04', type:'whole',   ley38:'Flecha circular — diente rotado'},
   {id:'supernumerar', label:'Supernumerario',      color:'#fff1f2', border:'#e11d48', type:'whole',   ley38:'Símbolo + — diente extra'},
-  {id:'agenesia',     label:'Agenesia',            color:'#f9fafb', border:'#9ca3af', type:'whole',   ley38:'Círculo punteado — diente ausente congénito'},
+  {id:'agenesia',     label:'Agenesia',            color:'#f4f6f8', border:'#9ca3af', type:'whole',   ley38:'Círculo punteado — diente ausente congénito'},
   {id:'alt-forma',    label:'Alt. de forma',       color:'#fffbeb', border:'#b45309', type:'whole',   ley38:'Triángulo — anomalía de forma'},
   {id:'alt-posicion', label:'Alt. de posición',    color:'#fdf4ff', border:'#a21caf', type:'whole',   ley38:'Flecha — diente mal posicionado'},
   {id:'movilidad',    label:'Movilidad dental',    color:'#fef2f2', border:'#dc2626', type:'whole',   ley38:'Grado I/II/III — movilidad'},
   {id:'ppr',          label:'Prótesis parcial rem.',color:'#f5f3ff',border:'#6d28d9', type:'whole',   ley38:'PPR — prótesis removible'},
-  {id:'limpiar',      label:'Limpiar diente',      color:'#f9fafb', border:'#d1d5db', type:'whole',   ley38:'Borrar todos los hallazgos'},
+  {id:'limpiar',      label:'Limpiar diente',      color:'#f4f6f8', border:'#d1d5db', type:'whole',   ley38:'Borrar todos los hallazgos'},
 ];
 
 const ADULT_TEETH = {
@@ -4569,7 +4570,7 @@ function renderTodayAppointments() {
   container.innerHTML = todayAppts.slice(0,6).map(a => `
     <div class="appt-item" style="border-radius:8px;padding:8px;margin-bottom:4px;background:${a.status==='asistio'?'#f0fff4':a.status==='falto'?'#fff5f5':a.status==='reagendo'?'#faf5ff':'white'};border:1px solid var(--border);cursor:pointer;" onclick="showPage('citas')">
       <div class="appt-time">${a.time}</div>
-      <div class="appt-bar" style="background:${STATUS_COLOR[a.status]||a.color||'#0052cc'};"></div>
+      <div class="appt-bar" style="background:${STATUS_COLOR[a.status]||a.color||'#3D5C82'};"></div>
       <div class="appt-info">
         <div class="appt-name">${a.patientName||a.patient||'Paciente'}</div>
         <div class="appt-proc">${a.type||'Consulta'} · ${a.doctor||'Dra. Yenifer'}</div>
@@ -4604,7 +4605,7 @@ function initDashboardCharts() {
         label: 'Ingresos',
         data: [12400000,15600000,8900000,18200000,16800000,9400000,0,14200000,17800000,11300000,19400000,18450000,8700000,0],
         backgroundColor: 'rgba(0,82,204,0.15)',
-        borderColor: '#0052cc',
+        borderColor: '#3D5C82',
         borderWidth: 2,
         borderRadius: 6,
         borderSkipped: false,
@@ -4618,7 +4619,7 @@ function initDashboardCharts() {
     type: 'doughnut',
     data: {
       labels: ['Limpieza','Empaste','Endodoncia','Corona','Ortodoncia','Otros'],
-      datasets: [{data:[28,22,15,12,10,13],backgroundColor:['#36b37e','#0052cc','#ff8b00','#de350b','#9f7aea','#00c7b1']}]
+      datasets: [{data:[28,22,15,12,10,13],backgroundColor:['#36b37e','#3D5C82','#ff8b00','#de350b','#9f7aea','#7093c0']}]
     },
     options: {responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:10}}},cutout:'65%'}
   });
@@ -5259,7 +5260,7 @@ function renderMonthView() {
     const dayAppts = APPOINTMENTS.filter(a => a.date === dateStr);
     html += `<div class="cal-day${isToday ? ' today' : ''}" onclick="renderDayAppointments(${d})">
       <div class="cal-num">${d}</div>
-      ${dayAppts.slice(0,3).map(a=>`<div class="cal-event${a.status==='reservado'?' cal-reservado':''}" style="${a.status!=='reservado'?'background:rgba(0,82,204,0.12);color:#0052cc;':''}font-size:10px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${a.status==='reservado'?'⏳ ':''}${a.time||''} ${a.patientName||a.patient||''}</div>`).join('')}
+      ${dayAppts.slice(0,3).map(a=>`<div class="cal-event${a.status==='reservado'?' cal-reservado':''}" style="${a.status!=='reservado'?'background:rgba(0,82,204,0.12);color:#3D5C82;':''}font-size:10px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${a.status==='reservado'?'⏳ ':''}${a.time||''} ${a.patientName||a.patient||''}</div>`).join('')}
       ${dayAppts.length>3?`<div style="font-size:10px;color:var(--text-muted);padding:1px 4px;">+${dayAppts.length-3} más</div>`:''}
     </div>`;
   }
@@ -5799,7 +5800,7 @@ function saveAppointment() {
   const COLORS_BY_TYPE = {
     'Revisión General':'#9ca3af','Limpieza Dental':'#36b37e','Empaste':'#f59e0b',
     'Extracción':'#ef4444','Endodoncia':'#dc2626','Ortodoncia':'#7c3aed',
-    'Implante':'#0891b2','Blanqueamiento':'#a78bfa','Corona':'#0052cc',
+    'Implante':'#0891b2','Blanqueamiento':'#a78bfa','Corona':'#3D5C82',
   };
 
   const newAppt = {
@@ -5815,7 +5816,7 @@ function saveAppointment() {
     room:        room,
     notes:       notas,
     status:      'pendiente',
-    color:       COLORS_BY_TYPE[tipo] || '#0052cc',
+    color:       COLORS_BY_TYPE[tipo] || '#3D5C82',
     createdAt:   new Date().toISOString(),
   };
 
@@ -5879,7 +5880,7 @@ function renderConditionPalette() {
 
   const selLbl = CONDITIONS.find(c=>c.id===selectedCondition);
   const infoBar = selLbl
-    ? `<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:5px 8px;margin-bottom:8px;font-size:10.5px;color:#1d4ed8;line-height:1.3;">
+    ? `<div style="background:#e8eef5;border:1px solid #bfdbfe;border-radius:6px;padding:5px 8px;margin-bottom:8px;font-size:10.5px;color:#16304f;line-height:1.3;">
         <strong>${selLbl.label}</strong><br>
         <span style="opacity:0.75;">${selLbl.ley38||''}</span>
        </div>`
@@ -5901,11 +5902,11 @@ function condBtn(c) {
     : '';
   // For rest-desad: white fill + red border
   const swatchBorder = c.isDesad ? `border:2.5px solid #dc2626;` : `border:1.5px solid ${c.border};`;
-  const btnBg = sel ? 'background:#eff6ff;border-color:#1d4ed8;' : '';
+  const btnBg = sel ? 'background:#e8eef5;border-color:#16304f;' : '';
   return `<div class="cond-btn ${sel?'selected':''}" onclick="selectCondition('${c.id}')" title="${c.ley38||c.label}" style="${btnBg}position:relative;">
     <div class="cond-color" style="position:relative;background:${c.color};${swatchBorder}">${symHtml}</div>
     <span style="font-size:9px;line-height:1.2;text-align:center;">${c.label}</span>
-    ${sel?'<div style="position:absolute;top:2px;right:2px;width:6px;height:6px;background:#1d4ed8;border-radius:50%;"></div>':''}
+    ${sel?'<div style="position:absolute;top:2px;right:2px;width:6px;height:6px;background:#16304f;border-radius:50%;"></div>':''}
   </div>`;
 }
 
@@ -5978,9 +5979,9 @@ function buildToothSVG(num, isUpper) {
 
   function sc(surf) {
     const cond = toothStates[`${num}-${surf}`];
-    if (!cond || cond === 'limpiar-sup') return '#f9fafb';
+    if (!cond || cond === 'limpiar-sup') return '#f4f6f8';
     const c = CONDITIONS.find(x => x.id === cond);
-    return c ? c.color : '#f9fafb';
+    return c ? c.color : '#f4f6f8';
   }
 
   const whole = toothStates[`${num}-whole`];
@@ -5990,7 +5991,7 @@ function buildToothSVG(num, isUpper) {
 
   if (whole === 'ausente') {
     // X NEGRA — Ley 38
-    body += `<ellipse cx="${cx}" cy="${cy}" rx="${orx}" ry="${ory}" fill="#f1f5f9" stroke="#1f2937" stroke-width="1.5"/>`;
+    body += `<ellipse cx="${cx}" cy="${cy}" rx="${orx}" ry="${ory}" fill="#eceef1" stroke="#1f2937" stroke-width="1.5"/>`;
     body += `<line x1="${cx-orx+3}" y1="${cy-ory+4}" x2="${cx+orx-3}" y2="${cy+ory-4}" stroke="#111827" stroke-width="3" stroke-linecap="round"/>`;
     body += `<line x1="${cx+orx-3}" y1="${cy-ory+4}" x2="${cx-orx+3}" y2="${cy+ory-4}" stroke="#111827" stroke-width="3" stroke-linecap="round"/>`;
 
@@ -6014,7 +6015,7 @@ function buildToothSVG(num, isUpper) {
     // ── DIENTE NORMAL — 5 zonas clickeables ─────────────────
 
     // Fondo (decorativo)
-    body += `<ellipse cx="${cx}" cy="${cy}" rx="${orx}" ry="${ory}" fill="#f9fafb" stroke="none" pointer-events="none"/>`;
+    body += `<ellipse cx="${cx}" cy="${cy}" rx="${orx}" ry="${ory}" fill="#f4f6f8" stroke="none" pointer-events="none"/>`;
 
     // 4 segmentos de corona — onclick directo (sin stopPropagation para compatibilidad SVG)
     const mRx = (orx+irx)/2, mRy = (ory+iry)/2;
@@ -6065,7 +6066,7 @@ function buildToothSVG(num, isUpper) {
 
     // Todos los overlays de condición son decorativos — no interceptan clics
     if (whole === 'corona') {
-      body += `<ellipse cx="${cx}" cy="${cy}" rx="${orx}" ry="${ory}" fill="none" stroke="#2563eb" stroke-width="4.5" pointer-events="none"/>`;
+      body += `<ellipse cx="${cx}" cy="${cy}" rx="${orx}" ry="${ory}" fill="none" stroke="#3D5C82" stroke-width="4.5" pointer-events="none"/>`;
     }
     if (whole === 'puente') {
       body += `<ellipse cx="${cx}" cy="${cy}" rx="${orx}" ry="${ory}" fill="none" stroke="#7c3aed" stroke-width="3" pointer-events="none"/>`;
@@ -6095,7 +6096,7 @@ function buildToothSVG(num, isUpper) {
     }
     if (whole === 'implante') {
       // Tornillo NEGRO — implante oseointegrado (color oscuro = ausencia de tejido natural)
-      const ic = '#1e293b';
+      const ic = '#1e3a5c';
       body += `<line x1="${cx-irx+1}" y1="${cy-iry+2}" x2="${cx+irx-1}" y2="${cy-iry+2}" stroke="${ic}" stroke-width="2.5" pointer-events="none"/>`;
       body += `<line x1="${cx}" y1="${cy-iry+2}" x2="${cx}" y2="${cy+iry-2}" stroke="${ic}" stroke-width="2.8" pointer-events="none"/>`;
       for (let yy = -4; yy <= 6; yy+=4) {
@@ -6116,10 +6117,10 @@ function buildToothSVG(num, isUpper) {
   // Posición: toca exactamente la frontera del óvalo (cy ± ory)
   const cvY = isUpper ? (cy - ory - BH) : (cy + ory);
   const cpY = isUpper ? (cy + ory)       : (cy - ory - BH);
-  const cvFill   = sc('Cv') !== '#f9fafb' ? sc('Cv') : 'white';
-  const cpFill   = sc('Cp') !== '#f9fafb' ? sc('Cp') : 'white';
-  const cvStroke = toothStates[`${num}-Cv`] === 'rest-desad' ? '#dc2626' : (sc('Cv') !== '#f9fafb' ? '#374151' : '#9ca3af');
-  const cpStroke = toothStates[`${num}-Cp`] === 'rest-desad' ? '#dc2626' : (sc('Cp') !== '#f9fafb' ? '#374151' : '#9ca3af');
+  const cvFill   = sc('Cv') !== '#f4f6f8' ? sc('Cv') : 'white';
+  const cpFill   = sc('Cp') !== '#f4f6f8' ? sc('Cp') : 'white';
+  const cvStroke = toothStates[`${num}-Cv`] === 'rest-desad' ? '#dc2626' : (sc('Cv') !== '#f4f6f8' ? '#374151' : '#9ca3af');
+  const cpStroke = toothStates[`${num}-Cp`] === 'rest-desad' ? '#dc2626' : (sc('Cp') !== '#f4f6f8' ? '#374151' : '#9ca3af');
   const cvCondId = toothStates[`${num}-Cv`], cpCondId = toothStates[`${num}-Cp`];
   const cvSym = cvCondId ? surfSymbol(cvCondId, cx, cvY + BH/2, 4) : `<text x="${cx}" y="${cvY+6.5}" text-anchor="middle" font-size="6.5" fill="#9ca3af" style="pointer-events:none;" font-weight="800">CV</text>`;
   const cpSym = cpCondId ? surfSymbol(cpCondId, cx, cpY + BH/2, 4) : `<text x="${cx}" y="${cpY+6.5}" text-anchor="middle" font-size="6.5" fill="#9ca3af" style="pointer-events:none;" font-weight="800">CP</text>`;
@@ -6263,7 +6264,7 @@ function showToothDetail(num) {
 
   // Count findings for badge
   const findingCount = Object.keys(toothStates).filter(k=>k.startsWith(`${num}-`)).length;
-  const badge = findingCount ? `<span style="background:#1d4ed8;color:white;font-size:9px;font-weight:700;border-radius:10px;padding:1px 6px;margin-left:6px;">${findingCount}</span>` : '';
+  const badge = findingCount ? `<span style="background:#16304f;color:white;font-size:9px;font-weight:700;border-radius:10px;padding:1px 6px;margin-left:6px;">${findingCount}</span>` : '';
 
   container.innerHTML = `
     <div style="display:flex;align-items:center;margin-bottom:2px;">
@@ -6434,14 +6435,14 @@ function printCartaDental() {
   <!-- LEYENDA -->
   <div class="section-title">Simbología Oficial · Ley 38 de 1993</div>
   <div class="leyenda">
-    <div class="ley-item"><div class="ley-dot" style="background:#f1f5f9;position:relative;"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10px;">✕</span></div>Ausente (X negra)</div>
+    <div class="ley-item"><div class="ley-dot" style="background:#eceef1;position:relative;"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10px;">✕</span></div>Ausente (X negra)</div>
     <div class="ley-item"><div class="ley-dot" style="background:#dc2626;"></div>Caries (área roja)</div>
-    <div class="ley-item"><div class="ley-dot" style="background:#2563eb;"></div>Restauración (área azul)</div>
-    <div class="ley-item"><div class="ley-dot" style="background:white;border:3px solid #2563eb;"></div>Corona (contorno azul)</div>
+    <div class="ley-item"><div class="ley-dot" style="background:#3D5C82;"></div>Restauración (área azul)</div>
+    <div class="ley-item"><div class="ley-dot" style="background:white;border:3px solid #3D5C82;"></div>Corona (contorno azul)</div>
     <div class="ley-item"><div class="ley-dot" style="background:#fee2e2;border-color:#dc2626;"></div>Endodoncia (línea raíz)</div>
     <div class="ley-item"><div class="ley-dot" style="background:#d1fae5;border-color:#059669;"></div>Implante (tornillo)</div>
     <div class="ley-item"><div class="ley-dot" style="background:#ede9fe;border-color:#7c3aed;"></div>Puente (línea pilares)</div>
-    <div class="ley-item"><div class="ley-dot" style="background:#dbeafe;position:relative;"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:9px;color:#1d4ed8;">✕</span></div>Exodoncia ind. (X azul)</div>
+    <div class="ley-item"><div class="ley-dot" style="background:#dbeafe;position:relative;"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:9px;color:#16304f;">✕</span></div>Exodoncia ind. (X azul)</div>
     <div class="ley-item"><div class="ley-dot" style="background:white;border:1.5px dashed #9ca3af;"></div>Agenesia</div>
     <div class="ley-item"><div class="ley-dot" style="background:#ede9fe;border:1.5px dashed #7c3aed;"></div>No erupcionado</div>
     <div class="ley-item"><div class="ley-dot" style="background:#fef3c7;border-color:#d97706;"></div>Impactado (flecha)</div>
@@ -6540,7 +6541,7 @@ function initReportCharts() {
       data: {
         labels: ['Ene','Feb','Mar','Abr','May','Jun'],
         datasets: [
-          {label:'2026',data:[98000,112000,105000,128000,134000,142800],borderColor:'#0052cc',backgroundColor:'rgba(0,82,204,0.08)',fill:true,tension:0.4,borderWidth:2.5},
+          {label:'2026',data:[98000,112000,105000,128000,134000,142800],borderColor:'#3D5C82',backgroundColor:'rgba(0,82,204,0.08)',fill:true,tension:0.4,borderWidth:2.5},
           {label:'2025',data:[82000,91000,87000,103000,110000,118000],borderColor:'#cbd5e0',borderDash:[4,4],fill:false,tension:0.4,borderWidth:1.5},
         ]
       },
@@ -6556,7 +6557,7 @@ function initReportCharts() {
       data: {
         labels: ['Ene','Feb','Mar','Abr','May','Jun'],
         datasets: [
-          {label:'Nuevos',data:[18,24,19,28,22,26],backgroundColor:'#0052cc'},
+          {label:'Nuevos',data:[18,24,19,28,22,26],backgroundColor:'#3D5C82'},
           {label:'Recurrentes',data:[145,162,158,174,181,192],backgroundColor:'rgba(0,199,177,0.7)'},
         ]
       },
@@ -6572,7 +6573,7 @@ function initReportCharts() {
       indexAxis: 'y',
       data: {
         labels: ['Limpieza','Empaste','Endodoncia','Corona','Blanqueam.','Implante'],
-        datasets: [{label:'Cantidad',data:[48,36,24,18,14,8],backgroundColor:['#36b37e','#0052cc','#ff8b00','#de350b','#9f7aea','#00c7b1']}]
+        datasets: [{label:'Cantidad',data:[48,36,24,18,14,8],backgroundColor:['#36b37e','#3D5C82','#ff8b00','#de350b','#9f7aea','#7093c0']}]
       },
       options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}}}}
     });
@@ -6869,34 +6870,34 @@ function printInvoice(folio) {
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:'Segoe UI',Arial,sans-serif;color:#1a202c;background:white;padding:40px;}
-    .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid #0052cc;}
+    .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid #3D5C82;}
     .logo{display:flex;align-items:center;gap:12px;}
-    .logo-icon{width:48px;height:48px;background:#0052cc;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;color:white;}
-    .clinic-name{font-size:20px;font-weight:800;color:#0052cc;}
-    .clinic-sub{font-size:11px;color:#718096;margin-top:2px;}
-    .invoice-badge{background:#0052cc;color:white;padding:8px 20px;border-radius:8px;text-align:right;}
+    .logo-icon{width:48px;height:48px;background:#3D5C82;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;color:white;}
+    .clinic-name{font-size:20px;font-weight:800;color:#3D5C82;}
+    .clinic-sub{font-size:11px;color:#7d838c;margin-top:2px;}
+    .invoice-badge{background:#3D5C82;color:white;padding:8px 20px;border-radius:8px;text-align:right;}
     .invoice-badge .label{font-size:11px;opacity:0.8;}
     .invoice-badge .folio{font-size:20px;font-weight:800;}
     .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;}
-    .info-box{background:#f7fafc;border-radius:8px;padding:16px;}
-    .info-box h4{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#718096;margin-bottom:8px;}
+    .info-box{background:#eef2f6;border-radius:8px;padding:16px;}
+    .info-box h4{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#7d838c;margin-bottom:8px;}
     .info-box p{font-size:13px;font-weight:600;margin-bottom:3px;}
-    .info-box span{font-size:12px;color:#4a5568;}
+    .info-box span{font-size:12px;color:#33455c;}
     table{width:100%;border-collapse:collapse;margin-bottom:24px;}
-    th{background:#0052cc;color:white;padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
-    td{padding:11px 14px;border-bottom:1px solid #e2e8f0;font-size:13px;}
+    th{background:#3D5C82;color:white;padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;}
+    td{padding:11px 14px;border-bottom:1px solid #d7d5d0;font-size:13px;}
     tr:last-child td{border:none;}
     .totals{display:flex;justify-content:flex-end;margin-bottom:28px;}
     .totals-box{width:280px;}
-    .total-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #e2e8f0;}
-    .total-row.grand{background:#0052cc;color:white;padding:12px 16px;border-radius:8px;margin-top:6px;font-weight:700;font-size:15px;border:none;}
-    .footer{border-top:1px solid #e2e8f0;padding-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:11px;color:#718096;}
-    .qr-box{background:#f7fafc;border-radius:8px;padding:12px;text-align:center;}
+    .total-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #d7d5d0;}
+    .total-row.grand{background:#3D5C82;color:white;padding:12px 16px;border-radius:8px;margin-top:6px;font-weight:700;font-size:15px;border:none;}
+    .footer{border-top:1px solid #d7d5d0;padding-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:11px;color:#7d838c;}
+    .qr-box{background:#eef2f6;border-radius:8px;padding:12px;text-align:center;}
     .stamp{display:inline-block;border:2px solid #36b37e;color:#36b37e;padding:4px 12px;border-radius:4px;font-weight:800;font-size:13px;transform:rotate(-5deg);margin-top:8px;}
     @media print{body{padding:20px;}button{display:none!important;}}
   </style></head><body>
   <div style="text-align:right;margin-bottom:16px;">
-    <button onclick="window.print()" style="background:#0052cc;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">🖨️ Imprimir / Guardar PDF</button>
+    <button onclick="window.print()" style="background:#3D5C82;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">🖨️ Imprimir / Guardar PDF</button>
   </div>
   <div class="header">
     <div class="logo">
@@ -7135,7 +7136,7 @@ function showLegal(type) {
   if (!content) return;
   document.getElementById('legal-title').textContent = content.title;
   document.getElementById('legal-content').innerHTML = `
-    <style>#legal-content h4{font-size:13px;font-weight:700;color:#0a1628;margin:16px 0 6px;}#legal-content p,#legal-content li{font-size:13px;line-height:1.7;color:#4a5568;margin-bottom:8px;}#legal-content ul{padding-left:16px;}</style>
+    <style>#legal-content h4{font-size:13px;font-weight:700;color:#16304f;margin:16px 0 6px;}#legal-content p,#legal-content li{font-size:13px;line-height:1.7;color:#33455c;margin-bottom:8px;}#legal-content ul{padding-left:16px;}</style>
     ${content.body}
   `;
   openModal('modal-legal');
@@ -7360,20 +7361,20 @@ function checkFirstUser(){
 // ============================================================
 
 const LAB_STATUS = {
-  borrador:     {label:'Borrador',       color:'#718096', bg:'#f4f5f7', icon:'📝'},
+  borrador:     {label:'Borrador',       color:'#7d838c', bg:'#f4f5f7', icon:'📝'},
   creada:       {label:'Enviada al lab', color:'#2b6cb0', bg:'#ebf8ff', icon:'📤'},
   recibida:     {label:'Recibida en lab',color:'#276749', bg:'#f0fff4', icon:'✅'},
   produccion:   {label:'En producción',  color:'#c05621', bg:'#fffaf0', icon:'⚙️'},
   prueba:       {label:'Lista para prueba',color:'#6b46c1',bg:'#faf5ff',icon:'🔍'},
   lista:        {label:'Lista p/entrega',color:'#276749', bg:'#e6fffa', icon:'📦'},
-  entregada:    {label:'Entregada',      color:'#718096', bg:'#f4f5f7', icon:'🎉'},
+  entregada:    {label:'Entregada',      color:'#7d838c', bg:'#f4f5f7', icon:'🎉'},
   retrasada:    {label:'Retrasada',      color:'#c53030', bg:'#fff5f5', icon:'⚠️'},
 };
 
 const STATUS_FLOW = ['creada','recibida','produccion','prueba','lista','entregada'];
 
 const LABS = [
-  {id:'L01', name:'Laboratorio Sonrisa Perfecta', contact:'Técnico Ramírez', tel:'+57 310 123 4567', email:'lab@sonrisaperfecta.com', city:'Bogotá', rating:5, specialties:['Zirconia','e.max','CAD/CAM'], tiempo:'5-7 días', avatar:'SP', color:'#0052cc'},
+  {id:'L01', name:'Laboratorio Sonrisa Perfecta', contact:'Técnico Ramírez', tel:'+57 310 123 4567', email:'lab@sonrisaperfecta.com', city:'Bogotá', rating:5, specialties:['Zirconia','e.max','CAD/CAM'], tiempo:'5-7 días', avatar:'SP', color:'#3D5C82'},
   {id:'L02', name:'DentalTech Cali',              contact:'Téc. Vargas',     tel:'+57 315 987 6543', email:'info@dentaltech.co',       city:'Cali',   rating:4, specialties:['PFM','Prótesis removible'], tiempo:'7-10 días', avatar:'DT', color:'#276749'},
   {id:'L03', name:'ProDental Lab',                contact:'Téc. Morales',    tel:'+57 320 555 4321', email:'prodental@gmail.com',        city:'Medellín',rating:5, specialties:['Implantes','Zirconia','e.max'], tiempo:'3-5 días', avatar:'PL', color:'#6b46c1'},
 ];
@@ -7479,8 +7480,8 @@ function renderLabOrders(orders) {
           const active = o.status === st;
           const lab = LAB_STATUS[st];
           return `<div style="display:flex;align-items:center;flex:1;">
-            <div title="${lab.label}" style="width:22px;height:22px;border-radius:50%;background:${done?lab.color:'#e2e8f0'};display:flex;align-items:center;justify-content:center;font-size:10px;color:white;flex-shrink:0;${active?'box-shadow:0 0 0 3px '+lab.color+'40;':''}">${done?'✓':'·'}</div>
-            ${i<STATUS_FLOW.length-1?`<div style="flex:1;height:2px;background:${done&&STATUS_FLOW.indexOf(o.status)>i?lab.color:'#e2e8f0'};"></div>`:''}
+            <div title="${lab.label}" style="width:22px;height:22px;border-radius:50%;background:${done?lab.color:'#d7d5d0'};display:flex;align-items:center;justify-content:center;font-size:10px;color:white;flex-shrink:0;${active?'box-shadow:0 0 0 3px '+lab.color+'40;':''}">${done?'✓':'·'}</div>
+            ${i<STATUS_FLOW.length-1?`<div style="flex:1;height:2px;background:${done&&STATUS_FLOW.indexOf(o.status)>i?lab.color:'#d7d5d0'};"></div>`:''}
           </div>`;
         }).join('')}
       </div>
@@ -7544,10 +7545,10 @@ function openOrdenDetail(id) {
         const lab = LAB_STATUS[st];
         return `<div style="display:flex;align-items:center;flex:1;">
           <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <div style="width:30px;height:30px;border-radius:50%;background:${done?lab.color:'#e2e8f0'};display:flex;align-items:center;justify-content:center;font-size:13px;color:white;${active?'box-shadow:0 0 0 4px '+lab.color+'30;':''}" title="${lab.label}">${done?'✓':lab.icon}</div>
+            <div style="width:30px;height:30px;border-radius:50%;background:${done?lab.color:'#d7d5d0'};display:flex;align-items:center;justify-content:center;font-size:13px;color:white;${active?'box-shadow:0 0 0 4px '+lab.color+'30;':''}" title="${lab.label}">${done?'✓':lab.icon}</div>
             <div style="font-size:9px;color:${done?lab.color:'var(--text-muted)'};font-weight:${active?'700':'400'};white-space:nowrap;">${lab.label}</div>
           </div>
-          ${i<STATUS_FLOW.length-1?`<div style="flex:1;height:2px;background:${done&&STATUS_FLOW.indexOf(o.status)>i?lab.color:'#e2e8f0'};margin-bottom:12px;"></div>`:''}
+          ${i<STATUS_FLOW.length-1?`<div style="flex:1;height:2px;background:${done&&STATUS_FLOW.indexOf(o.status)>i?lab.color:'#d7d5d0'};margin-bottom:12px;"></div>`:''}
         </div>`;
       }).join('')}
     </div>`;
@@ -7805,8 +7806,8 @@ function renderVITAGrids() {
     if (!el) return;
     el.innerHTML = Object.entries(VITA_SHADES).map(([shade, data]) =>
       `<div onclick="selectVITA('${tercio}','${shade}','${data.hex}')"
-        title="${shade}" style="width:22px;height:22px;background:${data.hex};border-radius:3px;cursor:pointer;border:2px solid ${vitaSelected[tercio]===shade?'#0052cc':'rgba(0,0,0,0.2)'};position:relative;"
-      >${vitaSelected[tercio]===shade?'<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#0052cc;">✓</div>':''}</div>`
+        title="${shade}" style="width:22px;height:22px;background:${data.hex};border-radius:3px;cursor:pointer;border:2px solid ${vitaSelected[tercio]===shade?'#3D5C82':'rgba(0,0,0,0.2)'};position:relative;"
+      >${vitaSelected[tercio]===shade?'<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#3D5C82;">✓</div>':''}</div>`
     ).join('');
   });
   updateVITAPreview();
@@ -7853,8 +7854,8 @@ function renderArchSVG() {
   let lowerPts = ARCH_TEETH_LOWER.map((n,i) => archPos(i,16,cx,baseLower,aLower));
 
   const pathStr = pts => pts.map((p,i) => `${i===0?'M':'L'}${p.x.toFixed(0)},${(p.y+12).toFixed(0)}`).join(' ');
-  content += `<path d="${pathStr(upperPts)}" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,2"/>`;
-  content += `<path d="${pathStr(lowerPts)}" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,2"/>`;
+  content += `<path d="${pathStr(upperPts)}" fill="none" stroke="#8b8f96" stroke-width="1" stroke-dasharray="4,2"/>`;
+  content += `<path d="${pathStr(lowerPts)}" fill="none" stroke="#8b8f96" stroke-width="1" stroke-dasharray="4,2"/>`;
 
   // Upper teeth
   ARCH_TEETH_UPPER.forEach((num, i) => {
@@ -7868,7 +7869,7 @@ function renderArchSVG() {
 
     content += `<g onclick="toggleArchTooth(${num})" style="cursor:pointer;">
       <circle cx="${x.toFixed(0)}" cy="${(y+12).toFixed(0)}" r="${r}"
-        fill="${selected?'#0052cc':'white'}" stroke="${selected?'#003d99':'#64748b'}" stroke-width="${selected?2:1.2}"/>
+        fill="${selected?'#3D5C82':'white'}" stroke="${selected?'#003d99':'#6f7680'}" stroke-width="${selected?2:1.2}"/>
       <text x="${x.toFixed(0)}" y="${(y+16).toFixed(0)}" text-anchor="middle" font-size="${isPosterior?8:7}"
         font-weight="${selected?800:600}" fill="${selected?'white':'#374151'}">${num}</text>
     </g>`;
@@ -7876,7 +7877,7 @@ function renderArchSVG() {
 
   // Midline
   content += `<line x1="${cx}" y1="14" x2="${cx}" y2="168" stroke="#cbd5e0" stroke-width="1" stroke-dasharray="3,2"/>`;
-  content += `<text x="${cx}" y="10" text-anchor="middle" font-size="9" fill="#94a3b8">│ Línea media</text>`;
+  content += `<text x="${cx}" y="10" text-anchor="middle" font-size="9" fill="#8b8f96">│ Línea media</text>`;
 
   // Lower teeth
   ARCH_TEETH_LOWER.forEach((num, i) => {
@@ -7887,15 +7888,15 @@ function renderArchSVG() {
 
     content += `<g onclick="toggleArchTooth(${num})" style="cursor:pointer;">
       <circle cx="${x.toFixed(0)}" cy="${(y+8).toFixed(0)}" r="${r}"
-        fill="${selected?'#0052cc':'white'}" stroke="${selected?'#003d99':'#64748b'}" stroke-width="${selected?2:1.2}"/>
+        fill="${selected?'#3D5C82':'white'}" stroke="${selected?'#003d99':'#6f7680'}" stroke-width="${selected?2:1.2}"/>
       <text x="${x.toFixed(0)}" y="${(y+12).toFixed(0)}" text-anchor="middle" font-size="${isPosterior?8:7}"
         font-weight="${selected?800:600}" fill="${selected?'white':'#374151'}">${num}</text>
     </g>`;
   });
 
   // Arch labels
-  content += `<text x="20" y="45" font-size="8" fill="#0052cc" font-weight="700">SUP.</text>`;
-  content += `<text x="20" y="125" font-size="8" fill="#6b778c" font-weight="700">INF.</text>`;
+  content += `<text x="20" y="45" font-size="8" fill="#3D5C82" font-weight="700">SUP.</text>`;
+  content += `<text x="20" y="125" font-size="8" fill="#6f7680" font-weight="700">INF.</text>`;
 
   svg.innerHTML = content;
   // Update selected label
@@ -8008,7 +8009,7 @@ function saveLabOrder(status) {
 function saveNewLab() {
   const nombre = document.getElementById('lab-nombre').value.trim();
   if (!nombre) { showToast('Ingresa el nombre del laboratorio', 'error'); return; }
-  const colors = ['#0052cc','#276749','#6b46c1','#c05621','#b83280'];
+  const colors = ['#3D5C82','#276749','#6b46c1','#c05621','#b83280'];
   const newLab = {
     id:'L'+String(LABS.length+1).padStart(2,'0'),
     name:nombre, contact:document.getElementById('lab-contacto').value,
@@ -8171,12 +8172,12 @@ function initFAQ() {
     col.forEach((item,i) => {
       const id = `faq-${ci}-${i}`;
       colDiv.insertAdjacentHTML('beforeend',`
-        <div style="border-bottom:1px solid #e2e8f0;">
-          <button onclick="toggleFAQ('${id}')" style="width:100%;text-align:left;background:none;border:none;padding:18px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:#0a1628;">
+        <div style="border-bottom:1px solid #d7d5d0;">
+          <button onclick="toggleFAQ('${id}')" style="width:100%;text-align:left;background:none;border:none;padding:18px 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:#16304f;">
             ${item.q}
-            <span id="faq-icon-${id}" style="font-size:18px;color:#0052cc;flex-shrink:0;margin-left:12px;font-weight:300;transition:transform 0.2s;">+</span>
+            <span id="faq-icon-${id}" style="font-size:18px;color:#3D5C82;flex-shrink:0;margin-left:12px;font-weight:300;transition:transform 0.2s;">+</span>
           </button>
-          <div id="${id}" style="display:none;padding:0 0 16px;font-size:13px;color:#6b778c;line-height:1.7;">${item.a}</div>
+          <div id="${id}" style="display:none;padding:0 0 16px;font-size:13px;color:#6f7680;line-height:1.7;">${item.a}</div>
         </div>`);
     });
     grid.appendChild(colDiv);
@@ -8199,7 +8200,7 @@ document.addEventListener('DOMContentLoaded', () => { setTimeout(initFAQ, 200); 
 // ============================================================
 const BOT_RESPONSES = {
   planes: {msg:'Tenemos 3 planes:\n\n💼 <strong>Básico:</strong> $89.000/mes · 1 odontólogo · 200 pacientes\n⭐ <strong>Pro:</strong> $189.000/mes · 3 odontólogos · RIPS · IA · WhatsApp\n🏥 <strong>Clínica:</strong> $349.000/mes · Ilimitado · Multisede · 24/7\n\nTodos incluyen <strong>14 días gratis</strong>. ¿Quieres más info de algún plan?', escalate:false},
-  demo: {msg:'¡Claro! Puedes agendar una demo gratuita de 30 minutos 👇\n\n📅 <a href="#" onclick="openDemoModal();return false;" style="color:#0052cc;font-weight:700;">Hacer clic aquí para agendar</a>\n💬 WhatsApp: +57 601 234-5678\n✉️ hola@soydenti.com\n\nTe contactamos en menos de 2 horas.', escalate:false},
+  demo: {msg:'¡Claro! Puedes agendar una demo gratuita de 30 minutos 👇\n\n📅 <a href="#" onclick="openDemoModal();return false;" style="color:#3D5C82;font-weight:700;">Hacer clic aquí para agendar</a>\n💬 WhatsApp: +57 601 234-5678\n✉️ hola@soydenti.com\n\nTe contactamos en menos de 2 horas.', escalate:false},
   rips: {msg:'Denti genera el archivo JSON de RIPS en formato SISPRO 2016 listo para subir a sispro.gov.co. Incluye:\n\n✓ Codificación CUPS automática\n✓ Diagnósticos CIE-10\n✓ Todos los tipos de servicio\n✓ Validación antes de generar\n\nDisponible en plan Pro y Enterprise.', escalate:false},
   seguridad: {msg:'Tu información y la de tus pacientes está 100% segura:\n\n🔒 Cifrado AES-256 en reposo y tránsito\n🔐 Autenticación de doble factor\n💾 Backups automáticos diarios\n🇨🇴 Servidores en Colombia\n📋 Cumplimiento Ley 1581/2012 (Habeas Data)', escalate:false},
   precio: {msg:'Nuestros precios en COP:\n\n• Básico: $89.000/mes\n• Pro: $189.000/mes ⭐\n• Clínica: $349.000/mes\n\nTodos con 14 días gratis sin tarjeta. ¿Prefieres ver los planes en detalle?', escalate:false},
@@ -8249,8 +8250,8 @@ function addBotMsg(role, text) {
   const div = document.createElement('div');
   div.style.cssText = `display:flex;justify-content:${isUser?'flex-end':'flex-start'};`;
   div.innerHTML = `<div style="max-width:85%;padding:9px 12px;border-radius:12px;font-size:12.5px;line-height:1.5;
-    ${isUser?'background:#0052cc;color:white;border-bottom-right-radius:3px':'background:white;border:1px solid #e2e8f0;border-bottom-left-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,0.06)'}">
-    ${!isUser?'<span style="font-size:9px;font-weight:800;color:#0052cc;display:block;margin-bottom:3px;">🤖 Denti</span>':''}
+    ${isUser?'background:#3D5C82;color:white;border-bottom-right-radius:3px':'background:white;border:1px solid #d7d5d0;border-bottom-left-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,0.06)'}">
+    ${!isUser?'<span style="font-size:9px;font-weight:800;color:#3D5C82;display:block;margin-bottom:3px;">🤖 Denti</span>':''}
     ${text.replace(/\n/g,'<br>')}
   </div>`;
   container.appendChild(div);
@@ -8620,7 +8621,7 @@ function renderEvoluciones(patientName) {
       : '';
     return;
   }
-  const catColor = {'S':'#0052cc','O':'#276749','A':'#c05621','P':'#6b46c1'};
+  const catColor = {'S':'#3D5C82','O':'#276749','A':'#c05621','P':'#6b46c1'};
   container.innerHTML = list.map(e => {
     const cups = ALL_CUPS.find(c=>c.code===e.cups);
     const cie  = ALL_CIE10.find(c=>c.code===e.cie10);
@@ -8640,10 +8641,10 @@ function renderEvoluciones(patientName) {
       <!-- CUPS + CIE-10 detail -->
       <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
         <div style="background:#e6f0ff;border-radius:6px;padding:6px 10px;font-size:11.5px;">
-          <strong style="color:#0052cc;">CUPS ${e.cups}</strong><br><span style="color:#4a5568;">${cups?cups.desc:e.cups_desc}</span>
+          <strong style="color:#3D5C82;">CUPS ${e.cups}</strong><br><span style="color:#33455c;">${cups?cups.desc:e.cups_desc}</span>
         </div>
         <div style="background:#e3fcef;border-radius:6px;padding:6px 10px;font-size:11.5px;">
-          <strong style="color:#276749;">CIE-10 ${e.cie10}</strong><br><span style="color:#4a5568;">${cie?cie.desc:e.cie10_desc}</span>
+          <strong style="color:#276749;">CIE-10 ${e.cie10}</strong><br><span style="color:#33455c;">${cie?cie.desc:e.cie10_desc}</span>
         </div>
       </div>
       <!-- SOAP -->
@@ -8653,7 +8654,7 @@ function renderEvoluciones(patientName) {
           const vals={S:e.s,O:e.o,A:e.a,P:e.p};
           return `<div style="background:#f8f9fa;border-radius:8px;padding:10px;border-left:3px solid ${catColor[k]};">
             <div style="font-size:10px;font-weight:800;text-transform:uppercase;color:${catColor[k]};margin-bottom:4px;">${k} — ${labels[k]}</div>
-            <div style="font-size:12px;color:#4a5568;line-height:1.5;">${vals[k]||'—'}</div>
+            <div style="font-size:12px;color:#33455c;line-height:1.5;">${vals[k]||'—'}</div>
           </div>`;
         }).join('')}
       </div>
@@ -8849,31 +8850,31 @@ function printEvolucion(id) {
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:Arial,sans-serif;background:white;padding:32px;color:#1a202c;font-size:13px;}
-    .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #2563eb;padding-bottom:16px;margin-bottom:20px;}
-    .clinic-name{font-size:20px;font-weight:900;color:#2563eb;}
-    .clinic-sub{font-size:11px;color:#718096;margin-top:2px;}
+    .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #3D5C82;padding-bottom:16px;margin-bottom:20px;}
+    .clinic-name{font-size:20px;font-weight:900;color:#3D5C82;}
+    .clinic-sub{font-size:11px;color:#7d838c;margin-top:2px;}
     .doc-title{text-align:right;}
     .doc-title h2{font-size:15px;font-weight:800;color:#1a202c;}
-    .doc-title small{font-size:11px;color:#718096;}
-    .meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:#f7fafc;border-radius:8px;padding:14px;margin-bottom:18px;border:1px solid #e2e8f0;}
-    .meta-item label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;color:#718096;margin-bottom:2px;}
+    .doc-title small{font-size:11px;color:#7d838c;}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;background:#eef2f6;border-radius:8px;padding:14px;margin-bottom:18px;border:1px solid #d7d5d0;}
+    .meta-item label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;color:#7d838c;margin-bottom:2px;}
     .meta-item span{font-size:13px;font-weight:700;color:#1a202c;}
     .codes-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
     .code-box{border-radius:8px;padding:10px 12px;border:1.5px solid;}
     .code-box.cups{background:#ebf4ff;border-color:#bee3f8;}
     .code-box.cie10{background:#e6fffa;border-color:#81e6d9;}
     .code-box .code{font-weight:900;font-size:13px;margin-bottom:2px;}
-    .code-box .desc{font-size:11.5px;color:#4a5568;}
+    .code-box .desc{font-size:11.5px;color:#33455c;}
     .soap-section{margin-bottom:18px;}
     .soap-section h3{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;padding:6px 10px;border-radius:6px 6px 0 0;margin:0;}
-    .soap-section .soap-body{border:1px solid #e2e8f0;border-top:none;border-radius:0 0 6px 6px;padding:12px;font-size:13px;line-height:1.7;white-space:pre-wrap;color:#1a202c;min-height:50px;}
+    .soap-section .soap-body{border:1px solid #d7d5d0;border-top:none;border-radius:0 0 6px 6px;padding:12px;font-size:13px;line-height:1.7;white-space:pre-wrap;color:#1a202c;min-height:50px;}
     .meds-box{background:#fffbeb;border:1.5px solid #fbd38d;border-radius:8px;padding:12px 14px;margin-bottom:16px;}
     .meds-box strong{display:block;font-size:11px;text-transform:uppercase;color:#b7791f;margin-bottom:4px;}
     .reco-box{background:#f0fff4;border:1.5px solid #9ae6b4;border-radius:8px;padding:12px 14px;margin-bottom:16px;}
     .reco-box strong{display:block;font-size:11px;text-transform:uppercase;color:#276749;margin-bottom:4px;}
     .footer{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;}
-    .sig-line{border-top:1.5px solid #2d3748;padding-top:6px;text-align:center;font-size:11px;color:#718096;}
-    .piezas-tag{display:inline-block;background:#e2e8f0;border-radius:4px;padding:2px 8px;font-size:11px;margin-right:4px;font-weight:700;}
+    .sig-line{border-top:1.5px solid #2d3748;padding-top:6px;text-align:center;font-size:11px;color:#7d838c;}
+    .piezas-tag{display:inline-block;background:#d7d5d0;border-radius:4px;padding:2px 8px;font-size:11px;margin-right:4px;font-weight:700;}
     @media print{body{padding:16px;} button{display:none!important;}}
   </style>
   </head><body>
@@ -8913,8 +8914,8 @@ function printEvolucion(id) {
   </div>
 
   <div style="text-align:center;margin-top:20px;">
-    <button onclick="window.print()" style="padding:10px 28px;background:#2563eb;color:white;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
-    <button onclick="window.close()" style="padding:10px 20px;background:#e2e8f0;color:#1a202c;border:none;border-radius:8px;font-size:14px;margin-left:8px;cursor:pointer;">Cerrar</button>
+    <button onclick="window.print()" style="padding:10px 28px;background:#3D5C82;color:white;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">🖨️ Imprimir</button>
+    <button onclick="window.close()" style="padding:10px 20px;background:#d7d5d0;color:#1a202c;border:none;border-radius:8px;font-size:14px;margin-left:8px;cursor:pointer;">Cerrar</button>
   </div>
   <script>setTimeout(()=>window.print(),400);<\/script>
   </body></html>`);
@@ -9650,22 +9651,22 @@ function verificarInteracciones() {
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
         <div>
           <span style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:${s.color};display:block;margin-bottom:2px;">${s.icon} ${s.label}</span>
-          <div style="font-size:15px;font-weight:800;color:#0a1628;">${inter.title}</div>
+          <div style="font-size:15px;font-weight:800;color:#16304f;">${inter.title}</div>
           <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Medicamento dental: <strong>${matchedDrugs}</strong></div>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
         <div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:10px 12px;">
           <div style="font-weight:700;font-size:11px;text-transform:uppercase;color:${s.color};margin-bottom:4px;">Efecto clínico</div>
-          <div style="color:#4a5568;">${inter.effect}</div>
+          <div style="color:#33455c;">${inter.effect}</div>
         </div>
         <div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:10px 12px;">
-          <div style="font-weight:700;font-size:11px;text-transform:uppercase;color:#4a5568;margin-bottom:4px;">Mecanismo</div>
-          <div style="color:#4a5568;">${inter.mechanism}</div>
+          <div style="font-weight:700;font-size:11px;text-transform:uppercase;color:#33455c;margin-bottom:4px;">Mecanismo</div>
+          <div style="color:#33455c;">${inter.mechanism}</div>
         </div>
         <div style="background:rgba(0,82,204,0.06);border-radius:8px;padding:10px 12px;border-left:3px solid ${s.border};">
-          <div style="font-weight:700;font-size:11px;text-transform:uppercase;color:#0052cc;margin-bottom:4px;">Recomendación clínica</div>
-          <div style="color:#0a1628;font-weight:500;">${inter.recommendation}</div>
+          <div style="font-weight:700;font-size:11px;text-transform:uppercase;color:#3D5C82;margin-bottom:4px;">Recomendación clínica</div>
+          <div style="color:#16304f;font-weight:500;">${inter.recommendation}</div>
         </div>
         ${inter.alternatives && inter.alternatives.length ? `
         <div>
@@ -9923,14 +9924,14 @@ function periDualLineGraph(teeth, surfs, invert) {
   });
 
   // CEJ reference line
-  const cejLine = `<line x1="${PLBL_W}" y1="${cejY}" x2="${totalW}" y2="${cejY}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>`;
+  const cejLine = `<line x1="${PLBL_W}" y1="${cejY}" x2="${totalW}" y2="${cejY}" stroke="#8b8f96" stroke-width="1" stroke-dasharray="3,3"/>`;
   // 3mm below CEJ line (pocket threshold)
   const threshY = !invert ? cejY + 3*MPX : H - (cejY + 3*MPX);
   const threshLine = `<line x1="${PLBL_W}" y1="${threshY}" x2="${totalW}" y2="${threshY}" stroke="#fca5a5" stroke-width="0.8" stroke-dasharray="4,3"/>`;
 
   // Quadrant separator
   const sepX = PLBL_W + 8*PCOL_W + 2.5;
-  const qSep = `<line x1="${sepX}" y1="0" x2="${sepX}" y2="${H}" stroke="#64748b" stroke-width="1.5"/>`;
+  const qSep = `<line x1="${sepX}" y1="0" x2="${sepX}" y2="${H}" stroke="#6f7680" stroke-width="1.5"/>`;
 
   // Scale labels
   const scaleLbl = `
@@ -9947,7 +9948,7 @@ function periDualLineGraph(teeth, surfs, invert) {
     ${grid}${cejLine}${threshLine}${qSep}
     <path d="${area}" fill="#bfdbfe" fill-opacity="0.45"/>
     <polyline points="${mgLine}" fill="none" stroke="#ef4444" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <polyline points="${pdLine}" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <polyline points="${pdLine}" fill="none" stroke="#16304f" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
     ${bopDots}
     ${scaleLbl}
   </svg>`;
@@ -9973,8 +9974,8 @@ function periDepthGraph(teeth, surfs, invert) {
   let refSVG = '';
   [3,6,9].forEach(mm => {
     const ry = yOf(mm);
-    refSVG += `<line x1="${PLBL_W}" y1="${ry}" x2="${totalW}" y2="${ry}" stroke="#94a3b8" stroke-width="0.7" stroke-dasharray="4,3"/>`;
-    refSVG += `<text x="${PLBL_W-4}" y="${ry+3.5}" text-anchor="end" font-size="7.5" fill="#64748b" font-family="Arial">${mm}</text>`;
+    refSVG += `<line x1="${PLBL_W}" y1="${ry}" x2="${totalW}" y2="${ry}" stroke="#8b8f96" stroke-width="0.7" stroke-dasharray="4,3"/>`;
+    refSVG += `<text x="${PLBL_W-4}" y="${ry+3.5}" text-anchor="end" font-size="7.5" fill="#6f7680" font-family="Arial">${mm}</text>`;
   });
 
   // Separator line between quadrants
@@ -9986,7 +9987,7 @@ function periDepthGraph(teeth, surfs, invert) {
   teeth.forEach((n,ti) => {
     const sep = ti >= 8 ? 5 : 0;
     const x = PLBL_W + ti * PCOL_W + sep;
-    gridSVG += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#e2e8f0" stroke-width="0.5"/>`;
+    gridSVG += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#d7d5d0" stroke-width="0.5"/>`;
   });
 
   // Gather measurement points
@@ -10018,17 +10019,17 @@ function periDepthGraph(teeth, surfs, invert) {
   ).join('');
 
   // CEJ baseline (thick)
-  const cejSVG = `<line x1="${PLBL_W}" y1="${baseY}" x2="${totalW}" y2="${baseY}" stroke="#1e293b" stroke-width="2"/>`;
+  const cejSVG = `<line x1="${PLBL_W}" y1="${baseY}" x2="${totalW}" y2="${baseY}" stroke="#1e3a5c" stroke-width="2"/>`;
 
   // Scale label (mm)
-  const scaleLbl = `<text x="${PLBL_W/2}" y="${H/2+3}" text-anchor="middle" font-size="7" fill="#94a3b8" font-family="Arial" transform="rotate(-90,${PLBL_W/2},${H/2})">mm</text>`;
+  const scaleLbl = `<text x="${PLBL_W/2}" y="${H/2+3}" text-anchor="middle" font-size="7" fill="#8b8f96" font-family="Arial" transform="rotate(-90,${PLBL_W/2},${H/2})">mm</text>`;
 
-  return `<svg width="${totalW}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;background:#f8fafc;">
+  return `<svg width="${totalW}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;background:#f7f2e3;">
     ${zoneSVG}
     ${gridSVG}
     ${refSVG}
     ${cejSVG}
-    <path d="${areaPath}" fill="#3b82f6" fill-opacity="0.12"/>
+    <path d="${areaPath}" fill="#7093c0" fill-opacity="0.12"/>
     <polyline points="${polyPts}" fill="none" stroke="#1e40af" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
     ${depthDots}
     ${bopDots}
@@ -10049,7 +10050,7 @@ function periToothSVG(n, inverted) {
   const OCC = 66;   // occlusal / incisal
   const RT  = 5;    // root apex
 
-  const cF = '#f8fafc', rF = '#e8edf5', cS = '#6b7a90', sw = 1.0;
+  const cF = '#f7f2e3', rF = '#e8edf5', cS = '#6b7a90', sw = 1.0;
 
   // Root with pronounced lateral bulge — organic, not triangular
   function root1(lx, rx, tipX, tipY) {
@@ -10142,9 +10143,9 @@ function periToothSVG(n, inverted) {
 }
 
 // ── Input cell for numeric values ────────────────────────────
-function periCell(n, surf, type, bgColor='white', textColor='#1e293b') {
+function periCell(n, surf, type, bgColor='white', textColor='#1e3a5c') {
   const v=pGV(n,surf,type);
-  const tc=type==='d'?(v>=6?'#dc2626':v>=4?'#d97706':'#1e293b'):textColor;
+  const tc=type==='d'?(v>=6?'#dc2626':v>=4?'#d97706':'#1e3a5c'):textColor;
   const bg=type==='d'?(v>=6?'#fee2e2':v>=4?'#fef9c3':bgColor):bgColor;
   return `<input type="number" min="0" max="12" value="${v||''}"
     style="width:${PSURF_W}px;height:15px;border:1px solid #d1d5db;border-radius:2px;text-align:center;font-size:9px;font-weight:700;padding:0;background:${bg};color:${tc};outline:none;"
@@ -10211,7 +10212,7 @@ function renderPerioChart() {
 
     // Separador de cuadrante
     const sepX=8*CW+SEP/2;
-    const qSep=`<line x1="${sepX}" y1="0" x2="${sepX}" y2="${GH+NH}" stroke="#64748b" stroke-width="1.5"/>`;
+    const qSep=`<line x1="${sepX}" y1="0" x2="${sepX}" y2="${GH+NH}" stroke="#6f7680" stroke-width="1.5"/>`;
 
     // Zonas clínicas (offset por NH)
     const zs=[
@@ -10226,7 +10227,7 @@ function renderPerioChart() {
     ).join('');
 
     const mgDots=mgPts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="2.5" fill="#ef4444"/>`).join('');
-    const pdDots=pdPts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="2.5" fill="#1d4ed8"/>`).join('');
+    const pdDots=pdPts.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="2.5" fill="#16304f"/>`).join('');
     const bops=mgPts.map((p,i)=>p.bop?`<circle cx="${p.x}" cy="${pdPts[i]?.y||p.y}" r="3.5" fill="#ef4444" stroke="white" stroke-width="0.8"/>`:'' ).join('');
     // ── Tooth anatomy backgrounds (integrated with graph like reference image) ──
     const TS='#8a9bb8',TSW=0.9;
@@ -10272,8 +10273,8 @@ function renderPerioChart() {
       ${vg}
       <line x1="0" y1="${y2p}"  x2="${GW}" y2="${y2p}"  stroke="#c8d4e0" stroke-width="0.4" stroke-dasharray="1,6"/>
       <line x1="0" y1="${y1p}"  x2="${GW}" y2="${y1p}"  stroke="#c8d4e0" stroke-width="0.4" stroke-dasharray="1,6"/>
-      <line x1="0" y1="${y3p}"  x2="${GW}" y2="${y3p}"  stroke="#94a3b8" stroke-width="0.9" stroke-dasharray="3,3" opacity="0.85"/>
-      <line x1="0" y1="${cejY}" x2="${GW}" y2="${cejY}" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <line x1="0" y1="${y3p}"  x2="${GW}" y2="${y3p}"  stroke="#8b8f96" stroke-width="0.9" stroke-dasharray="3,3" opacity="0.85"/>
+      <line x1="0" y1="${cejY}" x2="${GW}" y2="${cejY}" stroke="#1e3a5c" stroke-width="1.5" stroke-dasharray="5,3"/>
       <line x1="0" y1="${y1n}"  x2="${GW}" y2="${y1n}"  stroke="#d0c8b8" stroke-width="0.4" stroke-dasharray="1,6"/>
       <line x1="0" y1="${y2n}"  x2="${GW}" y2="${y2n}"  stroke="#d0c8b8" stroke-width="0.4" stroke-dasharray="1,6"/>
       <line x1="0" y1="${y3n}"  x2="${GW}" y2="${y3n}"  stroke="#f59e0b" stroke-width="1.0" stroke-dasharray="4,3"/>
@@ -10283,7 +10284,7 @@ function renderPerioChart() {
       ${qSep}
       <path d="${area}" fill="rgba(29,78,216,0.10)"/>
       <polyline points="${mgPts.map(p=>`${p.x},${p.y}`).join(' ')}" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
-      <polyline points="${pdPts.map(p=>`${p.x},${p.y}`).join(' ')}" fill="none" stroke="#1d4ed8" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+      <polyline points="${pdPts.map(p=>`${p.x},${p.y}`).join(' ')}" fill="none" stroke="#16304f" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
       ${mgDots}${pdDots}${bops}
     </svg>`;
   }
@@ -10303,14 +10304,14 @@ function renderPerioChart() {
     const y5n=(invert?GH-(CEJ_Y+5*MM_PX):CEJ_Y+5*MM_PX)+NH;
     const L=(y,t,col,fw='700')=>`<span style="position:absolute;right:4px;top:${Math.max(0,y-5)}px;font-size:7px;font-family:Arial;font-weight:${fw};color:${col};">${t}</span>`;
     const Tk=(y,col)=>`<span style="position:absolute;right:0;top:${Math.max(0,y)}px;width:6px;height:1px;background:${col};display:block;"></span>`;
-    const lbl=sectionLabel?`<span style="position:absolute;left:4px;top:2px;font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;color:#1e293b;font-family:Arial;line-height:1.1;">${sectionLabel}</span>`:'';
-    const mmLbl=`<span style="position:absolute;left:4px;top:${NH+1}px;font-size:6px;font-weight:600;color:#94a3b8;font-family:Arial;letter-spacing:0.2px;">(mm)</span>`;
-    return `<div style="width:${LW}px;flex-shrink:0;height:${totalH}px;position:relative;background:#f8fafc;border-right:2px solid #e2e8f0;">
+    const lbl=sectionLabel?`<span style="position:absolute;left:4px;top:2px;font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;color:#1e3a5c;font-family:Arial;line-height:1.1;">${sectionLabel}</span>`:'';
+    const mmLbl=`<span style="position:absolute;left:4px;top:${NH+1}px;font-size:6px;font-weight:600;color:#8b8f96;font-family:Arial;letter-spacing:0.2px;">(mm)</span>`;
+    return `<div style="width:${LW}px;flex-shrink:0;height:${totalH}px;position:relative;background:#f7f2e3;border-right:2px solid #d7d5d0;">
       ${lbl}${mmLbl}
       ${Tk(y2p,'#c8d4e0')}${L(y2p,'+2','#b0beca','400')}
       ${Tk(y1p,'#c8d4e0')}${L(y1p,'+1','#b0beca','400')}
-      ${Tk(y3p,'#94a3b8')}${L(y3p,'+3mm','#64748b')}
-      ${Tk(cejY,'#1e293b')}${L(cejY,'CEJ','#1e293b')}
+      ${Tk(y3p,'#8b8f96')}${L(y3p,'+3mm','#6f7680')}
+      ${Tk(cejY,'#1e3a5c')}${L(cejY,'CEJ','#1e3a5c')}
       ${Tk(y1n,'#d0c8b8')}${L(y1n,'−1','#c0b098','400')}
       ${Tk(y2n,'#d0c8b8')}${L(y2n,'−2','#c0b098','400')}
       ${Tk(y3n,'#f59e0b')}${L(y3n,'−3mm','#b45309')}
@@ -10323,32 +10324,32 @@ function renderPerioChart() {
   function makeNumHdr(teeth){
     const cells=teeth.map((n,ti)=>{
       const q=Math.floor(n/10),col=(q===1||q===4)?'#1e40af':'#5b21b6';
-      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#94a3b8;"></div>`:'';
-      return sep+`<div style="width:${CW}px;flex-shrink:0;text-align:center;font-size:9px;font-weight:800;color:${col};border-right:1px solid #ddd;padding:3px 0;background:#f1f5f9;">${n}</div>`;
+      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#8b8f96;"></div>`:'';
+      return sep+`<div style="width:${CW}px;flex-shrink:0;text-align:center;font-size:9px;font-weight:800;color:${col};border-right:1px solid #ddd;padding:3px 0;background:#eceef1;">${n}</div>`;
     }).join('');
-    return `<div style="display:flex;"><div style="width:${LW}px;flex-shrink:0;background:#f1f5f9;border-right:2px solid #cbd5e1;"></div>${cells}</div>`;
+    return `<div style="display:flex;"><div style="width:${LW}px;flex-shrink:0;background:#eceef1;border-right:2px solid #cbd5e1;"></div>${cells}</div>`;
   }
 
-  function rowLbl(txt,col,h=16,bg='#f8fafc'){
-    return `<div style="width:${LW}px;flex-shrink:0;min-height:${h}px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;color:${col};background:${bg};border-right:2px solid #e2e8f0;line-height:1.1;">${txt}</div>`;
+  function rowLbl(txt,col,h=16,bg='#f7f2e3'){
+    return `<div style="width:${LW}px;flex-shrink:0;min-height:${h}px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;color:${col};background:${bg};border-right:2px solid #d7d5d0;line-height:1.1;">${txt}</div>`;
   }
 
   function makeFurcaRow(teeth){
-    const COLS=['#94a3b8','#f59e0b','#f97316','#ef4444'],SYMS=['–','▲','▲▲','▲▲▲'];
+    const COLS=['#8b8f96','#f59e0b','#f97316','#ef4444'],SYMS=['–','▲','▲▲','▲▲▲'];
     const cells=teeth.map((n,ti)=>{
       const t=n%10,isMol=(t===6||t===7||t===0);
       const v=perioData[n+'-furca']||0;
       const col=isMol?COLS[v]:'#d1d5db',sym=isMol?SYMS[v]:'–';
       const oc=isMol?`onclick="pFurca(${n})"`:'' ;
-      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#94a3b8;"></div>`:'';
+      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#8b8f96;"></div>`:'';
       return sep+`<div ${oc} style="width:${CW}px;flex-shrink:0;min-height:16px;display:flex;align-items:center;justify-content:center;font-size:${isMol&&v>1?'8':'10'}px;font-weight:700;color:${col};cursor:${isMol?'pointer':'default'};background:#fafafa;border-right:1px solid #f0f0f0;user-select:none;">${sym}</div>`;
     }).join('');
-    return `<div style="display:flex;border-bottom:1px solid #e8e8e8;">${rowLbl('FURCA','#94a3b8',16)}${cells}</div>`;
+    return `<div style="display:flex;border-bottom:1px solid #e8e8e8;">${rowLbl('FURCA','#8b8f96',16)}${cells}</div>`;
   }
 
   function makeSqRow(teeth,surfs,label,lc,type,onColor,bg='#fafafa'){
     const cells=teeth.map((n,ti)=>{
-      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#94a3b8;"></div>`:'';
+      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#8b8f96;"></div>`:'';
       const sqs=surfs.map(s=>{
         const on=type==='bop'?pGet(n,s).bop:pGV(n,s,type)>0;
         return `<div onclick="togglePerioSquare(${n},'${s}','${type}')" style="width:${SQ}px;height:${SQ}px;border:1.5px solid ${on?onColor:'#d1d5db'};background:${on?onColor:'white'};border-radius:2px;cursor:pointer;flex-shrink:0;transition:all 0.1s;" title="${type} D${n}·${s}"></div>`;
@@ -10360,14 +10361,14 @@ function renderPerioChart() {
 
   function makeNumRow(teeth,surfs,label,lc,type,bg='white',rh=16){
     const cells=teeth.map((n,ti)=>{
-      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#94a3b8;"></div>`:'';
+      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#8b8f96;"></div>`:'';
       const ins=surfs.map(s=>{
         const v=pGV(n,s,type);
-        let ib=bg,ic='#1e293b';
+        let ib=bg,ic='#1e3a5c';
         if(type==='d'){if(v>=6){ib='#fee2e2';ic='#dc2626';}else if(v>=4){ib='#fef3c7';ic='#d97706';}}
-        else if(type==='mg'){ib='#eff6ff';ic=v>0?'#dc2626':v<0?'#1e40af':'#64748b';}
+        else if(type==='mg'){ib='#e8eef5';ic=v>0?'#dc2626':v<0?'#1e40af':'#6f7680';}
         else if(type==='ae'){ib='#f0fdf4';ic='#166534';}
-        return `<input type="number" min="-10" max="15" value="${v||''}" style="width:${SW}px;height:${rh-1}px;border:1px solid #e2e8f0;text-align:center;font-size:9px;font-weight:700;padding:0;background:${ib};color:${ic};outline:none;border-radius:0;flex-shrink:0;" oninput="pSV(${n},'${s}','${type}',this.value)" title="D${n} ${s}">`;
+        return `<input type="number" min="-10" max="15" value="${v||''}" style="width:${SW}px;height:${rh-1}px;border:1px solid #d7d5d0;text-align:center;font-size:9px;font-weight:700;padding:0;background:${ib};color:${ic};outline:none;border-radius:0;flex-shrink:0;" oninput="pSV(${n},'${s}','${type}',this.value)" title="D${n} ${s}">`;
       }).join('');
       return sep+`<div style="width:${CW}px;flex-shrink:0;min-height:${rh}px;display:flex;align-items:center;justify-content:center;gap:0;background:${bg};border-right:1px solid #f0f0f0;">${ins}</div>`;
     }).join('');
@@ -10376,14 +10377,14 @@ function renderPerioChart() {
 
   function makeToothRow(teeth,isUpper){
     const cells=teeth.map((n,ti)=>{
-      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#94a3b8;"></div>`:'';
+      const sep=ti===8?`<div style="width:${SEP}px;flex-shrink:0;background:#8b8f96;"></div>`:'';
       return sep+`<div style="width:${CW}px;flex-shrink:0;display:flex;align-items:${isUpper?'flex-end':'flex-start'};justify-content:center;background:white;border-right:1px solid #f5f5f5;">${periToothSVG(n,!isUpper)}</div>`;
     }).join('');
-    return `<div style="display:flex;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;background:white;"><div style="width:${LW}px;flex-shrink:0;background:#f8fafc;border-right:2px solid #e2e8f0;display:flex;align-items:center;justify-content:center;"><span style="writing-mode:vertical-lr;transform:rotate(180deg);font-size:7px;font-weight:700;color:#94a3b8;letter-spacing:1px;">ANATOMÍA</span></div>${cells}</div>`;
+    return `<div style="display:flex;border-top:1px solid #d7d5d0;border-bottom:1px solid #d7d5d0;background:white;"><div style="width:${LW}px;flex-shrink:0;background:#f7f2e3;border-right:2px solid #d7d5d0;display:flex;align-items:center;justify-content:center;"><span style="writing-mode:vertical-lr;transform:rotate(180deg);font-size:7px;font-weight:700;color:#8b8f96;letter-spacing:1px;">ANATOMÍA</span></div>${cells}</div>`;
   }
 
   function faceBanner(label,color,bg){
-    return `<div style="display:flex;"><div style="width:${LW}px;flex-shrink:0;padding:4px 8px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:${color};background:${bg};border-right:2px solid #e2e8f0;display:flex;align-items:center;justify-content:flex-end;">${label}</div><div style="flex:1;background:${bg};"></div></div>`;
+    return `<div style="display:flex;"><div style="width:${LW}px;flex-shrink:0;padding:4px 8px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:${color};background:${bg};border-right:2px solid #d7d5d0;display:flex;align-items:center;justify-content:flex-end;">${label}</div><div style="flex:1;background:${bg};"></div></div>`;
   }
 
   function makeArch(teeth,isUpper){
@@ -10392,22 +10393,22 @@ function renderPerioChart() {
     const archLbl=isUpper?'▲ ARCO SUPERIOR — Q.I (derecho) · Q.II (izquierdo)':'▼ ARCO INFERIOR — Q.IV (derecho) · Q.III (izquierdo)';
     const archBg=isUpper?'#dbeafe':'#ede9fe';
     return `<div style="margin-bottom:20px;border:1px solid #d1d5db;border-radius:10px;overflow:hidden;">
-      <div style="background:${archBg};padding:5px 14px;font-size:9.5px;font-weight:800;color:#1e293b;border-bottom:1px solid #cbd5e1;">${archLbl}</div>
+      <div style="background:${archBg};padding:5px 14px;font-size:9.5px;font-weight:800;color:#1e3a5c;border-bottom:1px solid #cbd5e1;">${archLbl}</div>
       <div style="overflow-x:auto;">
         <div style="min-width:${totalW}px;background:white;">
-          <div style="display:flex;border-bottom:1px solid #e2e8f0;">${makeYAxis(false,vLbl)}${makeGraph(teeth,SV,false,isUpper)}</div>
+          <div style="display:flex;border-bottom:1px solid #d7d5d0;">${makeYAxis(false,vLbl)}${makeGraph(teeth,SV,false,isUpper)}</div>
           ${makeFurcaRow(teeth)}
           ${makeSqRow(teeth,SV,'SANGRADO','#dc2626','bop','#dc2626','#fffafa')}
           ${makeSqRow(teeth,SV,'SUPURACIÓN','#d97706','sup','#f59e0b','#fffbf0')}
-          ${makeSqRow(teeth,SV,'PLACA','#64748b','pla','#9ca3af','#f9f9f9')}
+          ${makeSqRow(teeth,SV,'PLACA','#6f7680','pla','#9ca3af','#f9f9f9')}
           ${makeNumRow(teeth,SV,'ANCHURA ENCÍA','#15803d','ae','#f0fdf4')}
-          ${makeNumRow(teeth,SV,'MARGEN GINGIVAL','#1d4ed8','mg','#eff6ff')}
+          ${makeNumRow(teeth,SV,'MARGEN GINGIVAL','#16304f','mg','#e8eef5')}
           ${makeNumRow(teeth,SV,'PROF. SONDAJE','#991b1b','d','white',18)}
-          <div style="display:flex;border-bottom:1px solid #e2e8f0;">${makeYAxis(false,pLbl)}${makeGraph(teeth,SP,false,isUpper)}</div>
+          <div style="display:flex;border-bottom:1px solid #d7d5d0;">${makeYAxis(false,pLbl)}${makeGraph(teeth,SP,false,isUpper)}</div>
           ${makeFurcaRow(teeth)}
           ${makeSqRow(teeth,SP,'SANGRADO','#dc2626','bop','#dc2626','#fffafa')}
           ${makeSqRow(teeth,SP,'SUPURACIÓN','#d97706','sup','#f59e0b','#fffbf0')}
-          ${makeSqRow(teeth,SP,'PLACA','#64748b','pla','#9ca3af','#f9f9f9')}
+          ${makeSqRow(teeth,SP,'PLACA','#6f7680','pla','#9ca3af','#f9f9f9')}
           ${makeNumRow(teeth,SP,'ANCHURA ENCÍA','#15803d','ae','#f0fdf4')}
           ${makeNumRow(teeth,SP,'MARGEN GINGIVAL','#7c3aed','mg','#f5f3ff')}
           ${makeNumRow(teeth,SP,'PROF. SONDAJE','#991b1b','d','white',18)}
@@ -10418,22 +10419,22 @@ function renderPerioChart() {
 
 
   c.innerHTML = `
-    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:8px 14px;margin-bottom:14px;font-size:12px;color:#1d4ed8;display:flex;align-items:center;gap:10px;">
+    <div style="background:#e8eef5;border:1px solid #bfdbfe;border-radius:8px;padding:8px 14px;margin-bottom:14px;font-size:12px;color:#16304f;display:flex;align-items:center;gap:10px;">
       <span>💡</span>
       <div><strong>Cómo usar:</strong> Clic en cuadros de color · Digita valores numéricos · Clic en ▲ para graduar furcación · Gráfico se actualiza automáticamente</div>
       <button class="btn btn-ghost btn-sm" style="margin-left:auto;font-size:11px;white-space:nowrap;" onclick="loadPerioDemo();renderPerioChart();showToast('Datos de ejemplo cargados','info')">📋 Ejemplo</button>
     </div>
     ${makeArch(PERIO_UPPER, true)}
     ${makeArch(PERIO_LOWER, false)}
-    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:8px 14px;background:white;border:1px solid #e2e8f0;border-radius:8px;font-size:9px;color:#64748b;margin-top:8px;">
-      <strong style="color:#1e293b;font-size:10px;">Leyenda:</strong>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:8px 14px;background:white;border:1px solid #d7d5d0;border-radius:8px;font-size:9px;color:#6f7680;margin-top:8px;">
+      <strong style="color:#1e3a5c;font-size:10px;">Leyenda:</strong>
       <span><span style="display:inline-block;width:18px;height:3px;background:#ef4444;vertical-align:middle;border-radius:1px;"></span> Margen gingival</span>
-      <span><span style="display:inline-block;width:18px;height:3px;background:#1d4ed8;vertical-align:middle;border-radius:1px;"></span> Base de bolsa</span>
+      <span><span style="display:inline-block;width:18px;height:3px;background:#16304f;vertical-align:middle;border-radius:1px;"></span> Base de bolsa</span>
       <span><span style="display:inline-block;width:10px;height:10px;background:#dc2626;vertical-align:middle;border-radius:2px;"></span> BOP</span>
       <span><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;vertical-align:middle;border-radius:2px;"></span> Supuración</span>
       <span><span style="display:inline-block;width:10px;height:10px;background:#9ca3af;vertical-align:middle;border-radius:2px;"></span> Placa</span>
       <span><span style="color:#f59e0b;font-weight:900;">▲</span> Furcación</span>
-      <span style="border-left:1px solid #e2e8f0;padding-left:12px;display:flex;gap:6px;align-items:center;">
+      <span style="border-left:1px solid #d7d5d0;padding-left:12px;display:flex;gap:6px;align-items:center;">
         <span style="display:inline-block;width:10px;height:10px;background:#bbf7d0;border-radius:2px;vertical-align:middle;"></span>0-3mm (sano)
         <span style="display:inline-block;width:10px;height:10px;background:#fef9c3;border-radius:2px;vertical-align:middle;"></span>3-6mm
         <span style="display:inline-block;width:10px;height:10px;background:#fee2e2;border-radius:2px;vertical-align:middle;"></span>≥6mm (severo)
@@ -10452,27 +10453,27 @@ function printPeriodontograma() {
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:Arial,sans-serif;padding:16px;font-size:11px;}
-    .header{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #1d4ed8;padding-bottom:10px;margin-bottom:14px;}
+    .header{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #16304f;padding-bottom:10px;margin-bottom:14px;}
     .stats{display:flex;gap:20px;margin-bottom:12px;}
-    .stat{text-align:center;padding:6px 14px;background:#f8fafc;border-radius:6px;}
-    .stat-val{font-size:18px;font-weight:900;color:#1d4ed8;}
-    .stat-lbl{font-size:9px;color:#64748b;}
+    .stat{text-align:center;padding:6px 14px;background:#f7f2e3;border-radius:6px;}
+    .stat-val{font-size:18px;font-weight:900;color:#16304f;}
+    .stat-lbl{font-size:9px;color:#6f7680;}
     @media print{button{display:none!important;} body{padding:8px;}}
   </style>
   </head><body>
   <div class="header">
-    <div><div style="font-size:18px;font-weight:900;color:#1d4ed8;">🦷 Denti</div><div style="font-size:11px;color:#64748b;">Periodontograma clínico</div></div>
+    <div><div style="font-size:18px;font-weight:900;color:#16304f;">🦷 Denti</div><div style="font-size:11px;color:#6f7680;">Periodontograma clínico</div></div>
     <div style="text-align:right;font-size:11px;"><strong>Paciente:</strong> ${pat}<br><strong>Fecha:</strong> ${new Date().toLocaleDateString('es-CO')}</div>
   </div>
   <div class="stats">
     <div class="stat"><div class="stat-val" style="color:#f59e0b;">${document.getElementById('ps-4')?.textContent||0}</div><div class="stat-lbl">Bolsas ≥4mm</div></div>
     <div class="stat"><div class="stat-val" style="color:#ef4444;">${document.getElementById('ps-6')?.textContent||0}</div><div class="stat-lbl">Bolsas ≥6mm</div></div>
-    <div class="stat"><div class="stat-val" style="color:#3b82f6;">${document.getElementById('ps-bop')?.textContent||'0%'}</div><div class="stat-lbl">BOP %</div></div>
+    <div class="stat"><div class="stat-val" style="color:#7093c0;">${document.getElementById('ps-bop')?.textContent||'0%'}</div><div class="stat-lbl">BOP %</div></div>
     <div class="stat"><div class="stat-val">${document.getElementById('ps-avg')?.textContent||0}</div><div class="stat-lbl">Prof. media (mm)</div></div>
   </div>
   ${container.innerHTML}
   <div style="text-align:center;margin-top:20px;">
-    <button onclick="window.print()" style="padding:10px 28px;background:#1d4ed8;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;">🖨️ Imprimir</button>
+    <button onclick="window.print()" style="padding:10px 28px;background:#16304f;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;">🖨️ Imprimir</button>
   </div>
   <script>setTimeout(()=>window.print(),600);<\/script>
   </body></html>`);
@@ -10783,7 +10784,7 @@ function initEncuestas() {
     <div style="display:flex;justify-content:space-between;align-items:center;">
       <strong style="font-size:13px;">${e.pac}</strong>
       <div style="display:flex;align-items:center;gap:6px;">
-        <div style="width:28px;height:28px;border-radius:50%;background:${e.score>=9?'var(--success)':e.score>=7?'#94a3b8':'var(--danger)'};color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;">${e.score}</div>
+        <div style="width:28px;height:28px;border-radius:50%;background:${e.score>=9?'var(--success)':e.score>=7?'#8b8f96':'var(--danger)'};color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;">${e.score}</div>
         <span style="font-size:10px;color:var(--text-muted);">${e.fecha}</span>
       </div>
     </div>
@@ -11190,7 +11191,7 @@ function _renderResumenIAContent(p, container, emptyEl) {
 
   // AI summary card
   container.innerHTML = `
-    <div style="background:linear-gradient(135deg,#2563eb,#0a1628);border-radius:14px;padding:20px 24px;color:white;margin-bottom:20px;display:flex;gap:20px;align-items:flex-start;">
+    <div style="background:linear-gradient(135deg,#3D5C82,#16304f);border-radius:14px;padding:20px 24px;color:white;margin-bottom:20px;display:flex;gap:20px;align-items:flex-start;">
       <div style="font-size:40px;flex-shrink:0;">🧠</div>
       <div style="flex:1;">
         <div style="font-size:15px;font-weight:800;margin-bottom:6px;">Resumen Clínico IA — ${p.name}</div>
@@ -11268,7 +11269,7 @@ function renderHistoriaInHub(p) {
     </div>`;
     return;
   }
-  const catColor = {'S':'#0052cc','O':'#276749','A':'#c05621','P':'#6b46c1'};
+  const catColor = {'S':'#3D5C82','O':'#276749','A':'#c05621','P':'#6b46c1'};
   container.innerHTML = evolsP.slice().reverse().map(e => {
     const cups = typeof ALL_CUPS !== 'undefined' ? ALL_CUPS.find(c=>c.code===e.cups) : null;
     const cie  = typeof ALL_CIE10 !== 'undefined' ? ALL_CIE10.find(c=>c.code===e.cie10) : null;
@@ -11289,7 +11290,7 @@ function renderHistoriaInHub(p) {
         ${e.piezas?`<span class="badge badge-gray" style="font-size:10px;">D${e.piezas}</span>`:''}
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        ${['S','O','A','P'].map(k=>{const labels={S:'Subjetivo',O:'Objetivo',A:'Análisis',P:'Plan'};const vals={S:e.s,O:e.o,A:e.a,P:e.p};return vals[k]?`<div style="background:#f8f9fa;border-radius:6px;padding:8px;border-left:3px solid ${catColor[k]};"><div style="font-size:9px;font-weight:800;color:${catColor[k]};text-transform:uppercase;margin-bottom:3px;">${k} — ${labels[k]}</div><div style="font-size:11px;color:#4a5568;">${vals[k]}</div></div>`:'';}).join('')}
+        ${['S','O','A','P'].map(k=>{const labels={S:'Subjetivo',O:'Objetivo',A:'Análisis',P:'Plan'};const vals={S:e.s,O:e.o,A:e.a,P:e.p};return vals[k]?`<div style="background:#f8f9fa;border-radius:6px;padding:8px;border-left:3px solid ${catColor[k]};"><div style="font-size:9px;font-weight:800;color:${catColor[k]};text-transform:uppercase;margin-bottom:3px;">${k} — ${labels[k]}</div><div style="font-size:11px;color:#33455c;">${vals[k]}</div></div>`:'';}).join('')}
       </div>
       ${e.meds?`<div style="background:#fff3e0;border-radius:6px;padding:6px 10px;font-size:12px;margin-top:8px;"><strong>💊</strong> ${e.meds}</div>`:''}
     </div>`;
@@ -11348,7 +11349,7 @@ function initFirmaCanvasPD() {
   if(!canvas || firmaCanvasPD===canvas) return;
   firmaCanvasPD = canvas;
   firmaCanvasPDCtx = canvas.getContext('2d');
-  firmaCanvasPDCtx.strokeStyle='#2563eb'; firmaCanvasPDCtx.lineWidth=2; firmaCanvasPDCtx.lineCap='round';
+  firmaCanvasPDCtx.strokeStyle='#3D5C82'; firmaCanvasPDCtx.lineWidth=2; firmaCanvasPDCtx.lineCap='round';
   const getPos = e => {
     const r=canvas.getBoundingClientRect();
     const src=e.touches?e.touches[0]:e;
@@ -11394,12 +11395,12 @@ function imprimirConsentimiento(tipo, pacienteNombre) {
   const win=window.open('','_blank','width=800,height=1000');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Consentimiento — ${pacienteNombre}</title>
   <style>body{font-family:Arial,sans-serif;padding:40px;color:#1a202c;font-size:13px;max-width:700px;margin:0 auto;}
-  h1{font-size:18px;font-weight:900;color:#2563eb;text-align:center;margin-bottom:4px;}
-  h2{font-size:14px;font-weight:700;text-align:center;margin-bottom:24px;color:#4a5568;}
-  .meta{background:#f7fafc;border-radius:8px;padding:14px;margin-bottom:20px;}
+  h1{font-size:18px;font-weight:900;color:#3D5C82;text-align:center;margin-bottom:4px;}
+  h2{font-size:14px;font-weight:700;text-align:center;margin-bottom:24px;color:#33455c;}
+  .meta{background:#eef2f6;border-radius:8px;padding:14px;margin-bottom:20px;}
   p{line-height:1.8;margin-bottom:12px;}
   .sigs{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:50px;}
-  .sig-line{border-top:1.5px solid #2d3748;padding-top:6px;text-align:center;font-size:12px;color:#718096;}
+  .sig-line{border-top:1.5px solid #2d3748;padding-top:6px;text-align:center;font-size:12px;color:#7d838c;}
   @media print{button{display:none!important;}}</style></head><body>
   <h1>🦷 Denti</h1>
   <h2>${tipos[tipo]||tipo}</h2>
@@ -11415,7 +11416,7 @@ function imprimirConsentimiento(tipo, pacienteNombre) {
     <div class="sig-line"><br><br>Firma del paciente<br>${pacienteNombre}</div>
     <div class="sig-line"><br><br>Firma del odontólogo<br>Dra. Yenifer — TP 12345</div>
   </div>
-  <div style="text-align:center;margin-top:30px;"><button onclick="window.print()" style="padding:10px 28px;background:#2563eb;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;">🖨️ Imprimir</button></div>
+  <div style="text-align:center;margin-top:30px;"><button onclick="window.print()" style="padding:10px 28px;background:#3D5C82;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;">🖨️ Imprimir</button></div>
   <script>setTimeout(()=>window.print(),400);<\/script>
   </body></html>`);
   win.document.close();
@@ -11477,7 +11478,7 @@ function initFirmaCanvasReceta() {
   const canvas=document.getElementById('firma-canvas-receta');
   if(!canvas||firmaCanvasReceta===canvas) return;
   firmaCanvasReceta=canvas; firmaCanvasRecetaCtx=canvas.getContext('2d');
-  firmaCanvasRecetaCtx.strokeStyle='#2563eb'; firmaCanvasRecetaCtx.lineWidth=2; firmaCanvasRecetaCtx.lineCap='round';
+  firmaCanvasRecetaCtx.strokeStyle='#3D5C82'; firmaCanvasRecetaCtx.lineWidth=2; firmaCanvasRecetaCtx.lineCap='round';
   const getPos=e=>{const r=canvas.getBoundingClientRect();const src=e.touches?e.touches[0]:e;return{x:(src.clientX-r.left)*(canvas.width/r.width),y:(src.clientY-r.top)*(canvas.height/r.height)};};
   canvas.addEventListener('mousedown',e=>{firmaRecetaDrawing=true;const p=getPos(e);firmaCanvasRecetaCtx.beginPath();firmaCanvasRecetaCtx.moveTo(p.x,p.y);});
   canvas.addEventListener('mousemove',e=>{if(!firmaRecetaDrawing)return;const p=getPos(e);firmaCanvasRecetaCtx.lineTo(p.x,p.y);firmaCanvasRecetaCtx.stroke();});
@@ -11501,14 +11502,14 @@ function imprimirReceta() {
   const win=window.open('','_blank','width=800,height=900');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Receta — ${p.name}</title>
   <style>body{font-family:Arial,sans-serif;padding:32px;font-size:13px;color:#1a202c;max-width:650px;margin:0 auto;}
-  .hdr{border-bottom:3px solid #2563eb;padding-bottom:12px;margin-bottom:20px;display:flex;justify-content:space-between;}
-  .clinic{font-size:18px;font-weight:900;color:#2563eb;}table{width:100%;border-collapse:collapse;margin-bottom:16px;}
-  th{background:#ebf4ff;padding:8px;text-align:left;font-size:12px;}td{padding:8px;border-bottom:1px solid #e2e8f0;font-size:12px;}
-  .footer{display:flex;gap:40px;margin-top:50px;}.sig{flex:1;border-top:1.5px solid #2d3748;padding-top:6px;text-align:center;font-size:11px;color:#718096;}
+  .hdr{border-bottom:3px solid #3D5C82;padding-bottom:12px;margin-bottom:20px;display:flex;justify-content:space-between;}
+  .clinic{font-size:18px;font-weight:900;color:#3D5C82;}table{width:100%;border-collapse:collapse;margin-bottom:16px;}
+  th{background:#ebf4ff;padding:8px;text-align:left;font-size:12px;}td{padding:8px;border-bottom:1px solid #d7d5d0;font-size:12px;}
+  .footer{display:flex;gap:40px;margin-top:50px;}.sig{flex:1;border-top:1.5px solid #2d3748;padding-top:6px;text-align:center;font-size:11px;color:#7d838c;}
   @media print{button{display:none!important;}}</style></head><body>
-  <div class="hdr"><div><div class="clinic">🦷 Denti</div><div style="font-size:11px;color:#718096;">Clínica Dental Yenifer · TP 12345</div></div>
+  <div class="hdr"><div><div class="clinic">🦷 Denti</div><div style="font-size:11px;color:#7d838c;">Clínica Dental Yenifer · TP 12345</div></div>
   <div style="text-align:right;font-size:12px;"><strong>RECETA MÉDICA ELECTRÓNICA</strong><br>${fecha}<br>${dr}</div></div>
-  <div style="background:#f7fafc;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;">
+  <div style="background:#eef2f6;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;">
     <strong>Paciente:</strong> ${p.name} · <strong>Doc:</strong> CC ${p.id} · <strong>Edad:</strong> ${p.age} años${cie?` · <strong>Dx:</strong> ${cie}`:''}
   </div>
   ${meds.length?`<table><thead><tr><th>#</th><th>Medicamento</th><th>Dosis</th><th>Frecuencia</th><th>Duración</th></tr></thead><tbody>
@@ -11519,7 +11520,7 @@ function imprimirReceta() {
     <div class="sig">Firma del profesional<br>${dr}</div>
     <div class="sig">Firma del paciente<br>${p.name}</div>
   </div>
-  <div style="text-align:center;margin-top:24px;"><button onclick="window.print()" style="padding:10px 28px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;">🖨️ Imprimir</button></div>
+  <div style="text-align:center;margin-top:24px;"><button onclick="window.print()" style="padding:10px 28px;background:#3D5C82;color:white;border:none;border-radius:8px;cursor:pointer;">🖨️ Imprimir</button></div>
   <script>setTimeout(()=>window.print(),400);<\/script>
   </body></html>`);
   win.document.close();
@@ -12132,7 +12133,7 @@ function renderAlertasDelDia() {
   // 5. Citas hoy conteo
   const citasHoy = APPOINTMENTS.filter(a => a.date === todayStr);
   if (citasHoy.length > 0)
-    alerts.unshift({icon:'📅', color:'#0052cc', bg:'#e8f0fe', text:`<strong>${citasHoy.length} cita${citasHoy.length>1?'s':''}</strong> agendadas para hoy`});
+    alerts.unshift({icon:'📅', color:'#3D5C82', bg:'#e8f0fe', text:`<strong>${citasHoy.length} cita${citasHoy.length>1?'s':''}</strong> agendadas para hoy`});
 
   if (alerts.length === 0) {
     container.innerHTML = `<div style="padding:12px 16px;background:#f0fff4;border-radius:10px;color:#276749;font-size:13px;">✅ Todo al día — sin alertas pendientes</div>`;
@@ -12159,7 +12160,7 @@ function renderKanbanView() {
 
   const cols = [
     { id: 'espera',    label: 'En espera',   color: '#f59e0b', bg: '#fffbeb', statuses: ['pendiente','reservado'] },
-    { id: 'consulta',  label: 'En consulta', color: '#0052cc', bg: '#eff6ff', statuses: ['en_consulta'] },
+    { id: 'consulta',  label: 'En consulta', color: '#3D5C82', bg: '#e8eef5', statuses: ['en_consulta'] },
     { id: 'caja',      label: 'En caja',     color: '#7c3aed', bg: '#f5f3ff', statuses: ['en_caja'] },
     { id: 'completado',label: 'Completado',  color: '#16a34a', bg: '#f0fdf4', statuses: ['asistio','reagendo'] },
   ];
@@ -12188,7 +12189,7 @@ function renderKanbanView() {
               <div style="font-weight:700;font-size:13px;">${a.patientName||a.patient||'Paciente'}</div>
               <div style="font-size:11px;color:#6b7280;margin:2px 0 6px;">${a.time||'—'} · ${a.type||'Consulta'}</div>
               <div style="display:flex;gap:4px;flex-wrap:wrap;">
-                ${col.id==='espera'    ? moveBtn(a.id,'en_consulta','→ Consulta','#0052cc') : ''}
+                ${col.id==='espera'    ? moveBtn(a.id,'en_consulta','→ Consulta','#3D5C82') : ''}
                 ${col.id==='consulta'  ? moveBtn(a.id,'en_caja','→ Caja','#7c3aed') : ''}
                 ${col.id==='caja'      ? moveBtn(a.id,'asistio','→ Completar','#16a34a') : ''}
                 ${col.id==='completado'? moveBtn(a.id,'pendiente','↩ Deshacer','#9ca3af') : ''}
@@ -12246,7 +12247,7 @@ function confirmarCitasManana() {
 
   header.innerHTML = citas.length === 0
     ? `<div style="background:#f0fdf4;border-radius:10px;padding:12px 16px;color:#15803d;font-size:13px;">✅ Mañana (${fechaLabel}) no hay citas pendientes.</div>`
-    : `<div style="background:#eff6ff;border-radius:10px;padding:12px 16px;color:#1e40af;font-size:13px;">📅 <strong>${citas.length} cita${citas.length>1?'s':''}</strong> agendada${citas.length>1?'s':''} para mañana, <strong>${fechaLabel}</strong>. Envía un recordatorio a cada paciente.</div>`;
+    : `<div style="background:#e8eef5;border-radius:10px;padding:12px 16px;color:#1e40af;font-size:13px;">📅 <strong>${citas.length} cita${citas.length>1?'s':''}</strong> agendada${citas.length>1?'s':''} para mañana, <strong>${fechaLabel}</strong>. Envía un recordatorio a cada paciente.</div>`;
 
   // Default message template
   tmpl.value = `Hola {NOMBRE}, le recordamos que tiene cita en ${clinicaName} mañana {FECHA} a las {HORA}. Por favor confirme su asistencia respondiendo este mensaje. 🦷`;
@@ -12464,7 +12465,7 @@ if(_origSave){
   display:flex;flex-direction:column;align-items:center;gap:6px;
 }
 #voice-fab-label {
-  background:rgba(15,23,42,0.85);backdrop-filter:blur(8px);
+  background:rgba(22,48,79,0.85);backdrop-filter:blur(8px);
   color:white;font-size:9.5px;font-weight:700;padding:3px 9px;
   border-radius:20px;white-space:nowrap;letter-spacing:0.5px;
   pointer-events:none;opacity:0;transition:opacity 0.2s;
@@ -12472,7 +12473,7 @@ if(_origSave){
 #voice-fab-wrap:hover #voice-fab-label { opacity:1; }
 #voice-fab {
   width:58px;height:58px;border-radius:50%;
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  background:linear-gradient(135deg,#3D5C82,#16304f);
   color:white;font-size:24px;border:3px solid white;
   cursor:pointer;box-shadow:0 6px 28px rgba(37,99,235,0.50);
   transition:transform 0.18s,box-shadow 0.18s;
@@ -12493,7 +12494,7 @@ if(_origSave){
 #voice-panel {
   position:fixed;bottom:104px;right:28px;width:380px;
   background:#ffffff;border-radius:20px;
-  box-shadow:0 20px 60px rgba(15,23,42,0.20),0 4px 20px rgba(15,23,42,0.08);
+  box-shadow:0 20px 60px rgba(22,48,79,0.20),0 4px 20px rgba(22,48,79,0.08);
   border:1px solid rgba(37,99,235,0.12);
   display:none;flex-direction:column;
   overflow:hidden;z-index:9998;
@@ -12508,13 +12509,13 @@ if(_origSave){
 
 /* ── Header ── */
 .vp-header {
-  background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 100%);
+  background:linear-gradient(135deg,#16304f 0%,#2a4a70 100%);
   padding:16px 18px;display:flex;align-items:center;gap:12px;
   flex-shrink:0;
 }
 .vp-avatar {
   width:40px;height:40px;border-radius:50%;
-  background:linear-gradient(135deg,#60a5fa,#2563eb);
+  background:linear-gradient(135deg,#8fa9c9,#3D5C82);
   display:flex;align-items:center;justify-content:center;
   font-size:20px;flex-shrink:0;
   box-shadow:0 4px 12px rgba(37,99,235,0.4);
@@ -12522,7 +12523,7 @@ if(_origSave){
 }
 .vp-avatar-dot {
   position:absolute;bottom:1px;right:1px;width:10px;height:10px;
-  background:#22c55e;border-radius:50%;border:2px solid #0f172a;
+  background:#22c55e;border-radius:50%;border:2px solid #16304f;
   animation:pulse-dot 2.5s infinite;
 }
 .vp-header-info { flex:1;min-width:0; }
@@ -12540,7 +12541,7 @@ if(_origSave){
 
 /* ── Waveform bar ── */
 .vp-wave-bar {
-  background:linear-gradient(135deg,#0f172a,#1e293b);
+  background:linear-gradient(135deg,#16304f,#1e3a5c);
   padding:10px 18px;display:none;align-items:center;gap:10px;
   border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;
 }
@@ -12548,7 +12549,7 @@ if(_origSave){
 .vp-wave-bars { display:flex;align-items:center;gap:2.5px; }
 .vp-wave-bars span {
   display:block;width:3px;border-radius:3px;
-  background:linear-gradient(180deg,#60a5fa,#2563eb);
+  background:linear-gradient(180deg,#8fa9c9,#3D5C82);
   animation:waveBar 0.7s ease-in-out infinite;
 }
 .vp-wave-bars span:nth-child(1){height:6px;animation-delay:0s;}
@@ -12560,7 +12561,7 @@ if(_origSave){
 .vp-wave-bars span:nth-child(7){height:16px;animation-delay:0.04s;}
 @keyframes waveBar{0%,100%{transform:scaleY(0.4);}50%{transform:scaleY(1);}}
 .vp-wave-label { color:rgba(255,255,255,0.55);font-size:11.5px;font-weight:500;flex:1; }
-.vp-wave-text { color:#93c5fd;font-size:12px;font-style:italic;max-width:200px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis; }
+.vp-wave-text { color:#a9c2dc;font-size:12px;font-style:italic;max-width:200px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis; }
 
 /* ── Chat area ── */
 #vp-chat {
@@ -12571,7 +12572,7 @@ if(_origSave){
 }
 #vp-chat::-webkit-scrollbar { width:4px; }
 #vp-chat::-webkit-scrollbar-track { background:transparent; }
-#vp-chat::-webkit-scrollbar-thumb { background:#e2e8f0;border-radius:4px; }
+#vp-chat::-webkit-scrollbar-thumb { background:#d7d5d0;border-radius:4px; }
 
 /* Message bubbles */
 .vp-msg { display:flex;gap:8px;animation:msgIn 0.18s ease; }
@@ -12582,27 +12583,27 @@ if(_origSave){
   font-size:12.5px;line-height:1.5;
 }
 .vp-msg.denti .vp-bubble {
-  background:#f1f5f9;color:#0f172a;border-radius:4px 16px 16px 16px;
+  background:#eceef1;color:#16304f;border-radius:4px 16px 16px 16px;
 }
 .vp-msg.user .vp-bubble {
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  background:linear-gradient(135deg,#3D5C82,#16304f);
   color:white;border-radius:16px 16px 4px 16px;
 }
 .vp-msg-icon {
   width:28px;height:28px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:13px;
 }
-.vp-msg.denti .vp-msg-icon { background:linear-gradient(135deg,#60a5fa,#2563eb); }
-.vp-msg.user .vp-msg-icon { background:#e2e8f0;font-size:15px; }
+.vp-msg.denti .vp-msg-icon { background:linear-gradient(135deg,#8fa9c9,#3D5C82); }
+.vp-msg.user .vp-msg-icon { background:#d7d5d0;font-size:15px; }
 
 /* Result types */
 .vr-card {
-  background:white;border:1px solid #e2e8f0;border-radius:12px;
+  background:white;border:1px solid #d7d5d0;border-radius:12px;
   padding:10px 12px;margin-top:4px;font-size:12px;
 }
 .vr-card.success { border-left:3px solid #22c55e; }
 .vr-card.warn    { border-left:3px solid #f59e0b; }
-.vr-card.info    { border-left:3px solid #3b82f6; }
+.vr-card.info    { border-left:3px solid #7093c0; }
 .vr-card.error   { border-left:3px solid #ef4444; }
 
 /* Typing indicator */
@@ -12610,11 +12611,11 @@ if(_origSave){
   display:flex;gap:8px;align-items:flex-end;
 }
 .vp-typing-dots {
-  background:#f1f5f9;padding:10px 14px;border-radius:4px 16px 16px 16px;
+  background:#eceef1;padding:10px 14px;border-radius:4px 16px 16px 16px;
   display:flex;gap:4px;align-items:center;
 }
 .vp-typing-dots span {
-  width:6px;height:6px;background:#94a3b8;border-radius:50%;
+  width:6px;height:6px;background:#8b8f96;border-radius:50%;
   animation:typingDot 1.2s infinite;
 }
 .vp-typing-dots span:nth-child(2){animation-delay:0.2s;}
@@ -12623,42 +12624,42 @@ if(_origSave){
 
 /* ── Command chips ── */
 .vp-chips {
-  padding:10px 14px;border-top:1px solid #f1f5f9;
+  padding:10px 14px;border-top:1px solid #eceef1;
   display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;
 }
 .vp-chip {
-  background:#f8fafc;border:1px solid #e2e8f0;color:#475569;
+  background:#f7f2e3;border:1px solid #d7d5d0;color:#475569;
   font-size:11px;font-weight:600;padding:5px 10px;border-radius:20px;
   cursor:pointer;transition:all 0.15s;white-space:nowrap;
 }
-.vp-chip:hover { background:#eff6ff;border-color:#2563eb;color:#2563eb; }
+.vp-chip:hover { background:#e8eef5;border-color:#3D5C82;color:#3D5C82; }
 
 /* ── Text input row ── */
 .vp-input-row {
-  padding:10px 14px;border-top:1px solid #f1f5f9;
+  padding:10px 14px;border-top:1px solid #eceef1;
   display:flex;gap:8px;align-items:center;flex-shrink:0;
 }
 .vp-text-input {
-  flex:1;border:1.5px solid #e2e8f0;border-radius:24px;
+  flex:1;border:1.5px solid #d7d5d0;border-radius:24px;
   padding:8px 14px;font-size:12.5px;outline:none;
-  background:#f8fafc;color:#0f172a;transition:border-color 0.15s;
+  background:#f7f2e3;color:#16304f;transition:border-color 0.15s;
 }
-.vp-text-input:focus { border-color:#2563eb;background:white; }
-.vp-text-input::placeholder { color:#94a3b8; }
+.vp-text-input:focus { border-color:#3D5C82;background:white; }
+.vp-text-input::placeholder { color:#8b8f96; }
 .vp-send-btn {
   width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;
+  background:linear-gradient(135deg,#3D5C82,#16304f);color:white;
   font-size:15px;display:flex;align-items:center;justify-content:center;
   transition:transform 0.15s,box-shadow 0.15s;flex-shrink:0;
 }
 .vp-send-btn:hover { transform:scale(1.08);box-shadow:0 4px 12px rgba(37,99,235,0.4); }
 .vp-mic-btn {
   width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;
-  background:#f1f5f9;color:#475569;font-size:16px;
+  background:#eceef1;color:#475569;font-size:16px;
   display:flex;align-items:center;justify-content:center;
   transition:all 0.15s;flex-shrink:0;
 }
-.vp-mic-btn:hover { background:#eff6ff;color:#2563eb; }
+.vp-mic-btn:hover { background:#e8eef5;color:#3D5C82; }
 .vp-mic-btn.active { background:#fee2e2;color:#dc2626;animation:voicePulse 1.2s infinite; }
 
 /* Scrollbar for panel */
@@ -12744,6 +12745,7 @@ if(_origSave){
   let isSpeaking     = false;     // true mientras synth habla
   let echoUntil      = 0;         // timestamp hasta el que ignorar resultados (eco del altavoz)
   let lastSpokenNorm = '';        // texto normalizado de lo último que dijo Denti
+  let micBlocked     = false;     // true si el navegador denegó/bloqueó el permiso de micrófono
 
   // ── Selección de voz: priorizar voces neurales de macOS sobre Google ──
   // Orden: Enhanced/Premium macOS (neurales) > voces macOS base > Google (robótico)
@@ -12904,15 +12906,37 @@ if(_origSave){
     recognition.onerror = (evt) => {
       // 'aborted' ocurre cuando paramos el mic intencionalmente para que Denti hable
       // 'no-speech' es normal cuando nadie habla — ambos son esperados, ignorar
-      if (['no-speech','aborted','not-allowed'].includes(evt.error)) return;
-      console.warn('[Denti]', evt.error);
+      if (['no-speech','aborted'].includes(evt.error)) return;
+      if (evt.error === 'not-allowed' || evt.error === 'service-not-allowed') {
+        // El navegador bloqueó o revocó el permiso de micrófono — esto antes fallaba en silencio.
+        console.warn('[Denti] Permiso de micrófono denegado/bloqueado.');
+        mode = 'sleep';
+        setFabActive(false);
+        setStatus('⚠️ Micrófono bloqueado', false);
+        openPanel();
+        addDentiMessage('⚠️ No tengo permiso para usar el micrófono. Haz clic en el ícono 🔒 junto a la URL del navegador, permite el <strong>Micrófono</strong> para este sitio, y vuelve a hacer clic en el botón de voz.', 'warn');
+        micBlocked = true;
+        return;
+      }
+      console.warn('[Denti] Error de reconocimiento:', evt.error);
     };
 
     recognition.onend = () => {
       // El recognition puede terminar por timeout del navegador — reiniciar siempre
       // (ya no lo paramos manualmente, así Chrome no pide permiso de nuevo)
-      if (mode !== 'off') {
-        setTimeout(() => { try { recognition.start(); } catch(e){} }, 300);
+      if (mode !== 'off' && !micBlocked) {
+        setTimeout(() => {
+          try { recognition.start(); }
+          catch(e) {
+            // 'InvalidStateError' = ya estaba corriendo, se puede ignorar.
+            // Cualquier otro error probablemente significa que el objeto quedó
+            // en mal estado — se reconstruye desde cero en vez de fallar en silencio.
+            if (e.name !== 'InvalidStateError') {
+              console.warn('[Denti] Reinicio de reconocimiento falló, recreando:', e);
+              try { recognition = null; initSR(); } catch(e2) { console.warn('[Denti] No se pudo recrear el reconocimiento:', e2); }
+            }
+          }
+        }, 300);
       }
     };
 
@@ -13016,7 +13040,7 @@ if(_origSave){
     div.className = 'vp-msg denti';
     const cardClass = type ? ` vr-card ${type}` : '';
     div.innerHTML = `
-      <div class="vp-msg-icon" style="background:linear-gradient(135deg,#60a5fa,#2563eb);color:white;">🦷</div>
+      <div class="vp-msg-icon" style="background:linear-gradient(135deg,#8fa9c9,#3D5C82);color:white;">🦷</div>
       <div class="vp-bubble${cardClass}">${html}</div>`;
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
@@ -13028,7 +13052,7 @@ if(_origSave){
     typingEl = document.createElement('div');
     typingEl.className = 'vp-msg denti vp-typing';
     typingEl.innerHTML = `
-      <div class="vp-msg-icon" style="background:linear-gradient(135deg,#60a5fa,#2563eb);color:white;">🦷</div>
+      <div class="vp-msg-icon" style="background:linear-gradient(135deg,#8fa9c9,#3D5C82);color:white;">🦷</div>
       <div class="vp-typing-dots"><span></span><span></span><span></span></div>`;
     chat.appendChild(typingEl);
     chat.scrollTop = chat.scrollHeight;
@@ -13105,7 +13129,9 @@ if(_origSave){
       addDentiMessage('⚠️ Tu navegador no soporta dictado por voz.<br>Usa <strong>Google Chrome</strong> o escribe tu consulta abajo.', 'warn');
       return;
     }
-    if (!recognition) {
+    if (!recognition || micBlocked) {
+      micBlocked = false;
+      recognition = null;
       initSR();
       setTimeout(() => { wakeUp(''); }, 300);
       return;
