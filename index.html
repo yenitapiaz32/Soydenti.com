@@ -3585,8 +3585,8 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
     <div class="modal-body">
 
       <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:8px;">1. Motivo de consulta y enfermedad actual</div>
-      <div class="form-group"><label>Motivo de consulta</label><textarea id="anam-motivo" rows="2" placeholder="¿Por qué viene a la consulta?"></textarea></div>
-      <div class="form-group"><label>Enfermedad actual</label><textarea id="anam-enf-actual" rows="2" placeholder="Descripción del padecimiento actual: inicio, evolución, síntomas..."></textarea></div>
+      <div class="form-group"><label>Motivo de consulta <span style="color:var(--danger);">*</span></label><textarea id="anam-motivo" rows="2" placeholder="¿Por qué viene a la consulta?"></textarea></div>
+      <div class="form-group"><label>Enfermedad actual <span style="color:var(--danger);">*</span></label><textarea id="anam-enf-actual" rows="2" placeholder="Descripción del padecimiento actual: inicio, evolución, síntomas..."></textarea></div>
 
       <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">2. Antecedentes personales</div>
       <div class="form-group">
@@ -3604,7 +3604,11 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
         <div class="form-group" style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="anam-fuma" style="width:16px;height:16px;flex-shrink:0;"><label style="margin:0;" for="anam-fuma">Fumador/a</label></div>
         <div class="form-group" style="display:flex;align-items:center;gap:8px;"><input type="checkbox" id="anam-alcohol" style="width:16px;height:16px;flex-shrink:0;"><label style="margin:0;" for="anam-alcohol">Consume alcohol</label></div>
       </div>
-      <div class="form-group"><label>Hábitos orales parafuncionales</label><input type="text" id="anam-habitos-orales" placeholder="Ej: Bruxismo, onicofagia, respirador bucal, deglución atípica..."></div>
+      <div class="form-group">
+        <label>Hábitos orales parafuncionales</label>
+        <div id="anam-habitos-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-height:180px;overflow-y:auto;border:1.5px solid var(--border);border-radius:10px;padding:10px;"></div>
+      </div>
+      <div class="form-group"><label>Otros hábitos (no listados)</label><input type="text" id="anam-habitos-otros" placeholder="Ej: mordisquea lápices, chupa el cabello..."></div>
 
       <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">4. Antecedentes gineco-obstétricos</div>
       <div class="form-row">
@@ -3616,7 +3620,13 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
       <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">5. Antecedentes familiares</div>
       <div class="form-group"><label>Antecedentes familiares relevantes</label><textarea id="anam-familiares" rows="2" placeholder="Ej: Padre diabético, madre hipertensa..."></textarea></div>
 
-      <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">6. Signos vitales</div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">6. Revisión por sistemas</div>
+      <div class="form-group">
+        <div id="anam-ros-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-height:200px;overflow-y:auto;border:1.5px solid var(--border);border-radius:10px;padding:10px;"></div>
+      </div>
+      <div class="form-group"><label>Hallazgos positivos en la revisión por sistemas</label><input type="text" id="anam-ros-otros" placeholder="Cualquier síntoma o hallazgo por sistemas no listado..."></div>
+
+      <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">7. Signos vitales</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
         <div class="form-group"><label>T.A. (mmHg)</label><input type="text" id="anam-ta" placeholder="120/80"></div>
         <div class="form-group"><label>F.C. (lpm)</label><input type="number" id="anam-fc" placeholder="72"></div>
@@ -3624,11 +3634,72 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
         <div class="form-group"><label>Temp. (°C)</label><input type="text" id="anam-temp" placeholder="36.5"></div>
       </div>
 
-      <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">7. Examen físico</div>
-      <div class="form-group"><label>Examen extraoral</label><textarea id="anam-examen-extraoral" rows="2" placeholder="Simetría facial, ganglios, ATM, piel..."></textarea></div>
-      <div class="form-group"><label>Examen intraoral — tejidos blandos</label><textarea id="anam-examen-intraoral" rows="2" placeholder="Mucosa, lengua, piso de boca, encía, paladar..."></textarea></div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">8. Examen físico</div>
+      <div class="form-group">
+        <label>Examen extraoral</label>
+        <div id="anam-extraoral-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-height:180px;overflow-y:auto;border:1.5px solid var(--border);border-radius:10px;padding:10px;"></div>
+      </div>
+      <div class="form-group"><label>Otros hallazgos extraorales</label><input type="text" id="anam-extraoral-otros" placeholder="Cualquier otro hallazgo no listado..."></div>
+      <div class="form-group">
+        <label>Examen intraoral — tejidos blandos</label>
+        <div id="anam-intraoral-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-height:180px;overflow-y:auto;border:1.5px solid var(--border);border-radius:10px;padding:10px;"></div>
+      </div>
+      <div class="form-group"><label>Otros hallazgos intraorales</label><input type="text" id="anam-intraoral-otros" placeholder="Cualquier otro hallazgo no listado..."></div>
 
-      <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">8. Observaciones</div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">9. Información RIPS</div>
+      <div class="form-row">
+        <div class="form-group"><label>Tipo de consulta <span style="color:var(--danger);">*</span></label>
+          <select id="anam-rips-tipo-consulta">
+            <option value="">Seleccione...</option>
+            <option value="Consulta de primera vez">Consulta de primera vez</option>
+            <option value="Consulta de control o seguimiento">Consulta de control o seguimiento</option>
+            <option value="Urgencia">Urgencia</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Finalidad de la consulta <span style="color:var(--danger);">*</span></label>
+          <select id="anam-rips-finalidad">
+            <option value="">Seleccione...</option>
+            <option value="Detección de alteraciones bucales">Detección de alteraciones bucales</option>
+            <option value="Protección específica — atención preventiva en salud bucal">Protección específica — atención preventiva en salud bucal</option>
+            <option value="Diagnóstico">Diagnóstico</option>
+            <option value="Tratamiento">Tratamiento</option>
+            <option value="Control y seguimiento">Control y seguimiento</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Causa externa <span style="color:var(--danger);">*</span></label>
+        <select id="anam-rips-causa-externa">
+          <option value="">Seleccione...</option>
+          <option value="Enfermedad general">Enfermedad general</option>
+          <option value="Accidente de trabajo">Accidente de trabajo</option>
+          <option value="Accidente de tránsito">Accidente de tránsito</option>
+          <option value="Otro tipo de accidente">Otro tipo de accidente</option>
+          <option value="Otra">Otra</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="position:relative;"><label>Diagnóstico principal (CIE-10) <span style="color:var(--danger);">*</span></label>
+          <input type="text" id="anam-cie10-search" placeholder="Buscar por código o nombre..." autocomplete="off" oninput="anamSearchCIE10(this.value)">
+          <div id="anam-cie10-dropdown" style="display:none;position:absolute;z-index:200;background:white;border:1.5px solid var(--primary);border-radius:8px;box-shadow:var(--shadow-md);width:100%;max-height:180px;overflow-y:auto;top:62px;left:0;"></div>
+          <input type="hidden" id="anam-cie10-code">
+        </div>
+        <div class="form-group"><label>Tipo de diagnóstico principal</label>
+          <select id="anam-rips-tipo-diagnostico">
+            <option value="Impresión diagnóstica">Impresión diagnóstica</option>
+            <option value="Confirmado nuevo">Confirmado nuevo</option>
+            <option value="Confirmado repetido">Confirmado repetido</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Diagnósticos relacionados (opcional)</label>
+        <div class="form-row">
+          <input type="text" id="anam-rips-relacionado-1" placeholder="Diagnóstico relacionado 1 (código o nombre)">
+          <input type="text" id="anam-rips-relacionado-2" placeholder="Diagnóstico relacionado 2 (código o nombre)">
+        </div>
+      </div>
+      <div class="form-group"><label>Impresión diagnóstica</label><textarea id="anam-rips-impresion" rows="2" placeholder="Diagnóstico clínico / impresión diagnóstica..."></textarea></div>
+
+      <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:0.04em;text-transform:uppercase;margin:16px 0 8px;">10. Observaciones</div>
       <div class="form-group"><label>Observaciones generales</label><textarea id="anam-observaciones" rows="2" placeholder="Otra información clínica relevante..."></textarea></div>
     </div>
     <div class="modal-footer">
@@ -5630,6 +5701,32 @@ function openAddAlertModal() {
 // ANAMNESIS — historia médica del paciente
 // ============================================================
 let anamPatientId = null;
+
+function anamSearchCIE10(q) {
+  const dd = document.getElementById('anam-cie10-dropdown');
+  if (!dd) return;
+  if (!q || q.length < 2) { dd.style.display = 'none'; dd.innerHTML = ''; return; }
+  const list = (typeof ALL_CIE10 !== 'undefined') ? ALL_CIE10 : [];
+  const filtered = list.filter(c =>
+    c.code.toLowerCase().includes(q.toLowerCase()) || c.desc.toLowerCase().includes(q.toLowerCase()));
+  if (!filtered.length) { dd.style.display = 'none'; dd.innerHTML = ''; return; }
+  dd.innerHTML = filtered.slice(0, 20).map(c =>
+    `<div onclick="anamSelectCIE10('${c.code}')" style="padding:8px 10px;font-size:12px;cursor:pointer;border-bottom:1px solid var(--border);" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'"><strong>${c.code}</strong> — ${c.desc}</div>`
+  ).join('');
+  dd.style.display = 'block';
+}
+
+function anamSelectCIE10(code) {
+  const list = (typeof ALL_CIE10 !== 'undefined') ? ALL_CIE10 : [];
+  const c = list.find(x => x.code === code);
+  const input = document.getElementById('anam-cie10-search');
+  const hidden = document.getElementById('anam-cie10-code');
+  const dd = document.getElementById('anam-cie10-dropdown');
+  if (input) input.value = c ? `${c.code} — ${c.desc}` : '';
+  if (hidden) hidden.value = code;
+  if (dd) { dd.style.display = 'none'; dd.innerHTML = ''; }
+}
+
 function openAnamnesisModal(patientId) {
   const p = PATIENTS.find(x => x.id === patientId);
   if (!p) return;
@@ -5643,7 +5740,7 @@ function openAnamnesisModal(patientId) {
   document.getElementById('anam-medicamentos').value = p.medicamentos || '';
   document.getElementById('anam-fuma').checked = !!(p.habitos && p.habitos.fuma);
   document.getElementById('anam-alcohol').checked = !!(p.habitos && p.habitos.alcohol);
-  document.getElementById('anam-habitos-orales').value = (p.habitos && p.habitos.orales) || '';
+  document.getElementById('anam-habitos-otros').value = (p.habitos && p.habitos.otros) || '';
   document.getElementById('anam-embarazo').checked = !!(p.ginecoObstetricos && p.ginecoObstetricos.embarazo);
   document.getElementById('anam-lactancia').checked = !!(p.ginecoObstetricos && p.ginecoObstetricos.lactancia);
   document.getElementById('anam-semanas').value = (p.ginecoObstetricos && p.ginecoObstetricos.semanas) || '';
@@ -5653,18 +5750,42 @@ function openAnamnesisModal(patientId) {
   document.getElementById('anam-fc').value = (p.signosVitales && p.signosVitales.fc) || '';
   document.getElementById('anam-fr').value = (p.signosVitales && p.signosVitales.fr) || '';
   document.getElementById('anam-temp').value = (p.signosVitales && p.signosVitales.temp) || '';
-  document.getElementById('anam-examen-extraoral').value = p.examenExtraoral || '';
-  document.getElementById('anam-examen-intraoral').value = p.examenIntraoral || '';
+  document.getElementById('anam-extraoral-otros').value = p.examenExtraoralOtros || '';
+  document.getElementById('anam-intraoral-otros').value = p.examenIntraoralOtros || '';
+  document.getElementById('anam-ros-otros').value = p.revisionSistemasOtros || '';
   document.getElementById('anam-observaciones').value = p.anamnesisObs || '';
 
-  const grid = document.getElementById('anam-conditions-grid');
-  const selected = new Set(p.condiciones || []);
-  const conds = (typeof MEDICAL_CONDITIONS !== 'undefined') ? MEDICAL_CONDITIONS : [];
-  grid.innerHTML = conds.length ? conds.map(c => `
-    <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;">
-      <input type="checkbox" value="${c.id}" ${selected.has(c.id)?'checked':''} style="width:15px;height:15px;flex-shrink:0;">
-      <span>${c.icon||''} ${c.name}</span>
-    </label>`).join('') : '<div style="grid-column:1/-1;color:var(--text-muted);font-size:12px;">Sin lista de condiciones disponible.</div>';
+  const rips = p.rips || {};
+  document.getElementById('anam-rips-tipo-consulta').value = rips.tipoConsulta || '';
+  document.getElementById('anam-rips-finalidad').value = rips.finalidad || '';
+  document.getElementById('anam-rips-causa-externa').value = rips.causaExterna || '';
+  document.getElementById('anam-rips-tipo-diagnostico').value = rips.tipoDiagnostico || 'Impresión diagnóstica';
+  document.getElementById('anam-rips-relacionado-1').value = rips.relacionado1 || '';
+  document.getElementById('anam-rips-relacionado-2').value = rips.relacionado2 || '';
+  document.getElementById('anam-rips-impresion').value = rips.impresion || '';
+  document.getElementById('anam-cie10-code').value = rips.diagnosticoPrincipal || '';
+  const cie10List = (typeof ALL_CIE10 !== 'undefined') ? ALL_CIE10 : [];
+  const diagPrincipal = rips.diagnosticoPrincipal ? cie10List.find(c => c.code === rips.diagnosticoPrincipal) : null;
+  document.getElementById('anam-cie10-search').value = diagPrincipal ? `${diagPrincipal.code} — ${diagPrincipal.desc}` : '';
+  const cie10Dd = document.getElementById('anam-cie10-dropdown');
+  if (cie10Dd) { cie10Dd.style.display = 'none'; cie10Dd.innerHTML = ''; }
+
+  const renderCheckGrid = (elId, list, selectedIds) => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    const selected = new Set(selectedIds || []);
+    el.innerHTML = list.map(c => `
+      <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;">
+        <input type="checkbox" value="${c.id}" ${selected.has(c.id)?'checked':''} style="width:15px;height:15px;flex-shrink:0;">
+        <span>${c.icon||''} ${c.name}</span>
+      </label>`).join('');
+  };
+
+  renderCheckGrid('anam-conditions-grid', (typeof MEDICAL_CONDITIONS !== 'undefined') ? MEDICAL_CONDITIONS : [], p.condiciones);
+  renderCheckGrid('anam-habitos-grid', (typeof HABITOS_ORALES_LIST !== 'undefined') ? HABITOS_ORALES_LIST : [], p.habitos && p.habitos.orales);
+  renderCheckGrid('anam-extraoral-grid', (typeof EXAMEN_EXTRAORAL_LIST !== 'undefined') ? EXAMEN_EXTRAORAL_LIST : [], p.examenExtraoralSel);
+  renderCheckGrid('anam-intraoral-grid', (typeof EXAMEN_INTRAORAL_LIST !== 'undefined') ? EXAMEN_INTRAORAL_LIST : [], p.examenIntraoralSel);
+  renderCheckGrid('anam-ros-grid', (typeof REVISION_SISTEMAS_LIST !== 'undefined') ? REVISION_SISTEMAS_LIST : [], p.revisionSistemas);
 
   openModal('modal-anamnesis');
 }
@@ -5673,19 +5794,37 @@ function guardarAnamnesis() {
   const p = PATIENTS.find(x => x.id === anamPatientId);
   if (!p) { closeModal('modal-anamnesis'); return; }
 
-  const grid = document.getElementById('anam-conditions-grid');
-  const condSel = Array.from(grid.querySelectorAll('input[type=checkbox]:checked')).map(i => i.value);
+  const checkedIn = (elId) => {
+    const el = document.getElementById(elId);
+    if (!el) return [];
+    return Array.from(el.querySelectorAll('input[type=checkbox]:checked')).map(i => i.value);
+  };
 
-  p.motivo = document.getElementById('anam-motivo').value.trim() || null;
-  p.enfermedadActual = document.getElementById('anam-enf-actual').value.trim() || null;
-  p.condiciones = condSel;
+  const motivo = document.getElementById('anam-motivo').value.trim();
+  const enfActual = document.getElementById('anam-enf-actual').value.trim();
+  const ripsTipoConsulta = document.getElementById('anam-rips-tipo-consulta').value;
+  const ripsFinalidad = document.getElementById('anam-rips-finalidad').value;
+  const ripsCausaExterna = document.getElementById('anam-rips-causa-externa').value;
+  const ripsDiagPrincipal = document.getElementById('anam-cie10-code').value;
+
+  if (!motivo) { showToast('⚠️ El motivo de consulta es obligatorio para guardar la anamnesis', 'error'); return; }
+  if (!enfActual) { showToast('⚠️ La enfermedad actual es obligatoria para guardar la anamnesis', 'error'); return; }
+  if (!ripsTipoConsulta) { showToast('⚠️ Selecciona el tipo de consulta (información RIPS)', 'error'); return; }
+  if (!ripsFinalidad) { showToast('⚠️ Selecciona la finalidad de la consulta (información RIPS)', 'error'); return; }
+  if (!ripsCausaExterna) { showToast('⚠️ Selecciona la causa externa (información RIPS)', 'error'); return; }
+  if (!ripsDiagPrincipal) { showToast('⚠️ Busca y selecciona el diagnóstico principal CIE-10 (información RIPS)', 'error'); return; }
+
+  p.motivo = motivo;
+  p.enfermedadActual = enfActual;
+  p.condiciones = checkedIn('anam-conditions-grid');
   p.antecedentesQuirurgicos = document.getElementById('anam-quirurgicos').value.trim() || null;
   p.alergias = document.getElementById('anam-alergias').value.trim() || null;
   p.medicamentos = document.getElementById('anam-medicamentos').value.trim() || null;
   p.habitos = {
     fuma: document.getElementById('anam-fuma').checked,
     alcohol: document.getElementById('anam-alcohol').checked,
-    orales: document.getElementById('anam-habitos-orales').value.trim() || null,
+    orales: checkedIn('anam-habitos-grid'),
+    otros: document.getElementById('anam-habitos-otros').value.trim() || null,
   };
   p.ginecoObstetricos = {
     embarazo: document.getElementById('anam-embarazo').checked,
@@ -5693,14 +5832,28 @@ function guardarAnamnesis() {
     semanas: document.getElementById('anam-semanas').value || null,
   };
   p.antecedentesFamiliares = document.getElementById('anam-familiares').value.trim() || null;
+  p.revisionSistemas = checkedIn('anam-ros-grid');
+  p.revisionSistemasOtros = document.getElementById('anam-ros-otros').value.trim() || null;
   p.signosVitales = {
     ta: document.getElementById('anam-ta').value.trim() || null,
     fc: document.getElementById('anam-fc').value || null,
     fr: document.getElementById('anam-fr').value || null,
     temp: document.getElementById('anam-temp').value.trim() || null,
   };
-  p.examenExtraoral = document.getElementById('anam-examen-extraoral').value.trim() || null;
-  p.examenIntraoral = document.getElementById('anam-examen-intraoral').value.trim() || null;
+  p.examenExtraoralSel = checkedIn('anam-extraoral-grid');
+  p.examenExtraoralOtros = document.getElementById('anam-extraoral-otros').value.trim() || null;
+  p.examenIntraoralSel = checkedIn('anam-intraoral-grid');
+  p.examenIntraoralOtros = document.getElementById('anam-intraoral-otros').value.trim() || null;
+  p.rips = {
+    tipoConsulta: ripsTipoConsulta,
+    finalidad: ripsFinalidad,
+    causaExterna: ripsCausaExterna,
+    diagnosticoPrincipal: ripsDiagPrincipal,
+    tipoDiagnostico: document.getElementById('anam-rips-tipo-diagnostico').value || null,
+    relacionado1: document.getElementById('anam-rips-relacionado-1').value.trim() || null,
+    relacionado2: document.getElementById('anam-rips-relacionado-2').value.trim() || null,
+    impresion: document.getElementById('anam-rips-impresion').value.trim() || null,
+  };
   p.anamnesisObs = document.getElementById('anam-observaciones').value.trim() || null;
   p.anamnesisCompletada = true;
 
@@ -10878,6 +11031,81 @@ const MEDICAL_CONDITIONS = [
   {id:'cortic-c',name:'Corticoterapia crónica',              risk:'medium', icon:'💊'},
   {id:'insuf-supr',name:'Insuficiencia suprarrenal',         risk:'high',   icon:'⚕️'},
   {id:'alcohol',name:'Consumo crónico de alcohol',           risk:'medium', icon:'🍺'},
+];
+
+// ---- Hábitos orales parafuncionales (Anamnesis) ----
+const HABITOS_ORALES_LIST = [
+  {id:'bruxismo',    name:'Bruxismo',                          icon:'🦷'},
+  {id:'onicofagia',  name:'Onicofagia (morderse las uñas)',    icon:'💅'},
+  {id:'resp-bucal',  name:'Respirador bucal',                  icon:'👄'},
+  {id:'deglu-atip',  name:'Deglución atípica',                 icon:'😮'},
+  {id:'succ-digital',name:'Succión digital',                   icon:'👆'},
+  {id:'chupo-biberon',name:'Chupo / biberón prolongado',        icon:'🍼'},
+  {id:'interp-ling', name:'Interposición lingual',              icon:'👅'},
+  {id:'morder-obj',  name:'Morder objetos (lápices, uñas de otros...)', icon:'✏️'},
+  {id:'apret-dientes',name:'Apretamiento dental (bruxismo diurno)', icon:'🦷'},
+  {id:'masticacion-unilateral',name:'Masticación unilateral',   icon:'🍽️'},
+];
+
+// ---- Examen extraoral (Anamnesis) ----
+const EXAMEN_EXTRAORAL_LIST = [
+  {id:'simetria-facial',   name:'Simetría facial conservada',        icon:'✅'},
+  {id:'asimetria-facial',  name:'Asimetría facial',                  icon:'⚠️'},
+  {id:'atm-normal',        name:'ATM sin alteraciones',              icon:'✅'},
+  {id:'atm-chasquido',     name:'ATM — chasquido',                   icon:'⚠️'},
+  {id:'atm-dolor',         name:'ATM — dolor a la palpación',        icon:'⚠️'},
+  {id:'atm-limitacion',    name:'ATM — limitación de apertura',      icon:'⚠️'},
+  {id:'adenopatias',       name:'Adenopatías palpables',             icon:'⚠️'},
+  {id:'sin-adenopatias',   name:'Sin adenopatías palpables',         icon:'✅'},
+  {id:'perfil-recto',      name:'Perfil facial recto',               icon:'➖'},
+  {id:'perfil-convexo',    name:'Perfil facial convexo',             icon:'↗️'},
+  {id:'perfil-concavo',    name:'Perfil facial cóncavo',             icon:'↘️'},
+  {id:'competencia-labial',name:'Competencia labial adecuada',       icon:'✅'},
+  {id:'incompetencia-labial',name:'Incompetencia labial',            icon:'⚠️'},
+  {id:'alt-piel',          name:'Alteraciones de piel/lesiones visibles', icon:'⚠️'},
+];
+
+// ---- Examen intraoral — tejidos blandos (Anamnesis) ----
+const EXAMEN_INTRAORAL_LIST = [
+  {id:'mucosa-normal',   name:'Mucosa yugal sin alteraciones',    icon:'✅'},
+  {id:'mucosa-lesion',   name:'Lesión en mucosa',                 icon:'⚠️'},
+  {id:'encia-sana',      name:'Encía sana',                       icon:'✅'},
+  {id:'encia-inflamada', name:'Encía inflamada / sangrante',      icon:'⚠️'},
+  {id:'lengua-normal',   name:'Lengua sin alteraciones',          icon:'✅'},
+  {id:'lengua-saburral', name:'Lengua saburral',                  icon:'⚠️'},
+  {id:'lengua-fisurada', name:'Lengua fisurada / geográfica',     icon:'⚠️'},
+  {id:'piso-boca-normal',name:'Piso de boca sin alteraciones',    icon:'✅'},
+  {id:'paladar-normal',  name:'Paladar sin alteraciones',         icon:'✅'},
+  {id:'paladar-ojival',  name:'Paladar ojival',                   icon:'⚠️'},
+  {id:'frenillos-normales',name:'Frenillos normales',             icon:'✅'},
+  {id:'frenillos-cortos',name:'Frenillos cortos / inserción baja',icon:'⚠️'},
+  {id:'amigdalas-normales',name:'Amígdalas normales',             icon:'✅'},
+  {id:'amigdalas-hipertroficas',name:'Amígdalas hipertróficas',   icon:'⚠️'},
+  {id:'halitosis',       name:'Halitosis',                        icon:'⚠️'},
+];
+
+// ---- Revisión por sistemas (Anamnesis) ----
+const REVISION_SISTEMAS_LIST = [
+  {id:'cardio-neg',    name:'Cardiovascular — sin alteraciones',        icon:'✅'},
+  {id:'cardio-pos',    name:'Cardiovascular — palpitaciones/dolor torácico', icon:'⚠️'},
+  {id:'resp-neg',      name:'Respiratorio — sin alteraciones',          icon:'✅'},
+  {id:'resp-pos',      name:'Respiratorio — tos/disnea/sibilancias',    icon:'⚠️'},
+  {id:'digest-neg',    name:'Digestivo — sin alteraciones',             icon:'✅'},
+  {id:'digest-pos',    name:'Digestivo — dolor abdominal/náuseas/reflujo', icon:'⚠️'},
+  {id:'genito-neg',    name:'Genitourinario — sin alteraciones',        icon:'✅'},
+  {id:'genito-pos',    name:'Genitourinario — alteraciones urinarias',  icon:'⚠️'},
+  {id:'neuro-neg',     name:'Neurológico — sin alteraciones',           icon:'✅'},
+  {id:'neuro-pos',     name:'Neurológico — cefalea/mareo/convulsiones', icon:'⚠️'},
+  {id:'osteo-neg',     name:'Osteomuscular — sin alteraciones',         icon:'✅'},
+  {id:'osteo-pos',     name:'Osteomuscular — dolor articular/muscular', icon:'⚠️'},
+  {id:'piel-neg',      name:'Piel y anexos — sin alteraciones',         icon:'✅'},
+  {id:'piel-pos',      name:'Piel y anexos — lesiones/prurito/rash',    icon:'⚠️'},
+  {id:'endo-neg',      name:'Endocrino — sin alteraciones',             icon:'✅'},
+  {id:'endo-pos',      name:'Endocrino — poliuria/polidipsia/intolerancia al frío o calor', icon:'⚠️'},
+  {id:'hemato-neg',    name:'Hematológico / Linfático — sin alteraciones', icon:'✅'},
+  {id:'hemato-pos',    name:'Hematológico / Linfático — sangrados/adenopatías/palidez', icon:'⚠️'},
+  {id:'psiq-neg',      name:'Psiquiátrico — sin alteraciones',          icon:'✅'},
+  {id:'psiq-pos',      name:'Psiquiátrico — ansiedad/depresión/insomnio', icon:'⚠️'},
 ];
 
 // ---- Medicamentos frecuentes del paciente ----
