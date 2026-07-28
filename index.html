@@ -994,7 +994,7 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
         <div id="login-error" style="display:none;" class="alert alert-warning">⚠️ Correo o contraseña incorrectos</div>
 
         <div style="text-align:center;margin-bottom:16px;">
-          <a href="#" onclick="fillDemoLogin();return false;" style="font-size:12px;color:#64748b;text-decoration:underline;">Usar cuenta demo</a>
+          <a href="#" onclick="useDemoLogin();return false;" style="font-size:12px;color:#64748b;text-decoration:underline;">⚡ Entrar con cuenta demo</a>
         </div>
 
         <button onclick="doLogin()" style="width:100%;padding:14px;background:linear-gradient(135deg,#38bdf8,#0f172a);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:16px;letter-spacing:0.3px;transition:opacity 0.15s;box-shadow:0 4px 16px rgba(37,99,235,0.35);" onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1">
@@ -2115,8 +2115,9 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
         <div style="margin-top:16px;">
           <div class="alert alert-info">
             <span>🤖</span>
-            <div><strong>IA Radiológica (Beta):</strong> Sube una radiografía periapical y la IA detectará automáticamente caries, pérdida ósea y patologías. <button class="btn btn-primary btn-sm" style="margin-left:12px;" onclick="activarIARadiologica()">Activar IA</button></div>
+            <div><strong>IA Radiológica (Beta):</strong> Sube una radiografía periapical y la IA detectará automáticamente caries, pérdida ósea y patologías. <button class="btn btn-primary btn-sm" id="rx-ia-btn" style="margin-left:12px;" onclick="activarIARadiologica()">Activar IA</button></div>
           </div>
+          <div id="rx-ia-resultado" style="display:none;margin-top:10px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;font-size:13px;line-height:1.7;white-space:pre-wrap;"></div>
         </div>
       </div>
     </div>
@@ -3442,6 +3443,25 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
         <div class="form-row">
           <div class="form-group"><label>Ocupación</label><input type="text" id="pac-ocupacion" placeholder="Profesión u ocupación"></div>
           <div class="form-group"><label>EPS / Aseguradora</label><input type="text" id="pac-eps" placeholder="Sura, Sanitas, Compensar..."></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Régimen</label>
+            <select id="pac-regimen" onchange="togglePacTipoAfiliado()">
+              <option value="">Seleccione...</option>
+              <option value="Contributivo">Contributivo</option>
+              <option value="Subsidiado">Subsidiado</option>
+              <option value="Especial o de excepción">Especial o de excepción</option>
+              <option value="Particular / No afiliado">Particular / No afiliado</option>
+            </select>
+          </div>
+          <div class="form-group" id="pac-tipo-afiliado-wrap"><label>Tipo de afiliado</label>
+            <select id="pac-tipo-afiliado">
+              <option value="">Seleccione...</option>
+              <option value="Cotizante">Cotizante</option>
+              <option value="Beneficiario">Beneficiario</option>
+              <option value="Adicional">Adicional</option>
+            </select>
+          </div>
         </div>
       </div>
       <div id="tab-medico" class="tab-content">
@@ -8395,6 +8415,19 @@ function togglePacCondicion(condId) {
   }
 }
 
+function togglePacTipoAfiliado() {
+  const regimen = document.getElementById('pac-regimen')?.value || '';
+  const wrap = document.getElementById('pac-tipo-afiliado-wrap');
+  const sel = document.getElementById('pac-tipo-afiliado');
+  if (!wrap || !sel) return;
+  if (regimen === 'Contributivo') {
+    wrap.style.display = '';
+  } else {
+    wrap.style.display = 'none';
+    sel.value = '';
+  }
+}
+
 function togglePacMed(condId, med, el) {
   pacCondSelectedMeds[condId] = pacCondSelectedMeds[condId] || new Set();
   const set = pacCondSelectedMeds[condId];
@@ -8463,6 +8496,8 @@ function savePatient() {
   const alerg    = (document.getElementById('pac-alergias')?.value || '').trim();
   const motivo   = (document.getElementById('pac-motivo')?.value || '').trim();
   const eps      = (document.getElementById('pac-eps')?.value || '').trim();
+  const regimen  = document.getElementById('pac-regimen')?.value || '';
+  const tipoAfiliado = regimen === 'Contributivo' ? (document.getElementById('pac-tipo-afiliado')?.value || '') : '';
   const enfActual = (document.getElementById('pac-enf-actual')?.value || '').trim();
   const medicamentos = (document.getElementById('pac-medicamentos')?.value || '').trim();
   const antFamiliares = (document.getElementById('pac-antecedentes-familiares')?.value || '').trim();
@@ -8481,7 +8516,7 @@ function savePatient() {
   const camposComunes = {
     name: nombre + ' ' + apellido, age: age||0,
     phone: telefono || '—', email: email || '—',
-    cedula: cedula || '—', eps: eps || '—', sexo, ocupacion,
+    cedula: cedula || '—', eps: eps || '—', regimen: regimen || '—', tipoAfiliado: tipoAfiliado || '—', sexo, ocupacion,
     alergias: alerg || null, motivo: motivo || '',
     enfermedadActual: enfActual || '',
     medicamentos: medicamentos || null,
@@ -8521,10 +8556,12 @@ function savePatient() {
   // Limpiar formulario
   ['pac-nombre','pac-apellido','pac-cedula','pac-telefono','pac-email',
    'pac-nacimiento','pac-ocupacion','pac-alergias','pac-motivo','pac-eps',
+   'pac-regimen','pac-tipo-afiliado',
    'pac-enf-actual','pac-medicamentos','pac-antecedentes-familiares',
    'pac-direccion','pac-ciudad','pac-barrio','pac-emergencia'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.value='';
   });
+  togglePacTipoAfiliado();
   renderPacCondiciones();
   const titleEl = document.getElementById('modal-paciente-title');
   if (titleEl) titleEl.textContent = '👤 Nuevo Paciente';
@@ -8557,6 +8594,9 @@ function openEditPatientModal(id) {
   set('pac-sexo', p.sexo);
   set('pac-ocupacion', p.ocupacion);
   set('pac-eps', p.eps === '—' ? '' : p.eps);
+  set('pac-regimen', p.regimen === '—' ? '' : p.regimen);
+  togglePacTipoAfiliado();
+  set('pac-tipo-afiliado', p.tipoAfiliado === '—' ? '' : p.tipoAfiliado);
   set('pac-alergias', p.alergias);
   set('pac-motivo', p.motivo);
   set('pac-enf-actual', p.enfermedadActual);
@@ -8619,6 +8659,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!savedSession) {
     if (location.hash === '#register') showRegister();
     else if (location.hash === '#login') showLogin();
+    // Login por defecto: precarga la cuenta demo para no arrancar con campos vacíos
+    if (typeof fillDemoLogin === 'function') fillDemoLogin();
   }
 
   // Cargar datos persistidos antes de renderizar
@@ -8756,6 +8798,11 @@ const USERS_DB = [
 function fillDemoLogin() {
   document.getElementById('login-email').value = USERS_DB[0].email;
   document.getElementById('login-pass').value = USERS_DB[0].pass;
+}
+
+function useDemoLogin() {
+  fillDemoLogin();
+  doLogin();
 }
 
 function doLogin() {
@@ -9869,14 +9916,62 @@ function closeRxLightbox(e) {
   const lb = document.getElementById('rx-lightbox');
   if (lb) lb.style.display = 'none';
 }
+// Proyecto Supabase de Denti (Soydenti.com). La URL y la anon key son
+// públicas por diseño (se usan siempre desde el navegador); la API key
+// real de la IA nunca sale del backend (Edge Function analyze-xray).
+const DENTI_SUPABASE_URL = 'https://rdnazifzhtgopqmwwvjs.supabase.co';
+const DENTI_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkbmF6aWZ6aHRnb3BxbXd3dmpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwODM4MTIsImV4cCI6MjEwMDY1OTgxMn0.Kj3zQG1g7P59zp8314UlFxZH3SfD3iGO2p4Q-h8ge2g';
+
+function _dataUrlToParts(dataUrl) {
+  const m = /^data:([^;]+);base64,(.*)$/.exec(dataUrl || '');
+  if (!m) return null;
+  return { mimeType: m[1], base64: m[2] };
+}
+
 function activarIARadiologica() {
   const list = _rxCurrentPatientId ? RX_FOTOS.filter(f => f.patientId === _rxCurrentPatientId) : RX_FOTOS;
   const rx = list.find(f => f.category === 'radiografia') || list[0];
   if (!rx) { showToast('Sube una radiografía primero para analizarla', 'error'); return; }
+  const parts = _dataUrlToParts(rx.dataUrl);
+  if (!parts) { showToast('No se pudo leer la imagen de la radiografía', 'error'); return; }
+
+  const btn = document.getElementById('rx-ia-btn');
+  const resultBox = document.getElementById('rx-ia-resultado');
+  if (btn) { btn.disabled = true; btn.textContent = 'Analizando...'; }
+  if (resultBox) { resultBox.style.display = 'block'; resultBox.textContent = '🤖 Analizando radiografía con IA...'; }
   showToast('Analizando radiografía con IA...', 'info');
-  setTimeout(() => {
-    showToast('Análisis IA (demo): sin hallazgos críticos detectados. Verifica siempre con criterio clínico.', 'success');
-  }, 1400);
+
+  fetch(`${DENTI_SUPABASE_URL}/functions/v1/analyze-xray`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': DENTI_SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${DENTI_SUPABASE_ANON_KEY}`,
+    },
+    body: JSON.stringify({
+      imageBase64: parts.base64,
+      mimeType: parts.mimeType,
+      patientName: rx.patientName || '',
+    }),
+  })
+    .then(res => res.json().then(data => ({ ok: res.ok, data })))
+    .then(({ ok, data }) => {
+      if (!ok || data.error) {
+        const msg = (data && data.error) || 'No se pudo completar el análisis';
+        if (resultBox) { resultBox.style.display = 'block'; resultBox.textContent = `⚠️ ${msg}`; }
+        showToast('No se pudo analizar la radiografía con IA', 'error');
+        return;
+      }
+      if (resultBox) { resultBox.style.display = 'block'; resultBox.textContent = data.analysis || 'La IA no devolvió resultados.'; }
+      showToast('✅ Análisis IA completado', 'success');
+    })
+    .catch(err => {
+      if (resultBox) { resultBox.style.display = 'block'; resultBox.textContent = `⚠️ Error de conexión con la IA: ${err.message || err}`; }
+      showToast('Error de conexión con la IA', 'error');
+    })
+    .finally(() => {
+      if (btn) { btn.disabled = false; btn.textContent = 'Activar IA'; }
+    });
 }
 
 function teethChip(num) {
