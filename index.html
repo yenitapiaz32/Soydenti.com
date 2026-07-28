@@ -444,6 +444,40 @@ textarea { resize: vertical; min-height: 80px; }
   .landing-pills { gap: 6px !important; }
   .pricing-grid { grid-template-columns: 1fr !important; }
   .contact-grid { grid-template-columns: 1fr !important; }
+
+  /* Cobertura general para grillas y paneles escritos con style="" directo en el HTML
+     (no todas las pantallas usan las clases .grid-4/.form-row) */
+  [style*="grid-template-columns:repeat(3"],
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns:repeat(4"],
+  [style*="grid-template-columns: repeat(4"],
+  [style*="grid-template-columns:repeat(7"],
+  [style*="grid-template-columns: repeat(7"],
+  [style*="grid-template-columns:1fr 1fr 1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr 1fr 1fr"],
+  [style*="grid-template-columns:1fr 1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr 1fr"],
+  [style*="grid-template-columns:2fr 1fr 1fr 1fr 1fr auto"],
+  [style*="grid-template-columns:repeat(4,1fr) 1.4fr"],
+  [style*="grid-template-columns:repeat(auto-fill"],
+  [style*="grid-template-columns: repeat(auto-fill"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  [style*="grid-template-columns:320px 1fr"],
+  [style*="grid-template-columns:280px 1fr"],
+  [style*="grid-template-columns:240px 1fr"],
+  [style*="grid-template-columns:80px 1fr"],
+  [style*="grid-template-columns:1fr 340px"],
+  [style*="grid-template-columns:1fr 380px"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="width:460px"], [style*="width: 460px"],
+  [style*="width:600px"], [style*="width: 600px"] { width: 100% !important; max-width: 100% !important; }
+  #chatbot-widget { width: calc(100vw - 32px) !important; left: 16px !important; right: 16px !important; }
+  /* Tablas sueltas (sin .table-wrap): que se desplacen horizontal en vez de romper el layout */
+  table { display: block; overflow-x: auto; white-space: nowrap; }
+  canvas { max-width: 100%; }
+  body { overflow-x: hidden; }
 }
 @media (max-width: 480px) {
   .grid-4 { grid-template-columns: 1fr 1fr; }
@@ -452,6 +486,13 @@ textarea { resize: vertical; min-height: 80px; }
   .tab { white-space: nowrap; }
   #content { padding: 8px; }
   .odonto-row { gap: 1px; }
+
+  /* En celular angosto, todo lo multi-columna en línea se apila en una sola columna */
+  [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+  [style*="width:340px"], [style*="width: 340px"],
+  [style*="width:380px"], [style*="width: 380px"] { width: 100% !important; }
+  .form-row-3 { grid-template-columns: 1fr !important; }
+  #chatbot-widget { bottom: 76px !important; }
 }
 
 /* ── COMMAND PALETTE ──────────────────────────── */
@@ -2875,6 +2916,16 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
         <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Estos tiempos se usan para sugerir la duración automáticamente al crear una nueva cita.</div>
         <div id="proc-duracion-list" style="display:flex;flex-direction:column;gap:8px;"></div>
       </div>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title">📦 Migración de datos — importar historias clínicas masivamente</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Trae tus datos desde otro software (Excel/CSV). Sube el archivo, conecta cada columna con el campo de Denti que corresponda, revisa la vista previa y confirma. Si un paciente ya existe (misma cédula), se actualiza en vez de duplicarse.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-outline btn-sm" onclick="openImportModal('pacientes')">👤 Importar Pacientes (Historia Clínica)</button>
+          <button class="btn btn-outline btn-sm" onclick="openImportModal('evoluciones')">📓 Importar Evoluciones</button>
+          <button class="btn btn-outline btn-sm" onclick="openImportModal('tratamientos')">🏥 Importar Tratamientos</button>
+        </div>
+      </div>
     </div>
 
     <!-- ===== PERIODONTOGRAMA ===== -->
@@ -4732,6 +4783,49 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
     </div>
     <div style="padding:12px 16px;text-align:center;border-top:1px solid var(--border);">
       <button class="btn btn-ghost btn-sm">Ver todas las notificaciones</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: IMPORTAR DATOS MASIVAMENTE (migración desde otro software) ===== -->
+<div class="modal-overlay" id="modal-importar">
+  <div class="modal modal-xl">
+    <div class="modal-header">
+      <h3 id="import-modal-title">📦 Importar datos</h3>
+      <button class="modal-close" onclick="closeImportModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="import-step-file">
+        <div class="alert alert-info" style="margin-bottom:14px;">
+          <span>ℹ️</span>
+          <div id="import-instrucciones">Exporta tus datos desde tu software actual como archivo <strong>CSV</strong> (si está en Excel, usa "Guardar como... → CSV UTF-8") y súbelo aquí. En el siguiente paso conectas cada columna con el campo correspondiente en Denti.</div>
+        </div>
+        <div class="form-group">
+          <label>Archivo CSV</label>
+          <input type="file" id="import-file-input" accept=".csv,text/csv" onchange="handleImportFileSelect(this.files)">
+        </div>
+        <div id="import-file-status" style="font-size:12px;color:var(--text-muted);"></div>
+      </div>
+
+      <div id="import-step-map" style="display:none;">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px;">2. Conecta cada campo de Denti con la columna correspondiente de tu archivo</div>
+        <div id="import-mapping-grid" style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;"></div>
+
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;">3. Vista previa (primeras 5 filas)</div>
+        <div style="overflow-x:auto;margin-bottom:14px;">
+          <table id="import-preview-table" style="width:100%;border-collapse:collapse;font-size:11.5px;"></table>
+        </div>
+        <div style="font-size:12px;color:var(--text-muted);" id="import-total-rows"></div>
+      </div>
+
+      <div id="import-step-result" style="display:none;">
+        <div id="import-result-summary"></div>
+        <div id="import-result-errors" style="margin-top:12px;"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeImportModal()">Cancelar</button>
+      <button class="btn btn-primary" id="import-btn-confirm" style="display:none;" onclick="ejecutarImportacion()">✅ Importar</button>
     </div>
   </div>
 </div>
@@ -8791,7 +8885,7 @@ function printInvoice(folio) {
 // AUTH — LOGIN / REGISTER
 // ============================================================
 const USERS_DB = [
-  {email:'yenifer@denti.co', pass:'12345678', name:'Dra. Yenifer', role:'Admin', clinica:'Clínica Dental Yenifer'},
+  {email:'demo@denti.co', pass:'demo1234', name:'Dr/a. Demo', role:'Admin', clinica:'Clínica Demo Denti'},
   {email:'lopez@denti.co',  pass:'12345678', name:'Dra. López', role:'Especialista', clinica:'Clínica Dental Yenifer'},
 ];
 
@@ -13910,36 +14004,82 @@ function imprimirConsentimiento(tipo, pacienteNombre) {
 }
 
 // ============================================================
-// RECETA ELECTRÓNICA
+// RECETA ELECTRÓNICA — con parámetros de vademécum
 // ============================================================
 let medicamentosReceta = [];
 let firmaCanvasReceta = null, firmaCanvasRecetaCtx = null, firmaRecetaDrawing = false;
-const MEDS_FRECUENTES = [
-  {n:'Ibuprofeno 600mg c/8h × 3d',g:'AINEs'},
-  {n:'Amoxicilina 500mg c/8h × 7d',g:'Antibióticos'},
-  {n:'Acetaminofén 1g c/6h × 3d',g:'Analgésicos'},
-  {n:'Clindamicina 300mg c/8h × 7d',g:'Antibióticos'},
-  {n:'Metronidazol 500mg c/8h × 7d',g:'Antibióticos'},
-  {n:'Dexametasona 4mg dosis única',g:'Corticoides'},
+
+// ---- Vademécum odontológico (dosis/vía/duración estándar en adultos) ----
+// Referencia de práctica clínica general; siempre debe ajustarse a criterio del odontólogo.
+const VADEMECUM_ODONTO = [
+  {id:'acetaminofen500', grupo:'Analgésicos', nombre:'Acetaminofén (Paracetamol) 500mg', dosis:'500–1000 mg', frecuencia:'Cada 6-8 horas', duracion:'3-5 días', via:'Oral',
+    contraindicaciones:'Insuficiencia hepática severa. Precaución en consumo crónico de alcohol.', crossAllergy:[]},
+  {id:'ibuprofeno600', grupo:'AINEs', nombre:'Ibuprofeno 600mg', dosis:'400–600 mg', frecuencia:'Cada 8 horas', duracion:'3-5 días', via:'Oral',
+    contraindicaciones:'Úlcera péptica activa, insuficiencia renal severa, tercer trimestre de embarazo, asma con sensibilidad a AINEs.', crossAllergy:['aines','ibuprofeno','aspirina','asa']},
+  {id:'diclofenaco50', grupo:'AINEs', nombre:'Diclofenaco sódico 50mg', dosis:'50 mg', frecuencia:'Cada 8 horas', duracion:'3-5 días', via:'Oral',
+    contraindicaciones:'Enfermedad cardiovascular activa, úlcera péptica, insuficiencia renal.', crossAllergy:['aines','diclofenaco','aspirina','asa']},
+  {id:'naproxeno550', grupo:'AINEs', nombre:'Naproxeno sódico 550mg', dosis:'550 mg', frecuencia:'Cada 12 horas', duracion:'3-5 días', via:'Oral',
+    contraindicaciones:'Úlcera péptica activa, insuficiencia renal severa, tercer trimestre de embarazo.', crossAllergy:['aines','naproxeno','aspirina','asa']},
+  {id:'dipirona500', grupo:'Analgésicos', nombre:'Dipirona (Metamizol) 500mg', dosis:'500–1000 mg', frecuencia:'Cada 6-8 horas', duracion:'3 días', via:'Oral',
+    contraindicaciones:'Antecedente de agranulocitosis, porfiria, déficit de G6PD.', crossAllergy:['dipirona','metamizol']},
+  {id:'amoxicilina500', grupo:'Antibióticos', nombre:'Amoxicilina 500mg', dosis:'500 mg', frecuencia:'Cada 8 horas', duracion:'7 días', via:'Oral',
+    contraindicaciones:'Alergia a betalactámicos/penicilinas.', crossAllergy:['penicilina','amoxicilina','betalactamico','betalactámico']},
+  {id:'amoxiclav875', grupo:'Antibióticos', nombre:'Amoxicilina + Ácido clavulánico 875/125mg', dosis:'875/125 mg', frecuencia:'Cada 12 horas', duracion:'7 días', via:'Oral',
+    contraindicaciones:'Alergia a betalactámicos/penicilinas, antecedente de ictericia colestásica por este fármaco.', crossAllergy:['penicilina','amoxicilina','betalactamico','betalactámico']},
+  {id:'clindamicina300', grupo:'Antibióticos', nombre:'Clindamicina 300mg', dosis:'300 mg', frecuencia:'Cada 8 horas', duracion:'7 días', via:'Oral',
+    contraindicaciones:'Antecedente de colitis pseudomembranosa. Alternativa en alergia a penicilina.', crossAllergy:['clindamicina']},
+  {id:'metronidazol500', grupo:'Antibióticos', nombre:'Metronidazol 500mg', dosis:'500 mg', frecuencia:'Cada 8 horas', duracion:'7 días', via:'Oral',
+    contraindicaciones:'Primer trimestre de embarazo, consumo de alcohol concomitante (efecto disulfiram).', crossAllergy:['metronidazol']},
+  {id:'azitromicina500', grupo:'Antibióticos', nombre:'Azitromicina 500mg', dosis:'500 mg día 1, luego 250 mg', frecuencia:'Cada 24 horas', duracion:'3-5 días', via:'Oral',
+    contraindicaciones:'Enfermedad hepática severa, prolongación de intervalo QT.', crossAllergy:['azitromicina','macrolido','macrólido']},
+  {id:'cefalexina500', grupo:'Antibióticos', nombre:'Cefalexina 500mg', dosis:'500 mg', frecuencia:'Cada 6 horas', duracion:'7 días', via:'Oral',
+    contraindicaciones:'Posible reactividad cruzada (~1-3%) en alergia a penicilina.', crossAllergy:['cefalosporina','cefalexina','penicilina']},
+  {id:'dexametasona4', grupo:'Corticoides', nombre:'Dexametasona 4mg', dosis:'4-8 mg', frecuencia:'Dosis única / cada 24h × 2-3 días', duracion:'1-3 días', via:'Oral',
+    contraindicaciones:'Infección activa no controlada, úlcera péptica activa, diabetes descompensada.', crossAllergy:['dexametasona','corticoide']},
+  {id:'prednisolona50', grupo:'Corticoides', nombre:'Prednisolona 50mg', dosis:'50 mg', frecuencia:'Cada 24 horas', duracion:'3 días', via:'Oral',
+    contraindicaciones:'Infección activa no controlada, diabetes descompensada.', crossAllergy:['prednisolona','corticoide']},
+  {id:'diazepam5', grupo:'Ansiolíticos', nombre:'Diazepam 5mg', dosis:'5 mg', frecuencia:'Dosis única (1h antes del procedimiento)', duracion:'Dosis única', via:'Oral',
+    contraindicaciones:'Glaucoma de ángulo estrecho, miastenia gravis, insuficiencia respiratoria severa, embarazo.', crossAllergy:['diazepam','benzodiacepina']},
+  {id:'clorhexidina012', grupo:'Antisépticos', nombre:'Clorhexidina 0.12% enjuague bucal', dosis:'15 mL', frecuencia:'Cada 12 horas', duracion:'7 días', via:'Tópica (enjuague, no ingerir)',
+    contraindicaciones:'No usar más de 2 semanas seguidas (riesgo de tinción dental y alteración del gusto).', crossAllergy:['clorhexidina']},
 ];
+
+const MEDS_FRECUENTES = ['ibuprofeno600','amoxicilina500','acetaminofen500','clindamicina300','metronidazol500','dexametasona4'];
+
+function vademecumFindById(id) { return VADEMECUM_ODONTO.find(v => v.id === id); }
+
+// Cruza el fármaco elegido con las alergias registradas del paciente activo (texto libre).
+function checkAlergiaCruzada(vad) {
+  if (!vad || !vad.crossAllergy || !vad.crossAllergy.length) return null;
+  const p = (typeof PATIENTS !== 'undefined' && typeof currentPatientId !== 'undefined') ? PATIENTS.find(x => x.id === currentPatientId) : null;
+  const alergiasTxt = (p && p.alergias && p.alergias !== 'No registradas') ? p.alergias.toLowerCase() : '';
+  if (!alergiasTxt) return null;
+  const match = vad.crossAllergy.find(kw => alergiasTxt.includes(kw.toLowerCase()));
+  return match ? `🚨 El paciente tiene registrada una alergia relacionada con "${match}" — verificar antes de prescribir` : null;
+}
 
 function initRecetaTab() {
   const fd=document.getElementById('receta-fecha'); if(fd&&!fd.value) fd.value=new Date().toISOString().split('T')[0];
   if(!medicamentosReceta.length) addMedReceta();
   const mf=document.getElementById('med-frecuentes');
-  if(mf&&!mf.innerHTML) mf.innerHTML=MEDS_FRECUENTES.map(m=>`<button onclick="addMedFrecuente('${m.n}')" class="btn btn-ghost btn-sm" style="font-size:11px;text-align:left;padding:4px 8px;">${m.n}</button>`).join('');
+  if(mf&&!mf.innerHTML) mf.innerHTML=MEDS_FRECUENTES.map(id=>{
+    const v=vademecumFindById(id); if(!v) return '';
+    return `<button onclick="addMedFrecuente('${id}')" class="btn btn-ghost btn-sm" style="font-size:11px;text-align:left;padding:4px 8px;">${v.nombre} — ${v.frecuencia}</button>`;
+  }).join('');
   setTimeout(initFirmaCanvasReceta, 100);
 }
 
 function addMedReceta() {
   const id='med_'+Date.now();
-  medicamentosReceta.push({id,nombre:'',dosis:'',frecuencia:'',duracion:''});
+  medicamentosReceta.push({id,vademecumId:'',nombre:'',dosis:'',frecuencia:'',duracion:'',via:''});
   renderMedsReceta();
 }
 
-function addMedFrecuente(nombre) {
+function addMedFrecuente(vademecumId) {
+  const v = vademecumFindById(vademecumId);
+  if (!v) return;
   const id='med_'+Date.now();
-  medicamentosReceta.push({id,nombre,dosis:'',frecuencia:'',duracion:''});
+  medicamentosReceta.push({id,vademecumId:v.id,nombre:v.nombre,dosis:v.dosis,frecuencia:v.frecuencia,duracion:v.duracion,via:v.via});
   renderMedsReceta();
 }
 
@@ -13948,17 +14088,54 @@ function removeMedReceta(id) {
   renderMedsReceta();
 }
 
+// Al elegir un fármaco del vademécum en el selector, autocompleta dosis/frecuencia/duración/vía estándar.
+function onVademecumMedSelect(i, vademecumId) {
+  const m = medicamentosReceta[i];
+  if (!m) return;
+  m.vademecumId = vademecumId;
+  if (vademecumId === '__otro__' || !vademecumId) {
+    m.vademecumId = '';
+  } else {
+    const v = vademecumFindById(vademecumId);
+    if (v) {
+      m.nombre = v.nombre;
+      m.dosis = v.dosis;
+      m.frecuencia = v.frecuencia;
+      m.duracion = v.duracion;
+      m.via = v.via;
+    }
+  }
+  renderMedsReceta();
+}
+
 function renderMedsReceta() {
   const container=document.getElementById('receta-medicamentos');
   if(!container) return;
-  container.innerHTML = medicamentosReceta.map((m,i)=>`
-    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:6px;align-items:center;background:var(--bg);padding:8px;border-radius:8px;">
-      <input placeholder="Medicamento..." value="${m.nombre}" oninput="medicamentosReceta[${i}].nombre=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
-      <input placeholder="Dosis" value="${m.dosis}" oninput="medicamentosReceta[${i}].dosis=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
-      <input placeholder="Frecuencia" value="${m.frecuencia}" oninput="medicamentosReceta[${i}].frecuencia=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
-      <input placeholder="Duración" value="${m.duracion}" oninput="medicamentosReceta[${i}].duracion=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
-      <button onclick="removeMedReceta('${m.id}')" style="width:28px;height:28px;border:none;background:#fff5f5;border-radius:6px;cursor:pointer;color:var(--danger);font-size:14px;">✕</button>
-    </div>`).join('');
+  const grupos = [...new Set(VADEMECUM_ODONTO.map(v=>v.grupo))];
+  container.innerHTML = medicamentosReceta.map((m,i)=>{
+    const vad = m.vademecumId ? vademecumFindById(m.vademecumId) : null;
+    const alertaAlergia = vad ? checkAlergiaCruzada(vad) : null;
+    const selectHtml = `<select onchange="onVademecumMedSelect(${i},this.value)" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
+        <option value="">Elegir del vademécum...</option>
+        ${grupos.map(g => `<optgroup label="${g}">${VADEMECUM_ODONTO.filter(v=>v.grupo===g).map(v=>`<option value="${v.id}" ${m.vademecumId===v.id?'selected':''}>${v.nombre}</option>`).join('')}</optgroup>`).join('')}
+        <option value="__otro__" ${(!m.vademecumId && m.nombre)?'selected':''}>Otro (escribir manualmente)</option>
+      </select>`;
+    const nombreManualHtml = (!m.vademecumId) ? `<input placeholder="Medicamento (manual)..." value="${m.nombre}" oninput="medicamentosReceta[${i}].nombre=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;margin-top:4px;">` : '';
+    return `
+    <div style="background:var(--bg);padding:8px;border-radius:8px;">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;gap:6px;align-items:center;">
+        ${selectHtml}
+        <input placeholder="Dosis" value="${m.dosis}" oninput="medicamentosReceta[${i}].dosis=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
+        <input placeholder="Frecuencia" value="${m.frecuencia}" oninput="medicamentosReceta[${i}].frecuencia=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
+        <input placeholder="Duración" value="${m.duracion}" oninput="medicamentosReceta[${i}].duracion=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
+        <input placeholder="Vía" value="${m.via||''}" oninput="medicamentosReceta[${i}].via=this.value" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;outline:none;">
+        <button onclick="removeMedReceta('${m.id}')" style="width:28px;height:28px;border:none;background:#fff5f5;border-radius:6px;cursor:pointer;color:var(--danger);font-size:14px;">✕</button>
+      </div>
+      ${nombreManualHtml}
+      ${vad && vad.contraindicaciones ? `<div style="font-size:11px;color:var(--text-muted);margin-top:4px;">ℹ️ ${vad.contraindicaciones}</div>` : ''}
+      ${alertaAlergia ? `<div style="font-size:11px;color:var(--danger);font-weight:700;margin-top:4px;">${alertaAlergia}</div>` : ''}
+    </div>`;
+  }).join('');
 }
 
 function initFirmaCanvasReceta() {
@@ -13999,8 +14176,8 @@ function imprimirReceta() {
   <div style="background:#eef2f6;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;">
     <strong>Paciente:</strong> ${p.name} · <strong>Doc:</strong> CC ${p.id} · <strong>Edad:</strong> ${p.age} años${cie?` · <strong>Dx:</strong> ${cie}`:''}
   </div>
-  ${meds.length?`<table><thead><tr><th>#</th><th>Medicamento</th><th>Dosis</th><th>Frecuencia</th><th>Duración</th></tr></thead><tbody>
-  ${meds.map((m,i)=>`<tr><td>${i+1}</td><td>${m.nombre}</td><td>${m.dosis}</td><td>${m.frecuencia}</td><td>${m.duracion}</td></tr>`).join('')}
+  ${meds.length?`<table><thead><tr><th>#</th><th>Medicamento</th><th>Dosis</th><th>Frecuencia</th><th>Duración</th><th>Vía</th></tr></thead><tbody>
+  ${meds.map((m,i)=>`<tr><td>${i+1}</td><td>${m.nombre}</td><td>${m.dosis}</td><td>${m.frecuencia}</td><td>${m.duracion}</td><td>${m.via||'Oral'}</td></tr>`).join('')}
   </tbody></table>`:'<p>Sin medicamentos prescritos.</p>'}
   ${indi?`<div style="background:#fffbeb;border-radius:6px;padding:10px;margin-bottom:16px;"><strong>Indicaciones:</strong> ${indi}</div>`:''}
   <div class="footer">
@@ -14596,6 +14773,320 @@ function exportarPacientesCSV() {
   a.click();
   URL.revokeObjectURL(url);
   showToast('📊 CSV de pacientes descargado', 'success');
+}
+
+// ============================================================
+// IMPORTACIÓN MASIVA — MIGRACIÓN DESDE OTRO SOFTWARE
+// ============================================================
+const IMPORT_SCHEMAS = {
+  pacientes: {
+    label: 'Pacientes (Historia Clínica)',
+    instrucciones: 'Un renglón por paciente. Exporta tus pacientes con su historia clínica desde tu software actual como CSV y súbelo aquí. Si la cédula ya existe en Denti, se actualiza ese paciente en vez de crear uno duplicado.',
+    fields: [
+      {key:'nombreCompleto', label:'Nombre completo', required:true, aliases:['nombre','paciente','nombre completo','nombre y apellido','nombres']},
+      {key:'apellido', label:'Apellidos (si vienen en columna aparte)', required:false, aliases:['apellido','apellidos']},
+      {key:'cedula', label:'Cédula / Documento', required:false, aliases:['cedula','documento','identificacion','cc','nit','numero de documento']},
+      {key:'telefono', label:'Teléfono', required:false, aliases:['telefono','celular','movil','numero celular']},
+      {key:'email', label:'Email', required:false, aliases:['email','correo','e-mail','correo electronico']},
+      {key:'fechaNacimiento', label:'Fecha de nacimiento', required:false, aliases:['fecha nacimiento','fecha de nacimiento','nacimiento','fecha nac']},
+      {key:'sexo', label:'Sexo', required:false, aliases:['sexo','genero']},
+      {key:'eps', label:'EPS / Aseguradora', required:false, aliases:['eps','aseguradora','entidad']},
+      {key:'regimen', label:'Régimen', required:false, aliases:['regimen']},
+      {key:'ocupacion', label:'Ocupación', required:false, aliases:['ocupacion','profesion']},
+      {key:'direccion', label:'Dirección', required:false, aliases:['direccion']},
+      {key:'ciudad', label:'Ciudad', required:false, aliases:['ciudad']},
+      {key:'alergias', label:'Alergias', required:false, aliases:['alergias','alergia']},
+      {key:'medicamentos', label:'Medicamentos actuales', required:false, aliases:['medicamentos','medicacion']},
+      {key:'motivo', label:'Motivo de consulta', required:false, aliases:['motivo','motivo consulta','motivo de consulta']},
+      {key:'enfermedadActual', label:'Enfermedad actual', required:false, aliases:['enfermedad actual','padecimiento actual']},
+      {key:'antecedentesQuirurgicos', label:'Antecedentes quirúrgicos', required:false, aliases:['antecedentes quirurgicos','cirugias previas']},
+      {key:'antecedentesFamiliares', label:'Antecedentes familiares', required:false, aliases:['antecedentes familiares']},
+      {key:'observaciones', label:'Observaciones generales', required:false, aliases:['observaciones','notas']},
+    ]
+  },
+  evoluciones: {
+    label: 'Evoluciones clínicas',
+    instrucciones: 'Un renglón por nota de evolución. El paciente debe existir ya en Denti (impórtalo primero) — se busca por cédula o por nombre.',
+    fields: [
+      {key:'pacienteRef', label:'Paciente (nombre o cédula)', required:true, aliases:['paciente','nombre','cedula','documento']},
+      {key:'fecha', label:'Fecha', required:true, aliases:['fecha','fecha consulta','fecha de la consulta']},
+      {key:'dentista', label:'Odontólogo', required:false, aliases:['dentista','odontologo','doctor']},
+      {key:'cups', label:'Código CUPS', required:false, aliases:['cups','codigo cups']},
+      {key:'cie10', label:'Código CIE-10', required:false, aliases:['cie10','cie-10','diagnostico']},
+      {key:'piezas', label:'Piezas dentales', required:false, aliases:['piezas','dientes','pieza']},
+      {key:'s', label:'Subjetivo (S)', required:false, aliases:['subjetivo','s']},
+      {key:'o', label:'Objetivo (O)', required:false, aliases:['objetivo','o','hallazgos']},
+      {key:'a', label:'Análisis / Diagnóstico (A)', required:false, aliases:['analisis','a']},
+      {key:'p', label:'Plan (P)', required:false, aliases:['plan','p','tratamiento']},
+      {key:'meds', label:'Medicamentos formulados', required:false, aliases:['medicamentos','formula']},
+    ]
+  },
+  tratamientos: {
+    label: 'Tratamientos',
+    instrucciones: 'Un renglón por procedimiento/paso del plan de tratamiento. Varios renglones con el mismo paciente + diagnóstico se agrupan en un solo plan. El paciente debe existir ya en Denti.',
+    fields: [
+      {key:'pacienteRef', label:'Paciente (nombre o cédula)', required:true, aliases:['paciente','nombre','cedula']},
+      {key:'diagnosis', label:'Diagnóstico / nombre del plan', required:false, aliases:['diagnostico','plan']},
+      {key:'stepName', label:'Procedimiento / paso', required:true, aliases:['procedimiento','paso','tratamiento']},
+      {key:'cost', label:'Costo', required:false, aliases:['costo','valor','precio']},
+      {key:'done', label:'¿Realizado? (si/no)', required:false, aliases:['realizado','completado','hecho']},
+      {key:'status', label:'Estado general del plan', required:false, aliases:['estado plan','estado tratamiento','estado']},
+    ]
+  }
+};
+
+let _importState = { tipo:null, headers:[], rows:[], mapping:{} };
+
+function openImportModal(tipo) {
+  const schema = IMPORT_SCHEMAS[tipo];
+  if (!schema) return;
+  _importState = { tipo, headers:[], rows:[], mapping:{} };
+  document.getElementById('import-modal-title').textContent = `📦 Importar ${schema.label}`;
+  document.getElementById('import-instrucciones').innerHTML = schema.instrucciones;
+  document.getElementById('import-step-file').style.display = 'block';
+  document.getElementById('import-step-map').style.display = 'none';
+  document.getElementById('import-step-result').style.display = 'none';
+  document.getElementById('import-btn-confirm').style.display = 'none';
+  const fi = document.getElementById('import-file-input'); if (fi) fi.value = '';
+  document.getElementById('import-file-status').textContent = '';
+  openModal('modal-importar');
+}
+
+function closeImportModal() { closeModal('modal-importar'); }
+
+// ---- Parser CSV robusto: soporta comillas, , o ; como separador, y saltos de línea dentro de campos ----
+function parseCSV(text) {
+  text = text.replace(/^﻿/, '');
+  const sampleLine = text.split(/\r\n|\n/, 1)[0] || '';
+  const delim = (sampleLine.split(';').length > sampleLine.split(',').length) ? ';' : ',';
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i], next = text[i+1];
+    if (inQuotes) {
+      if (c === '"' && next === '"') { field += '"'; i++; }
+      else if (c === '"') { inQuotes = false; }
+      else { field += c; }
+    } else {
+      if (c === '"') { inQuotes = true; }
+      else if (c === delim) { row.push(field); field = ''; }
+      else if (c === '\r') { /* ignorar */ }
+      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+      else { field += c; }
+    }
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  while (rows.length && rows[rows.length-1].every(v => v.trim() === '')) rows.pop();
+  return rows;
+}
+
+function normalizeHeader(h) {
+  return (h||'').toString().trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+}
+
+function guessImportMapping(schema, headers) {
+  const mapping = {};
+  const normHeaders = headers.map(normalizeHeader);
+  schema.fields.forEach(f => {
+    const aliasesNorm = f.aliases.map(normalizeHeader);
+    let idx = normHeaders.findIndex(h => aliasesNorm.includes(h));
+    if (idx === -1) idx = normHeaders.findIndex(h => aliasesNorm.some(a => h.includes(a) || a.includes(h)));
+    mapping[f.key] = idx >= 0 ? idx : -1;
+  });
+  return mapping;
+}
+
+function handleImportFileSelect(files) {
+  const file = files && files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const rows = parseCSV(String(e.target.result));
+    if (!rows.length) { showToast('El archivo está vacío o no se pudo leer', 'error'); return; }
+    const headers = rows[0];
+    const dataRows = rows.slice(1);
+    const schema = IMPORT_SCHEMAS[_importState.tipo];
+    _importState.headers = headers;
+    _importState.rows = dataRows;
+    _importState.mapping = guessImportMapping(schema, headers);
+    document.getElementById('import-file-status').textContent = `✓ ${file.name} — ${headers.length} columnas, ${dataRows.length} filas detectadas`;
+    renderImportMappingStep();
+  };
+  reader.onerror = () => showToast('No se pudo leer el archivo', 'error');
+  reader.readAsText(file, 'UTF-8');
+}
+
+function renderImportMappingStep() {
+  const schema = IMPORT_SCHEMAS[_importState.tipo];
+  const grid = document.getElementById('import-mapping-grid');
+  grid.innerHTML = schema.fields.map(f => {
+    const options = ['<option value="-1">— No mapear —</option>']
+      .concat(_importState.headers.map((h,i) => `<option value="${i}" ${_importState.mapping[f.key]===i?'selected':''}>${h || '(columna '+(i+1)+')'}</option>`));
+    return `
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:10px;align-items:center;">
+        <label style="margin:0;font-size:12px;">${f.label}${f.required?' <span style="color:var(--danger);">*</span>':''}</label>
+        <select onchange="_importState.mapping['${f.key}']=parseInt(this.value);renderImportPreview();" style="font-size:12px;padding:6px;border:1px solid var(--border);border-radius:6px;">
+          ${options.join('')}
+        </select>
+      </div>`;
+  }).join('');
+  document.getElementById('import-step-file').style.display = 'none';
+  document.getElementById('import-step-map').style.display = 'block';
+  document.getElementById('import-btn-confirm').style.display = 'inline-flex';
+  renderImportPreview();
+}
+
+function renderImportPreview() {
+  const schema = IMPORT_SCHEMAS[_importState.tipo];
+  const table = document.getElementById('import-preview-table');
+  const mappedFields = schema.fields.filter(f => _importState.mapping[f.key] >= 0);
+  const previewRows = _importState.rows.slice(0, 5);
+  table.innerHTML = `
+    <thead><tr>${mappedFields.map(f=>`<th style="background:#ebf4ff;padding:6px 8px;text-align:left;">${f.label}</th>`).join('')}</tr></thead>
+    <tbody>${previewRows.map(r => `<tr>${mappedFields.map(f => `<td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;">${(r[_importState.mapping[f.key]]||'').toString().slice(0,60)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  document.getElementById('import-total-rows').textContent = `Total de filas a importar: ${_importState.rows.length}`;
+}
+
+function importGetVal(row, key) {
+  const idx = _importState.mapping[key];
+  if (idx == null || idx < 0) return '';
+  return (row[idx] || '').toString().trim();
+}
+
+function resolvePacienteRef(ref) {
+  const digits = ref.replace(/\D/g,'');
+  if (digits.length >= 5) {
+    const byCedula = PATIENTS.find(p => p.cedula && p.cedula.replace(/\D/g,'') === digits);
+    if (byCedula) return byCedula;
+  }
+  const norm = normalizeHeader(ref);
+  let p = PATIENTS.find(x => normalizeHeader(x.name) === norm);
+  if (!p) p = PATIENTS.find(x => normalizeHeader(x.name).includes(norm) || norm.includes(normalizeHeader(x.name)));
+  return p || null;
+}
+
+function importarPacientesCSV() {
+  const result = { creados:0, actualizados:0, errores:[] };
+  _importState.rows.forEach((row, i) => {
+    const nombreCompleto = importGetVal(row,'nombreCompleto');
+    const apellido = importGetVal(row,'apellido');
+    const nombreFinal = (apellido ? `${nombreCompleto} ${apellido}` : nombreCompleto).trim();
+    if (!nombreFinal) { result.errores.push({fila:i+2, motivo:'Falta el nombre'}); return; }
+    const cedula = importGetVal(row,'cedula');
+    let p = cedula ? PATIENTS.find(x => x.cedula && x.cedula.replace(/\D/g,'') === cedula.replace(/\D/g,'')) : null;
+    const isNew = !p;
+    if (isNew) {
+      p = { id: 'P'+String(Date.now()+i).slice(-6), lastVisit:'—', nextAppt:'—', status:'activo', balance:0,
+        avatar:(nombreFinal[0]||'?').toUpperCase(), color:['avatar-blue','avatar-green','avatar-orange','avatar-purple'][PATIENTS.length%4],
+        createdAt:new Date().toISOString() };
+      PATIENTS.unshift(p);
+    }
+    p.name = nombreFinal;
+    if (cedula) p.cedula = cedula;
+    const tel = importGetVal(row,'telefono'); if (tel) { const t = normalizeColPhone(tel); p.phone = t.valid ? t.formatted : tel; }
+    const email = importGetVal(row,'email'); if (email) p.email = email;
+    const fnac = importGetVal(row,'fechaNacimiento');
+    if (fnac) { const d = new Date(fnac); if (!isNaN(d)) p.age = Math.floor((new Date()-d)/(365.25*24*3600*1000)); }
+    const sexo = importGetVal(row,'sexo'); if (sexo) p.sexo = sexo;
+    const eps = importGetVal(row,'eps'); if (eps) p.eps = eps;
+    const regimen = importGetVal(row,'regimen'); if (regimen) p.regimen = regimen;
+    const ocup = importGetVal(row,'ocupacion'); if (ocup) p.ocupacion = ocup;
+    const dir = importGetVal(row,'direccion'); if (dir) p.direccion = dir;
+    const ciudad = importGetVal(row,'ciudad'); if (ciudad) p.ciudad = ciudad;
+    const alergias = importGetVal(row,'alergias'); if (alergias) p.alergias = alergias;
+    const meds = importGetVal(row,'medicamentos'); if (meds) p.medicamentos = meds;
+    const motivo = importGetVal(row,'motivo'); if (motivo) p.motivo = motivo;
+    const enfAct = importGetVal(row,'enfermedadActual'); if (enfAct) p.enfermedadActual = enfAct;
+    const antQx = importGetVal(row,'antecedentesQuirurgicos'); if (antQx) p.antecedentesQuirurgicos = antQx;
+    const antFam = importGetVal(row,'antecedentesFamiliares'); if (antFam) p.antecedentesFamiliares = antFam;
+    const obs = importGetVal(row,'observaciones'); if (obs) p.anamnesisObs = obs;
+    if (motivo || enfAct) p.anamnesisCompletada = true;
+    if (isNew) result.creados++; else result.actualizados++;
+  });
+  if (typeof persistData === 'function') persistData();
+  if (typeof renderPatients === 'function') renderPatients(PATIENTS);
+  if (typeof updatePatientCounters === 'function') updatePatientCounters();
+  return result;
+}
+
+function importarEvolucionesCSV() {
+  const result = { creados:0, actualizados:0, errores:[] };
+  _importState.rows.forEach((row,i) => {
+    const ref = importGetVal(row,'pacienteRef');
+    const fecha = importGetVal(row,'fecha');
+    if (!ref) { result.errores.push({fila:i+2, motivo:'Falta el paciente'}); return; }
+    if (!fecha) { result.errores.push({fila:i+2, motivo:'Falta la fecha'}); return; }
+    const p = resolvePacienteRef(ref);
+    if (!p) { result.errores.push({fila:i+2, motivo:`No se encontró el paciente "${ref}" — impórtalo primero`}); return; }
+    EVOLUCIONES.push({
+      id:'E'+Date.now()+i, patient:p.name, patientId:p.id, fecha,
+      dentista: importGetVal(row,'dentista') || '—',
+      cups: importGetVal(row,'cups'), cups_desc:'',
+      cie10: importGetVal(row,'cie10'), cie10_desc:'',
+      piezas: importGetVal(row,'piezas') || 'Todos',
+      s: importGetVal(row,'s'), o: importGetVal(row,'o'), a: importGetVal(row,'a'), p: importGetVal(row,'p'),
+      meds: importGetVal(row,'meds'),
+    });
+    result.creados++;
+  });
+  if (typeof persistData === 'function') persistData();
+  return result;
+}
+
+function importarTratamientosCSV() {
+  const result = { creados:0, actualizados:0, errores:[] };
+  const grupos = new Map();
+  _importState.rows.forEach((row,i) => {
+    const ref = importGetVal(row,'pacienteRef');
+    const stepName = importGetVal(row,'stepName');
+    if (!ref) { result.errores.push({fila:i+2, motivo:'Falta el paciente'}); return; }
+    if (!stepName) { result.errores.push({fila:i+2, motivo:'Falta el nombre del procedimiento'}); return; }
+    const p = resolvePacienteRef(ref);
+    if (!p) { result.errores.push({fila:i+2, motivo:`No se encontró el paciente "${ref}" — impórtalo primero`}); return; }
+    const diagnosis = importGetVal(row,'diagnosis') || 'Plan de tratamiento importado';
+    const key = p.name + '||' + diagnosis;
+    if (!grupos.has(key)) grupos.set(key, { patient:p.name, diagnosis, status: importGetVal(row,'status') || 'en-proceso', steps:[] });
+    const costRaw = importGetVal(row,'cost').replace(/[^\d.-]/g,'');
+    const doneRaw = importGetVal(row,'done').toLowerCase();
+    grupos.get(key).steps.push({
+      name: stepName,
+      cost: costRaw ? parseFloat(costRaw) : 0,
+      done: ['si','sí','yes','true','1','realizado','completado'].includes(doneRaw),
+    });
+  });
+  grupos.forEach(g => { TREATMENTS.push({ id:'T'+Date.now()+Math.floor(Math.random()*1000), ...g }); result.creados++; });
+  if (typeof persistData === 'function') persistData();
+  return result;
+}
+
+function ejecutarImportacion() {
+  const schema = IMPORT_SCHEMAS[_importState.tipo];
+  const faltantes = schema.fields.filter(f => f.required && _importState.mapping[f.key] < 0);
+  if (faltantes.length) { showToast(`Falta mapear un campo obligatorio: ${faltantes.map(f=>f.label).join(', ')}`, 'error'); return; }
+  let result;
+  if (_importState.tipo === 'pacientes') result = importarPacientesCSV();
+  else if (_importState.tipo === 'evoluciones') result = importarEvolucionesCSV();
+  else if (_importState.tipo === 'tratamientos') result = importarTratamientosCSV();
+  else return;
+  mostrarResultadoImportacion(result);
+}
+
+function mostrarResultadoImportacion(result) {
+  document.getElementById('import-step-map').style.display = 'none';
+  document.getElementById('import-btn-confirm').style.display = 'none';
+  document.getElementById('import-step-result').style.display = 'block';
+  const parts = [];
+  if (result.creados) parts.push(`${result.creados} creados`);
+  if (result.actualizados) parts.push(`${result.actualizados} actualizados`);
+  const summary = parts.length ? parts.join(' · ') : 'no se importó ningún registro';
+  document.getElementById('import-result-summary').innerHTML =
+    `<div class="alert alert-success"><span>✅</span><div>Importación completada: ${summary}. ${result.errores.length ? result.errores.length+' fila(s) con errores (ver abajo).' : ''}</div></div>`;
+  const errBox = document.getElementById('import-result-errors');
+  errBox.innerHTML = result.errores.length
+    ? `<div style="font-size:12px;font-weight:700;margin-bottom:6px;">⚠️ Filas no importadas:</div>
+       <div style="max-height:200px;overflow-y:auto;font-size:11.5px;">${result.errores.map(e=>`<div>Fila ${e.fila}: ${e.motivo}</div>`).join('')}</div>`
+    : '';
+  showToast(`Importación completada: ${summary}`, 'success');
 }
 
 // ============================================================
