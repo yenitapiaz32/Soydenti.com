@@ -1294,7 +1294,7 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
         <a href="#" onclick="showLegal('habeasdata')" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:12px;">Habeas Data</a>
         <a href="#" onclick="document.getElementById('section-contacto').scrollIntoView({behavior:'smooth'})" style="color:rgba(255,255,255,0.5);text-decoration:none;font-size:12px;">Contacto</a>
       </div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.3);">© 2026 Denti · Bogotá, Colombia</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.3);">© 2026 Denti · Medellín, Colombia</div>
     </div>
   </div>
 </div>
@@ -2580,8 +2580,8 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
             <div class="form-group"><label>Código habilitación RETHUS</label><input value="110010000001"></div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Departamento</label><input value="Bogotá D.C."></div>
-            <div class="form-group"><label>Municipio (cód.)</label><input value="11001"></div>
+            <div class="form-group"><label>Departamento</label><input value="Antioquia"></div>
+            <div class="form-group"><label>Municipio (cód.)</label><input value="05001"></div>
           </div>
           <div class="form-group"><label>Nombre del prestador</label><input value="Clínica Dental Yenifer SAS"></div>
           <button class="btn btn-outline btn-sm">Guardar configuración</button>
@@ -2881,8 +2881,8 @@ body.dark-mode #page-interacciones .int-drug-chip.sel { background: rgba(91,141,
           <div class="card-title">Datos de la Clínica</div>
           <div class="form-group"><label>Nombre de la clínica</label><input id="cfg-clinica" value="Clínica Dental Yenifer"></div>
           <div class="form-group"><label>NIT</label><input id="cfg-nit" value="900.123.456-7"></div>
-          <div class="form-group"><label>Dirección</label><input id="cfg-dir" value="Carrera 15 # 93-47, Bogotá"></div>
-          <div class="form-group"><label>Ciudad</label><input id="cfg-ciudad" value="Bogotá" placeholder="Ej: Bogotá, Medellín..."></div>
+          <div class="form-group"><label>Dirección</label><input id="cfg-dir" value="Carrera 43A # 5-15, Medellín"></div>
+          <div class="form-group"><label>Ciudad</label><input id="cfg-ciudad" value="Medellín" placeholder="Ej: Bogotá, Medellín..."></div>
           <div class="form-group"><label>Teléfono</label><input id="cfg-tel" value="+57 601 234 5678"></div>
           <div class="form-group"><label>RETHUS / TP del odontólogo</label><input id="cfg-tp" value="TP-12345"></div>
           <div class="form-group"><label>Nombre del odontólogo principal</label><input id="cfg-doctor" value="Dra. Yenifer"></div>
@@ -5401,9 +5401,11 @@ function dashAskDenti() {
 }
 
 function initDashboard() {
-  // Dynamic greeting
+  // Dynamic greeting — prioriza el nombre de la sesión activa (quién inició sesión),
+  // y solo si no hay sesión usa el nombre configurado en Configuración como respaldo.
+  const session = JSON.parse(localStorage.getItem('denti_session') || '{}');
   const cfg = JSON.parse(localStorage.getItem('denti_config') || '{}');
-  const doctorName = cfg.doctor || 'Dra. Yenifer';
+  const doctorName = session.name || cfg.doctor || 'Dr/a. Demo';
   const h = new Date().getHours();
   const saludo = h < 12 ? 'Buenos días' : h < 18 ? 'Buenas tardes' : 'Buenas noches';
   const greetEl = document.getElementById('dash-greeting');
@@ -8742,10 +8744,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (auth) { auth.style.display = 'none'; }
       const ua = document.querySelector('.user-avatar');
       const ui = document.querySelector('.user-info');
-      if (ua) ua.textContent = (session.name||'DY').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-      if (ui) ui.innerHTML = `<strong>${session.name||'Dra. Yenifer'}</strong><span>${session.role||'Admin'}</span>`;
+      if (ua) ua.textContent = (session.name||'DD').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+      if (ui) ui.innerHTML = `<strong>${session.name||'Dr/a. Demo'}</strong><span>${session.role||'Admin'}</span>`;
       const logoutLbl = document.getElementById('logout-user-name');
-      if (logoutLbl) logoutLbl.textContent = session.name || 'Dra. Yenifer';
+      if (logoutLbl) logoutLbl.textContent = session.name || 'Dr/a. Demo';
     } catch(e) { localStorage.removeItem('denti_session'); }
   }
 
@@ -8786,7 +8788,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================
 function printInvoice(folio) {
   const inv = INVOICES.find(i => i.folio === folio) || INVOICES[0];
-  const clinic = { name:'Clínica Dental Yenifer', nit:'900.123.456-7', dir:'Carrera 15 # 93-47, Bogotá', tel:'+57 601 234 5678', email:'info@dentalrivera.com.co', regEspecial:'IPS habilitada — Código 11001' };
+  const clinic = { name:'Clínica Dental Yenifer', nit:'900.123.456-7', dir:'Carrera 43A # 5-15, Medellín', tel:'+57 601 234 5678', email:'info@dentalrivera.com.co', regEspecial:'IPS habilitada — Código 05001' };
   const win = window.open('', '_blank', 'width=800,height=1000');
   win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
   <title>Factura ${inv.folio}</title>
@@ -9010,12 +9012,12 @@ const LEGAL_CONTENT = {
 <h4>8. Terminación</h4>
 <p>El Cliente puede cancelar su suscripción en cualquier momento con 30 días de aviso. Denti podrá suspender el servicio ante incumplimiento de estos términos.</p>
 <h4>9. Legislación aplicable</h4>
-<p>El presente contrato se rige por las leyes de la República de Colombia. Cualquier controversia se someterá a arbitraje en la Cámara de Comercio de Bogotá.</p>`
+<p>El presente contrato se rige por las leyes de la República de Colombia. Cualquier controversia se someterá a arbitraje en la Cámara de Comercio de Medellín para Antioquia.</p>`
   },
   privacidad: {
     title: '🛡️ Política de Privacidad',
     body: `<h4>1. Responsable del tratamiento</h4>
-<p><strong>Denti SAS</strong>, NIT 900.123.456-7, dirección: Carrera 15 # 93-47, Bogotá D.C., Colombia. Correo: datos@denti.co</p>
+<p><strong>Denti SAS</strong>, NIT 900.123.456-7, dirección: Carrera 43A # 5-15, Medellín, Colombia. Correo: datos@denti.co</p>
 <h4>2. Datos que recopilamos</h4>
 <p><strong>Del profesional (titular):</strong> Nombre, número de identificación, correo electrónico, teléfono, información de la clínica, datos de facturación.<br>
 <strong>De los pacientes (datos bajo custodia del Cliente):</strong> Nombre, documento de identidad, fecha de nacimiento, información clínica dental, radiografías y fotos. <em>Denti actúa como encargado del tratamiento de datos de pacientes; el responsable es el profesional Cliente.</em></p>
@@ -9035,7 +9037,7 @@ const LEGAL_CONTENT = {
     body: `<h4>Autorización para el tratamiento de datos personales</h4>
 <p>En cumplimiento de la Ley Estatutaria 1581 de 2012 y el Decreto Reglamentario 1377 de 2013, Denti SAS informa:</p>
 <h4>Responsable del tratamiento</h4>
-<p><strong>Denti SAS</strong><br>NIT: 900.123.456-7<br>Dirección: Carrera 15 # 93-47, Piso 8, Bogotá D.C.<br>Teléfono: +57 (601) 234-5678<br>Email: datos@denti.co</p>
+<p><strong>Denti SAS</strong><br>NIT: 900.123.456-7<br>Dirección: Carrera 43A # 5-15, Piso 8, Medellín<br>Teléfono: +57 (604) 234-5678<br>Email: datos@denti.co</p>
 <h4>Datos tratados</h4>
 <p>Datos de identificación, datos de contacto, datos profesionales, datos financieros para facturación, y datos sensibles de salud de los pacientes bajo la custodia del profesional Cliente.</p>
 <h4>Tratamiento de datos sensibles</h4>
